@@ -1,0 +1,7 @@
+doc/
+api-docs/doc/
+docker-example/
+node_modules/
+tmp/
+npm-debug.log
+.idea
