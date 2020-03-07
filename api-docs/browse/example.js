@@ -24,8 +24,9 @@
  /**----------------------------------------------------------------list of Categories---------------------------------------------------------- */
 /**  
  * @api {get} /browse/categories Request list of Categories
- * @apiGroup GetAllCategories
+ * @apiGroup Browse
  * @apiName Get All Categories
+ * @apiVersion 0.1.0
  *
  * @apiHeader {String} Authorization  (required) A valid user access token.
  * 
@@ -106,8 +107,9 @@
 
 /**
  * @api {get} /browse/categories/{category_id} Get a single category used to tag items in Spotify
- * @apiGroup Get a Category
+ * @apiGroup Browse
  * @apiName Get a Category
+ * @apiVersion 0.1.0
  *
  * @apiHeader {String} Authorization  (required) A valid user access token.
  * 
@@ -138,8 +140,9 @@
 
 /**
  * @api {get} /browse/categories/{category_id}/playlists   Get a list of Spotify playlists tagged with a particular category.
- * @apiGroup Get a Category's Playlists
+ * @apiGroup Browse
  * @apiName Get a Category's Playlists
+ * @apiVersion 0.1.0
  *
  * @apiHeader  {String} Authorization  (required) A valid user access token.
     @apiParam {Number} category_id 	The Spotify category ID for the category
@@ -240,8 +243,9 @@
 
 /**
  * @api {get} /browse/featured-playlists   Get a list of Spotify featured playlists.
- * @apiGroup Get a List of Featured Playlists
+ * @apiGroup Browse
  * @apiName Get a List of Featured Playlists
+ * @apiVersion 0.1.0
  *
  * @apiHeader  {String} Authorization  (required) A valid user access token.
  * 
@@ -343,8 +347,9 @@
 
 /**
  * @api {get} /browse/new-releases  Get a list of new album releases featured in Spotif.
- * @apiGroup Get a List of New Releases
+ * @apiGroup Browse
  * @apiName Get a List of New Releases
+ * @apiVersion 0.1.0
  *
  * @apiHeader  {String} Authorization  (required) A valid user access token.
  * 
@@ -452,8 +457,9 @@
 
 /**
  * @api {get} /recommendations  Create a playlist-style listening experience based on seed artists, tracks and genres.           
- * @apiGroup Get Recommendations Based on Seeds
+ * @apiGroup Browse
  * @apiName Get Recommendations Based on Seeds
+ * @apiVersion 0.1.0
  *
  * @apiHeader  {String} Authorization  (required) A valid user access token.
  * 

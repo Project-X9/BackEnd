@@ -26,7 +26,8 @@
 /**
  * @api {get} /me/following/contains   Check to see if the current user is following one or more artists or other Spotify users.
  * @apiName Check if Current User Follows Artists or Users
- * @apiGroup Check if Current User Follows Artists or Users
+ * @apiGroup Follow
+ * @apiVersion 0.1.0
  *
  * @apiHeader {String} Authorization  (required) A valid user access token.The access token must have been issued on behalf of the current user. Getting details of the artists or users the current user follows requires authorization of the user-follow-read scope
  * 
@@ -48,8 +49,9 @@
 /**
  * @api {get} /playlists/{playlist_id}/followers/contains   Check to see if one or more Spotify users are following a specified playlist.
  * @apiName Check if Users Follow a Playlist
- * @apiGroup Check if Users Follow a Playlist
- *
+ * @apiGroup Follow
+ * @apiVersion 0.1.0
+ * 
  * @apiHeader {String} Authorization  (required) A valid user access token.The access token must have been issued on behalf of the current user. Getting details of the artists or users the current user follows requires authorization of the user-follow-read scope
  * 
  * @apiParam {Number[]{-5}} ids  A comma-separated list of Spotify User IDs ; the ids of the users that you want to check to see if they follow the playlist. 
@@ -71,8 +73,9 @@
 /**
  * @api {put} /me/following  Add the current user as a follower of one or more artists or other Spotify users.
  * @apiName Follow Artists or Users
- * @apiGroup Follow Artists or Users
- *
+ * @apiGroup Follow
+ * @apiVersion 0.1.0
+ * 
  * @apiHeader {String} Authorization  (required) A valid user access token.The access token must have been issued on behalf of the current user. Getting details of the artists or users the current user follows requires authorization of the user-follow-read scope
  * @apiHeader {object} Content-Type Required if IDs are passed in the request body, otherwise ignored. The content type of the request body: application/json.
  * 
@@ -92,7 +95,8 @@
 /**
  * @api {get} /me/following?type=artist  Get the current user’s followed artists
  * @apiName Get User's Followed Artists
- * @apiGroup Get User's Followed Artists
+ * @apiGroup Follow
+ * @apiVersion 0.1.0
  *
  * @apiHeader {String} Authorization  	Required. A valid access token from the Spotify Accounts service: see the Web API Authorization Guide for details. The access token must have been issued on behalf of the current user. Getting details of the artists or users the current user follows requires authorization of the user-follow-read scope. See Using Scopes.
  * 
@@ -154,7 +158,8 @@
 /**
  * @api {DELETE} /me/following  Remove the current user as a follower of one or more artists or other Spotify users.
  * @apiName Unfollow Artists or Users
- * @apiGroup Unfollow Artists or Users
+ * @apiGroup Follow
+ * @apiVersion 0.1.0
  *
  * @apiHeader {String} Authorization  (required) A valid user access token.The access token must have been issued on behalf of the current user. Getting details of the artists or users the current user follows requires authorization of the user-follow-read scope
  * @apiHeader {object} Content-Type Required if IDs are passed in the request body, otherwise ignored. The content type of the request body: application/json.
@@ -177,7 +182,8 @@
 /**
  * @api {DELETE} /playlists/{playlist_id}/followers  Remove the current user as a follower of a playlist
  * @apiName Unfollow  a Playlist
- * @apiGroup Unfollow  a Playlist
+ * @apiGroup Follow
+ * @apiVersion 0.1.0
  *
  * @apiHeader {String} Authorization  	Required. A valid access token from the Spotify Accounts service: see the Web API Authorization Guide for details. The access token must have been issued on behalf of the user.
 Unfollowing a publicly followed playlist for a user requires authorization of the playlist-modify-public scope; unfollowing a privately followed playlist requires the playlist-modify-private scope. See Using Scopes.
