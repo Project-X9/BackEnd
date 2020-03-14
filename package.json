@@ -1,0 +1,33 @@
+{
+  "name": "BackEnd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "apidoc.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "dev": ".\\node_modules\\.bin\\env-cmd -f .\\config\\dev.env nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Project-X9/BackEnd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Project-X9/BackEnd/issues"
+  },
+  "homepage": "https://github.com/Project-X9/BackEnd#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.5.5",
+    "mongoose": "^5.9.4"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "nodemon": "^2.0.2"
+  }
+}
