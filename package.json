@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": ".\\node_modules\\.bin\\env-cmd -f .\\config\\dev.env nodemon src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": ".\\node_modules\\.bin\\env-cmd -f .\\config\\test.env npx jasmine"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",
+    "jasmine": "^3.5.0",
     "nodemon": "^2.0.2"
   }
 }
