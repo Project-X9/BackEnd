@@ -26,4 +26,10 @@ router.route('/:id/albums')
 // router.route("/:id/top/:type")
 // .get(userController.getTopTracksAndAlbums);
 
+
+//====================  (AUTHENTICATION) Login ======================
+
+router.route('/login')
+.post(userController.login);
+
 module.exports = router;

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 userSchema = mongoose.Schema({
     name: {
@@ -7,6 +8,7 @@ userSchema = mongoose.Schema({
     },
     email: {
         type: String,
+        unique: true,
         required: [true, 'A user must have an email']
     },
     password: {
@@ -30,6 +32,50 @@ userSchema = mongoose.Schema({
     artists:[String]
 });
 
+// so we can access function directly through the model:
+userSchema.statics.findByCredentials = async (email, password) => {
+    
+    //find them by email first:
+    const user = await User.findOne({ email })
+
+    if (!user) {
+        throw new Error('Incorrect email or password');
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch){
+        throw new Error('Incorrect email or password');
+    }
+
+    return user;
+
+} 
+
+
+
+// =========================== (AUTHENTICAION) Hashing Password =========================
+
+userSchema.pre('save', async function(next) {
+    const user = this;
+
+
+    if(user.isModified('password')){
+        user.password = await bcrypt.hash(user.password, 8);
+        //TODO: fix user update.
+    }
+    
+    next();
+
+});
+
 const User = mongoose.model('User',userSchema);
+
+
+
+
+
+
+
 
 module.exports = User;

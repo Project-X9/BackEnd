@@ -151,3 +151,17 @@ exports.getAlbums = async (req, res) => {
 //     })
 //   }
 // };
+
+
+//============================== (AUTHENTICATION) =========================
+exports.login = async (req,res) => {
+  try {
+    const user = await User.findByCredentials(req.body.email, req.body.password);
+    res.send(user); // we will just send json with user info untill its implemented to direct user to his homepage.
+
+
+  } catch (e) {
+    res.status(400).send("Cannot login");
+
+  }
+}
