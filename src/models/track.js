@@ -2,18 +2,15 @@ const mongoose= require('mongoose');
 
 
 const trackSchema = new mongoose.Schema({
-    album :{type: mongoose.Schema.Types.ObjectId,ref:'Album'},
     artists :[{type: mongoose.Schema.Types.ObjectId,ref:'Artist'}],
-    disc_number : Number,
-    duration_ms : Number,
-    explicit: Boolean ,
-    href : string,
+    description : String,
+    likers : [String],
     id : string,
-    is_playable : Boolean,
     name : string,
-    popularity : Number,
-    preview_url : {type:string, default: null},
-    uri : string
+    playCount : Number,
+    url : string,
+    duration : Number,
+    genres: [{type: mongoose.Schema.Types.ObjectId,ref:'Category'}]
 });
 
 const Track = mongoose.model('Track',trackSchema);
