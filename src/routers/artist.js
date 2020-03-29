@@ -18,7 +18,7 @@ router
 
 
 router
-.route("/artists/{id}/related-artists")
+.route("/artists/:id/related-artists")
 .get(artistController.getArtistRelatedArtists);
 
 
