@@ -49,6 +49,5 @@ router
      .route("/artist")
      .patch(followController.likeArtist)
      .delete(followController.dislikeArtist)
-     .get(followController.getAllArtists)
 
 module.exports = router;
