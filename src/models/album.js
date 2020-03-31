@@ -5,7 +5,7 @@ const albumSchema = mongoose.Schema({
     author: String,
     artists: [String],
     trackIds: [String],
-    discription: String,
+    description: String,
     image: String,
     dateCreated:{
         type: Date,

@@ -5,10 +5,10 @@ const trackSchema = new mongoose.Schema({
     artists :[{type: mongoose.Schema.Types.ObjectId,ref:'Artist'}],
     description : String,
     likers : [String],
-    id : string,
-    name : string,
+    id : String,
+    name : String,
     playCount : Number,
-    url : string,
+    url : String,
     duration : Number,
     genres: [{type: mongoose.Schema.Types.ObjectId,ref:'Category'}]
 });

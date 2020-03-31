@@ -1,4 +1,4 @@
-const User = require(`./../models/category.js`);
+const Category = require(`./../models/category.js`);
 
 
 //-------------------------------------------------------CREATE--------------------------------------------------------------------//
@@ -6,11 +6,11 @@ const User = require(`./../models/category.js`);
 //Create a Category
 exports.createCategory = async (req, res) => {
   try {
-    const newCategory = await Category.create(req.body);
+    const newcategory = await Category.create(req.body);
     res.status(201).json({
       status: "success",
       data: {
-        category: newCategory
+        Category: newcategory
       }
     });
   } catch (err) {
@@ -27,14 +27,14 @@ exports.createCategory = async (req, res) => {
 //update a category
 exports.updateCategory = async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    const categ = await Category.findByIdAndUpdate(req.query.id, req.body, {
       new: true,
       runValidators: true
     });
     res.status(200).json({
       status: "success",
       data: {
-        category
+        categ
       }
     });
   } catch (err) {
@@ -73,12 +73,10 @@ exports.getAllCategories = async (req, res) => {
 exports.getCategoryById = async (req, res) => {
   try 
   {
-    const category=  await Category.findById(req.params.id);
+    const categ=  await Category.findById(req.query.id);
     res.status(200).json({
       status: "success",
-      data: {
-        category
-      }
+      data: {categ}
     });
   } catch (err)
   {
@@ -95,11 +93,11 @@ exports.getCategoryById = async (req, res) => {
 exports.getCategoryNameById = async (req, res) => {
   try 
   {
-    const category=  await Category.findById(req.params.id);
+    const category=  await Category.findById(req.query.id);
     res.status(200).json({
       status: "success",
       data: {
-        category: category.name
+        category_name: category.name
       }
     });
   } catch (err)
@@ -117,11 +115,11 @@ exports.getCategoryNameById = async (req, res) => {
 exports.getCategoryHrefById = async (req, res) => {
   try 
   {
-    const category=  await Category.findById(req.params.id);
+    const category=  await Category.findById(req.query.id);
     res.status(200).json({
       status: "success",
       data: {
-        category : category.href
+        category_href : category.href
       }
     });
   } catch (err)
@@ -138,11 +136,11 @@ exports.getCategoryHrefById = async (req, res) => {
 exports.getCategoryIconById = async (req, res) => {
   try 
   {
-    const category=  await Category.findById(req.params.id);
+    const category=  await Category.findById(req.query.id);
     res.status(200).json({
       status: "success",
       data: {
-        category : category.icon
+        Category_icon: category.icon
       }
     });
   } catch (err)
@@ -159,7 +157,7 @@ exports.getCategoryIconById = async (req, res) => {
 //delete category by id
 exports.deleteCategoryById = async (req, res) => {
   try {
-    await Category.findByIdAndDelete(req.params.id);
+    await Category.findByIdAndDelete(req.query.id);
     res.status(204).json({
       status: "success",
       data: null
@@ -174,7 +172,7 @@ exports.deleteCategoryById = async (req, res) => {
 };
 
 //delete all categories
-exports.deleteCategoryById = async (req, res) => {
+exports.deleteAllCategory = async (req, res) => {
   try {
     await Category.deleteMany();
     res.status(204).json({
