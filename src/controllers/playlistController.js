@@ -62,23 +62,25 @@ exports.getPlaylistTracks  = async (req, res) => {
   }
   };
 
-  exports.getPlaylistFollowers  = async (req, res) => {    
-    try {
-      const playlistFollowers = await Playlist.findById(req.params.id, "followers");
-      res.status(200).json({
-        status: "success",
-        data: {
-          followers                 
-        }
-      });
-    } catch (err) {
-      console.log(err);
-      res.status(404).json({
-        status: "fail",
-        message: err.message        
-      });
-    }
-    }; 
+//NOT IN SPOTIFY API
+
+//   exports.getPlaylistFollowers  = async (req, res) => {    
+//     try {
+//       const playlistFollowers = await Playlist.findById(req.params.id, "followers");
+//       res.status(200).json({
+//         status: "success",
+//         data: {
+//           followers                 
+//         }
+//       });
+//     } catch (err) {
+//       console.log(err);
+//       res.status(404).json({
+//         status: "fail",
+//         message: err.message        
+//       });
+//     }
+//     }; 
 
 
 //                                    ----DELETE :----
