@@ -85,21 +85,24 @@ exports.getPlaylistTracks  = async (req, res) => {
 
 //                                    ----DELETE :----
 
-  exports.deletePlaylist = async (req, res) => {
-    try {
-      await Playlist.findByIdAndDelete(req.params.id);
-      res.status(204).json({
-        status: "success",
-        data: null
-      });
-    } catch (err) {
-      console.log(err);
-      res.status(404).json({
-        status: "fail",
-        message: err.message
-      });
-    }
-  };
+
+//NOT IN SPOTIFY API
+
+//   exports.deletePlaylist = async (req, res) => {
+//     try {
+//       await Playlist.findByIdAndDelete(req.params.id);
+//       res.status(204).json({
+//         status: "success",
+//         data: null
+//       });
+//     } catch (err) {
+//       console.log(err);
+//       res.status(404).json({
+//         status: "fail",
+//         message: err.message
+//       });
+//     }
+//   };
 
   exports.deletePlaylistTarck = async (req, res) => {
     try {
