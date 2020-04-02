@@ -17,9 +17,10 @@ categorySchema = mongoose.Schema({
         required: [true, 'A category must have a href'],
         minlength:5,
         maxlength:255
-    }
+    },
+    playlists:[String]
 });
 
-const Category = mongoose.model('Category',userSchema);
+const Category = mongoose.model('Category',categorySchema);
 
 module.exports = Category;

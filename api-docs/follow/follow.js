@@ -7,7 +7,7 @@
  * 
  * @apiError BadRequest The request could not be understood by the server due to malformed syntax. The message body will contain more information; see Response Schema.
  * @apiError UserUnauthorized The request requires user authentication or, if the request included authorization credentials, authorization has been refused for those credentials.
- * @apiError Forbidden The server understood the request, but is refusing to fulfill it.
+ * @apiError Forbidden (403) The server understood the request, but is refusing to fulfill it.
  * @apiError UserNotFound The requested resource could not be found. This error can be due to a temporary or permanent condition.
  * @apiError TooManyRequests Rate limiting has been applied
  * 

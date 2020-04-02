@@ -1,24 +1,6 @@
 const express = require('express');
 const router = new express.Router();
 const followController = require(`./../controllers/followController`);
-//const categoryController = require(`./../controllers/categoryController`);
-
-//WORKING
-/*
-router
-    .route("/category")
-    .post(categoryController.createCategory)
-    .get(categoryController.getAllCategories)
-router
-    .route("/")
-    //.delete(categoryController.deleteCategoryById)
-    .get(categoryController.getCategoryById)
-    //.get(categoryController.getCategoryNameById)
-    //.get(categoryController.getCategoryIconById)
-    //.get(categoryController.getCategoryHrefById)
-    //patch(categoryController.updateCategory)*/
-
-
 
 router
     .route("/getfollowers")
