@@ -93,7 +93,8 @@ exports.deleteUser = async (req, res) => {
 };
 
 exports.getCurrentUser = async (req, res) => {
-  console.log("/me route is not handled yet.");
+  console.log(req.user);
+  res.send(req.user);
 };
 
 exports.getTracks = async (req, res) => {
@@ -157,11 +158,13 @@ exports.getAlbums = async (req, res) => {
 exports.login = async (req,res) => {
   try {
     const user = await User.findByCredentials(req.body.email, req.body.password);
-    res.send(user); // we will just send json with user info untill its implemented to direct user to his homepage.
+    const token = await user.generateAuthToken();
+    res.send({user, token}); // we will just send json with user info untill its implemented to direct user to his homepage.
 
 
   } catch (e) {
-    res.status(400).send("Cannot login");
+    console.log(e);
+    res.status(400).send(e);
 
   }
 }
