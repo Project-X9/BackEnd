@@ -13,7 +13,7 @@
  * @api {post} /browse/category   create a single category 
  * @apiGroup Browse
  * @apiName Create Category
- * @apiVersion 0.1.0
+ * @apiVersion 0.2.0
  *
  * 
  * @apiParam {string} href 
@@ -59,7 +59,7 @@
  * @api {patch} /browse/category?=  update a single category 
  * @apiGroup Browse
  * @apiName update a category
- * @apiVersion 0.1.0
+ * @apiVersion 0.2.0
  * @apiHeader {string} id  category Id
  * @apiHeaderExample {json} Request-Example:
  *      id       5e85fd12bd68be36d86ca316
@@ -100,7 +100,7 @@
  * @api {get} /browse/categories Get all category
  * @apiGroup Browse
  * @apiName get all Categories
- * @apiVersion 0.1.0
+ * @apiVersion 0.2.0
  * @apiSuccess {Object}    categories         category objects
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 201 OK
@@ -142,7 +142,7 @@
  * @api {get} /browse/category?=  Get a single category 
  * @apiGroup Browse
  * @apiName get a Category
- * @apiVersion 0.1.0
+ * @apiVersion 0.2.0
  * 
  * @apiHeader {string} id   category Id
  * @apiHeaderExample {json} Request-Example:
@@ -175,7 +175,7 @@
  * @api {delete} /browse/category?=  delete a single category 
  * @apiGroup Browse
  * @apiName delete a category
- * @apiVersion 0.1.0
+ * @apiVersion 0.2.0
  * @apiHeader {string} id  category Id
  * @apiHeaderExample {json} Request-Example:
  *      id       5e85fd12bd68be36d86ca316
@@ -198,10 +198,10 @@
 
    /**---------------------------------------------------------------add a playlist to category --------------------------------------------------------------- */
 /**
- * @api {post} /browse/categoryPlaylist  delete a single category 
+ * @api {post} /browse/categoryPlaylist  add a playlist to category
  * @apiGroup Browse
  * @apiName add a playlist to category
- * @apiVersion 0.1.0
+ * @apiVersion 0.2.0
  * @apiHeader {string} id   category Id
  * @apiHeader {string} id1  playlist Id
  * 
@@ -236,10 +236,10 @@
 
   /**---------------------------------------------------------------remove a playlist to category --------------------------------------------------------------- */
 /**
- * @api {post} /browse/categoryPlaylist  delete a single category 
+ * @api {post} /browse/categoryPlaylist  remove a playlist to category
  * @apiGroup Browse
  * @apiName remove a playlist to category
- * @apiVersion 0.1.0
+ * @apiVersion 0.2.0
  * @apiHeader {string} id   category Id
  * @apiHeader {string} id1  playlist Id
  * 
