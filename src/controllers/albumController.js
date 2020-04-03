@@ -9,7 +9,7 @@ const Album = require(`./../models/album.js`);
 // }
 
 
-exports.getAlbumById() =async (req, res)=>
+exports.getAlbumById =async (req, res)=>
 {
     try {
         const album = await Album.findById(req.params.id);
