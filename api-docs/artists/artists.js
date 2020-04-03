@@ -71,7 +71,7 @@
  * @apiName getArtistRelatedArtists
  * @apiGroup Artist 
  * @apiDescription Get Spotify catalog information about artists similar to a given artist. Similarity is based on analysis of the Spotify community’s listening history.
- * @apiHeader {String} Authorization Required A valid access token from the Spotify Accounts service: see the Web API Authorization Guide for details.
+ * @apiHeader {String} Authorization Required A valid access token from the Spotify Accounts service
  * @apiParam {string} artistID
  * @apiSuccess {Object[]} artists
  * @apiSuccessExample Success-Example:
