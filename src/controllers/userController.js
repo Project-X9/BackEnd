@@ -211,7 +211,6 @@ exports.login = async (req,res) => {
 
 
   } catch (e) {
-    console.log(e);
     res.status(400).send(e);
 
   }
