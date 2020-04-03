@@ -10,7 +10,7 @@
  * @apiSuccess {String} PlayList_Name The playlist's name.
  * @apiSuccess {Number} PlayList_Owner_ID The user ID Number of the user who created the playlist.
  * @apiSuccess {String[]} Track_IDs The IDs of all the track in this playlist
- * @apiSuccess {String} Discription The playlist discription.
+ * @apiSuccess {String} Description The playlist discription.
  * @apiSuccess {String} PlayList_image_url A HTTP-based URL pointing to the icon image pf the palylist.
  * @apiSuccess {Boolean} Is_Private Indecation to if this playlist a private one ust for the user or it can be vied by other users.
  * @apiSuccess {String[]} Followers_IDs The IDs of all the followers of this playlist
