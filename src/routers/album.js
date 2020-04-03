@@ -16,3 +16,5 @@ router
 router
     .route("/:id/tracks")
     .get(AController.getAlbumTracks());
+
+module.exports = router;
