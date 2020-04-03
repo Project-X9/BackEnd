@@ -12,6 +12,7 @@ const Album = require(`./../models/album.js`);
 exports.getAlbumById =async (req, res)=>
 {
     try {
+        console.log(req);
         const album = await Album.findById(req.params.id);
         res.status(200).json({
           status: "success",

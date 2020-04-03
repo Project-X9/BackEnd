@@ -9,16 +9,16 @@ router
   .post(userController.createUser);
 
  router.route("/me")
- .get(auth,userController.getCurrentUser);
+ .get(userController.getCurrentUser);
 
 router
   .route("/:id")
-  .get(auth,userController.getUser)
-  .patch(auth,userController.updateUser)
-  .delete(auth,userController.deleteUser);
+  .get(userController.getUser)
+  .patch(userController.updateUser)
+  .delete(userController.deleteUser);
 
 router.route('/:id/tracks')
-.get(auth,userController.getTracks)
+.get(userController.getTracks)
 // .put(userController.addTracks);
 
 router.route('/:id/tracks/:trackId')
