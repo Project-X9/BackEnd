@@ -1,18 +1,17 @@
 // Object : Album
 // ------------------------------------------------------------------------------------------
-
+ //* @apiSuccess {String} Album_ID The Album's ID Number.
 /**
  * 
  * @apiDefine Album
  * @apiVersion 0.1.0
  * 
- //* @apiSuccess {String} Album_ID The Album's ID Number.
  * @apiSuccess {String} Album_Name The album's name.
  * @apiSuccess {String[]} Album_Track_IDs The IDs of all the track in this album.
  * @apiSuccess {String} Description The albums discription/info.
  * @apiSuccess {String} Album_image_url A HTTP-based URL pointing to the icon image pf the album.
  * @apiSuccess {String} Artist_Of_Album_ID The ID Number of the artist whom this album belongs to.
- * @apiSuccess {Srting[]} Albums_Genres The IDs of all the genres in this album.
+ * @apiSuccess {String[]} Albums_Genres The IDs of all the genres in this album.
  * @apiSuccessExample {json} Success-Response:
  *     {
  *      "ID":34500

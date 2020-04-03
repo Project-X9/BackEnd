@@ -9,3 +9,7 @@ mongoose.connect(process.env.MONGODB_URL, {
 }).catch((error) => {
     console.log('error connecting db');
 });
+
+
+
+module.exports = mongoose;
