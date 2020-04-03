@@ -17,12 +17,20 @@ router
   .patch(auth,userController.updateUser)
   .delete(auth,userController.deleteUser);
 
-
 router.route('/:id/tracks')
-.get(auth,userController.getTracks);
+.get(auth,userController.getTracks)
+// .put(userController.addTracks);
+
+router.route('/:id/tracks/:trackId')
+.delete(userController.deleteTracks);
+
 
 router.route('/:id/albums')
-.get(auth,userController.getAlbums);
+.get(userController.getAlbums)
+// .put(userController.addAlbums);
+
+router.route('/:id/tracks/:albumId')
+.delete(userController.deleteAlbums);
 
 // router.route("/:id/top/:type")
 // .get(userController.getTopTracksAndAlbums);
@@ -31,6 +39,6 @@ router.route('/:id/albums')
 //====================  (AUTHENTICATION) Login ======================
 
 router.route('/login')
-.post(auth,userController.login);
+.post(userController.login);
 
 module.exports = router;

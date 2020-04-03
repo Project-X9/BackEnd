@@ -1,4 +1,6 @@
 const User = require(`./../models/user.js`);
+const ObjectId = require("mongodb").ObjectId;
+
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -18,23 +20,37 @@ exports.getAllUsers = async (req, res) => {
     });
   }
 };
-
 exports.getUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
+    if (user) {
+      res.status(200).json({
+        status: "success",
+        data: {
+          user
+        }
+      });
+    }
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: "Id not found",
+      error: err.message
+    });
+  }
+  const user = await User.findById(req.params.id);
+  if (user) {
     res.status(200).json({
       status: "success",
       data: {
         user
       }
     });
-  } catch (err) {
-    console.log(err);
-    res.status(404).json({
-      status: "fail",
-      message: err.message
-    });
   }
+  res.status(404).json({
+    status: "fail",
+    message: "Id not found"
+  });
 };
 
 exports.createUser = async (req, res) => {
@@ -103,17 +119,43 @@ exports.getTracks = async (req, res) => {
     res.status(200).json({
       status: "success",
       data: {
-        tracks
+        user: tracks
       }
     });
   } catch (err) {
-    console.log(err);
     res.status(404).json({
       status: "fail",
       message: err.message
     });
   }
 };
+
+// exports.addTracks = async (req, res) => {
+//   try {
+    
+//   } catch (err) {
+//     res.status(404).json({
+//       status: "fail",
+//       message: err.message
+//     });
+//   }
+// }
+
+
+exports.deleteTracks = async (req, res) => {
+  try {
+    await User.findByIdAndUpdate(req.params.id, {$pullAll: {tracks: req,params, trackId}});
+
+    res.status(204).json({
+      status: 'success'
+    })
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message
+    });
+  }
+}
 
 exports.getAlbums = async (req, res) => {
   try {
@@ -133,38 +175,43 @@ exports.getAlbums = async (req, res) => {
   }
 };
 
-
-// exports.getTopTracksAndAlbums = async (req, res) => {
+// exports.addAlbums = async (req, res) => {
 //   try {
-//     const top = await User.findById(req.params.id, `${req.params.type}`);
-
-//     res.status(200).json({
-//       status: 'success',
-//       type: req.params.type,
-//       data: {
-//         top
-//       }
-//     })
+    
 //   } catch (err) {
 //     res.status(404).json({
-//       status: 'fail',
-//       message: 'Not Found'
-//     })
+//       status: "fail",
+//       message: err.message
+//     });
 //   }
-// };
+// }
 
+
+exports.deleteAlbums = async (req, res) => {
+  try {
+    await User.findByIdAndUpdate(req.params.id, {$pullAll: {albums: req,params, albumId}});
+
+    res.status(204).json({
+      status: 'success'
+    })
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message
+    });
+  }
+}
 
 //============================== (AUTHENTICATION) =========================
-exports.login = async (req,res) => {
+exports.login = async (req, res) => {
   try {
-    const user = await User.findByCredentials(req.body.email, req.body.password);
-    const token = await user.generateAuthToken();
-    res.send({user, token}); // we will just send json with user info untill its implemented to direct user to his homepage.
-
-
+    const user = await User.findByCredentials(
+      req.body.email,
+      req.body.password
+    );
+    res.send(user); // we will just send json with user info untill its implemented to direct user to his homepage.
   } catch (e) {
-    console.log(e);
     res.status(400).send(e);
 
   }
-}
+};
