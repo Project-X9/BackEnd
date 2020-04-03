@@ -6,18 +6,18 @@
  * @apiDescription Get Spotify catalog information for a single artist identified by their unique Spotify ID.
  * @apiParam {string} artistID 
  * @apiSuccess {Object} artist
- * @apiSuccess (artist) {String} Bio 
- * @apiSuccess (artist) {String[]} followers
- * @apiSuccess (artist) {CategoryId[]} genres
- * @apiSuccess (artist) {TrackId[]} tracks
- * @apiSuccess (artist) {String} image
- * @apiSuccess (artist) {String} name
- * @apiSuccess (artist) {ArtistId[]} relatedArtists
- * @apiSuccess (artist) {String} email
- * @apiSuccess (artist) {String} password
- * @apiSuccess (artist) {Date} dateAdded
+ * @apiSuccess (artist object) {String} Bio 
+ * @apiSuccess (artist object) {String[]} followers
+ * @apiSuccess (artist object) {CategoryId[]} genres
+ * @apiSuccess (artist object) {TrackId[]} tracks
+ * @apiSuccess (artist object) {String} image
+ * @apiSuccess (artist object) {String} name
+ * @apiSuccess (artist object) {ArtistId[]} relatedArtists
+ * @apiSuccess (artist object) {String} email
+ * @apiSuccess (artist object) {String} password
+ * @apiSuccess (artist object) {Date} dateAdded
  * 
- * @apiHeader {String} Authorization Required  A valid access token from the Spotify Accounts service: see the Web API Authorization Guide for details.
+ * @apiHeader {String} Authorization Required  A valid access token from the Spotify Accounts service
  * @apiSuccessExample
  *      HTTP/1.1 200 OK
  *        
@@ -39,8 +39,7 @@
  *              album-object
  *          }
  * 
- * @apiHeader {String} Authorization Required  A valid access token from the Spotify Accounts service: see the Web API Authorization Guide for details.
-
+ * @apiHeader {String} Authorization Required  A valid access token from the Spotify Accounts service
  */
 //function getArtistAlbums()
 //{

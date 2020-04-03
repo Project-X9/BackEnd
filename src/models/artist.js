@@ -5,7 +5,7 @@ const artistSchema = new mongoose.Schema({
     followers : [String],
     genres :[{type: mongoose.Schema.Types.ObjectId,ref:'Category'}],
     tracks: [{type: mongoose.Schema.Types.ObjectId,ref:'Track'}],
-     image: String,
+    image: String,
     name: String,
     relatedArtists: [{type: mongoose.Schema.Types.ObjectId,ref:'Artist'}],
     email:String,
