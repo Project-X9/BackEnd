@@ -7,7 +7,7 @@
  * @apiName getTrack 	Get a Track
  * @apiDescription Get Spotify catalog information for a single track identified by its unique Spotify ID.
  * @apiHeader {String} Authorization (Required.) A valid access token from the Spotify Accounts service
- * @apiParam {string} id	The Spotify ID for the track.
+ * @apiParam {string} trackID	The Spotify ID for the track.
  * @apiSuccess (Track object) {ArtistId[]} artists
  * @apiSuccess (Track object) {String} description
  * @apiSuccess (Track object) {String[]} likers
