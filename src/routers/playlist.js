@@ -11,7 +11,7 @@ router.route("/:id")
 
 router
   .route("/")
-  .post(playlistController.createPlaylist);
+  .post(PController.createPlaylist);
 
 
 
