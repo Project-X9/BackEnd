@@ -6,15 +6,15 @@ const AController = require(`./../controllers/albumController`);
 
 // router
 //     .route("/")
-//     .get(AController.getAllAlbums());
+//     .get(AController.getAllAlbums);
 
 
 router
     .route("/:id")
-    .get(AController.getAlbumById());
+    .get(AController.getAlbumById);
 
 router
     .route("/:id/tracks")
-    .get(AController.getAlbumTracks());
+    .get(AController.getAlbumTracks);
 
 module.exports = router;
