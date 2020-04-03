@@ -1,3 +1,6 @@
+//--------------------------------------------------Get a track-------------------------------------------------------------------------------------
+
+
 /**
  * @api {get} /tracks/{id}
  * @apiGroup Tracks
@@ -5,7 +8,14 @@
  * @apiDescription Get Spotify catalog information for a single track identified by its unique Spotify ID.
  * @apiHeader {String} Authorization (Required.) A valid access token from the Spotify Accounts service: see the Web API Authorization Guide for details.
  * @apiParam {string} id	The Spotify ID for the track.
- * @apiParam (Query parameters) {market} (Optional.) An ISO 3166-1 alpha-2 country code or the string from_token. Provide this parameter if you want to apply Track Relinking.
+ * @apiSuccess (Track) {ArtistId[]} artists
+ * @apiSuccess (Track) {String} description
+ * @apiSuccess (Track) {String []} likers
+ * @apiSuccess (Track) {String} url
+ * @apiSuccess (Track) {String} name
+ * @apiSuccess (Track) {Number} playcount
+ * @apiSuccess (Track) {Number} duration
+ * @apiSuccess (Track) {CategoryId[]} genres
  * @apiSuccess {Object} track
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -13,7 +23,7 @@
  *              "track"
  *          }
  */
-//-----------------------------------------------------------
+//------------------------------------------Get Several Tracks -----------------------------------------------------------------------------------------
 /**
  * @api {get} /tracks
  * @apiGroup Tracks
