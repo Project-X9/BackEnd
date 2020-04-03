@@ -122,7 +122,7 @@ exports.getPlaylistTracks  = async (req, res) => {
 
   //                                    ----UPDATE :----
 
-  exports.updatePlaylist() = async (req, res) => {      //for anything except adding & deleting tracks
+  exports.updatePlaylist = async (req, res) => {      //for anything except adding & deleting tracks
     try {
       const playlist = await Playlist.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
@@ -145,7 +145,7 @@ exports.getPlaylistTracks  = async (req, res) => {
 
 
 
-  exports.addPlaylistTrack()= async (req, res) =>
+  exports.addPlaylistTrack= async (req, res) =>
   {
     try {
       const playlist = await Playlist.findByIdAndUpdate(req.query.id,{ $push:{trackIds: req.query.id1} });
