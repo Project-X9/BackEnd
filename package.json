@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": ".\\node_modules\\.bin\\env-cmd -f .\\config\\dev.env nodemon src/index.js",
-    "test": ".\\node_modules\\.bin\\env-cmd -f .\\config\\test.env npx jasmine"
+    "test": ".\\node_modules\\.bin\\env-cmd -f .\\config\\test.env npx jasmine --random=false"
   },
   "repository": {
     "type": "git",
@@ -26,7 +26,8 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.5",
-    "mongoose": "^5.9.4"
+    "mongoose": "^5.9.4",
+    "validator": "^13.0.0"
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",

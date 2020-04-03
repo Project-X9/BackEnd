@@ -1,29 +1,26 @@
 // Object : Album
 // ------------------------------------------------------------------------------------------
-
+ //* @apiSuccess {String} Album_ID The Album's ID Number.
 /**
  * 
  * @apiDefine Album
  * @apiVersion 0.1.0
  * 
- * @apiSuccess {Number} Album_ID The Album's ID Number.
  * @apiSuccess {String} Album_Name The album's name.
- * @apiSuccess {Number[]} Album_Track_IDs The IDs of all the track in this album.
- * @apiSuccess {String} Discription The albums discription/info.
+ * @apiSuccess {String[]} Album_Track_IDs The IDs of all the track in this album.
+ * @apiSuccess {String} Description The albums discription/info.
  * @apiSuccess {String} Album_image_url A HTTP-based URL pointing to the icon image pf the album.
- * @apiSuccess {Number} Artist_Of_Album_ID The ID Number of the artist whom this album belongs to.
- * @apiSuccess {Number[]} Albums_Genres The IDs of all the genres in this album.
- * @apiHeader  {Number} User_Access_ ID The users id to check if he is allowed to get this album or not
- *
- *  @apiSuccessExample {json} Success-Response:
+ * @apiSuccess {String} Artist_Of_Album_ID The ID Number of the artist whom this album belongs to.
+ * @apiSuccess {String[]} Albums_Genres The IDs of all the genres in this album.
+ * @apiSuccessExample {json} Success-Response:
  *     {
  *      "ID":34500
  *      "Album_Name": "Sahran",
- *      "Track_IDs":[256321242121 , 3343726443],
+ *      "Track_IDs":[2vf42121 , 33437zx],
  *      "Discription": "Amr Diabs latest Album . Relesed by Feb 2020",
- *      "Album_image_url":"http://a2.twimg.com/profile_background_images/229557229/Ennovateapi-bg.png",
- *      "Artist_Of_Album_ID": 34889056,
- *      "Genres": [14 , 22 , 5]
+ *      "Album_image_url":"",
+ *      "Artist_Of_Album_ID": 3488wqx56,
+ *      "Genres": [1Y4 , R22 , 5]
  *     }
  *  
  */
@@ -52,17 +49,29 @@
 *
 */
 
-// Get Album :
+// Get Album BY ID:
 /**
- * @api {get} /Album/Album_ID Album ID
+ * @api {get} /Album/Album_ID   Get Album
  * @apiVersion 0.1.0
  * @apiName getAlbum
  * @apiGroup Album
- * @apiPermission private
- * @apiSampleRequest localhost:3000/Album/Album_ID.json
+ * @apiDescription Gets an album using its specific ID.
  *
- * @apiDescription Get an album.
+ * @apiParam {String} PlayList_ID  The Spotify ID of the playlist.
  * 
+ * @apiHeader {String} Authorization  (required) A valid user access token.The access token must have been issued on behalf of the current user. Getting details of the artists or users the current user follows requires authorization of the user-follow-read scope
+ * 
+ * @apiSuccessExample {Object} Success-Response:
+ * HTTP/1.1 200 OK
+ * {
+ *     "Album_ID":1234RY5
+ *     "Album_Name": "...",
+ *     "Discription": "...",     
+ *      ...
+ * }
+ * 
+ * @apiUse Error404
+ * @apiUse Error400
  * @apiError AccessAlbumDenied If the user tries to access an album he doesn' have permision for .
  * @apiErrorExample Response (example):
  *     HTTP/1.1 403 Forbidden
@@ -72,77 +81,52 @@
  *
  *
  */
-function getAlbum() {
-    return;
-  }
 
-  
-// Get Album :
+// GET ALL ALBUM TRACKS :
 /**
- * @api {get} /Album/Album_ID Album ID
+ * @api {get} /{Album_ID}/tracks   Returns an array with the IDs of all the tracks in the album
  * @apiVersion 0.1.0
- * @apiName getAlbum
+ * @apiName Get Album tracks
  * @apiGroup Album
- * @apiPermission private
- * @apiSampleRequest localhost:3000/Album/Album_ID.json
- *
- * @apiDescription Get an album.
  * 
- * @apiError AccessAlbumDenied If the user tries to access an album he doesn' have permision for .
- * @apiErrorExample Response (example):
- *     HTTP/1.1 403 Forbidden
+ *
+ * @apiParam {String} Album_ID  The Spotify ID of the album.
+ * 
+ * @apiHeader {String} Authorization  (required) A valid user access token.The access token must have been issued on behalf of the current user. Getting details of the artists or users the current user follows requires authorization of the user-follow-read scope
+ * 
+ * @apiSuccess {Object} Tracks   returns simplified track objects wrapped in a paging object in JSON format.
+ * 
+ * @apiSuccessExample Success-Response:
+ * HTTP/1.1 200 OK
  *     {
- *       "error": "Authorization bearer "
+ *          name : "Honey",
+ *          descriptiom : "A 2016 pop track realesed as a part of the top selling ablum of that year by Wegz ",
+ *        
  *     }
  *
- *
+ * @apiUse Error404
+ * @apiUse Error400
  */
-function getAlbum() {
-    return;
-  }
 
-  
-// Get Album Tracks :
-/**
- * @api {get} /Album/Album_Track_IDs Album Track IDs
- * @apiVersion 0.1.0
- * @apiName getAlbumTracks
- * @apiGroup Album
- * @apiPermission private
- * @apiSampleRequest localhost:3000/Album/Album_Track_IDs.json
- *
- * @apiDescription Get album tracks.
- * 
- * @apiError AccessDenied If the user tries to access an album he doesn't have permision for .
- * @apiErrorExample Response (example):
- *     HTTP/1.1 403 Forbidden
- *     {
- *       "error": "Authorization bearer "
- *     }
- *
- *
- */
-function getAlbumTracks() {
-    return;
-  }
 
 
 // Get Multiple Album :
 /**
- * @api {get} /Album Albums IDs
+ * @api {get} /Album 
  * @apiVersion 0.1.0
  * @apiName getAlbums
  * @apiGroup Album
- * @apiPermission private
- * @apiSampleRequest localhost:3000/Album.json
  *
- * @apiDescription Get albums.
+ * @apiDescription Get Spotify catalog information for multiple albums identified by their Spotify IDs.
  * 
+ * @apiHeader {String} Authorization  (required) A valid user access token.The access token must have been issued on behalf of the current user. Getting details of the artists or users the current user follows requires authorization of the user-follow-read scope
  * 
+ * @apiSuccess (200) {Object} Albums   the response body contains an object whose key is "albums" and whose value is an array of album objects in JSON format.
+ * @apiUse Error400
  */
-function getAlbums() {
-    return;
-  }
+
+
+
 
 
 
