@@ -28,7 +28,7 @@ exports.getAlbumById() =async (req, res)=>
       }
 }
 
-exports.getPlaylistTracks  = async (req, res) => {    //api done
+exports.getAlbumTracks  = async (req, res) => {    //api done
     try {
       const albumTracks = await Album.findById(req.params.id, "trackIds");
       res.status(200).json({
