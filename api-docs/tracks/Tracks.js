@@ -8,14 +8,15 @@
  * @apiDescription Get Spotify catalog information for a single track identified by its unique Spotify ID.
  * @apiHeader {String} Authorization (Required.) A valid access token from the Spotify Accounts service: see the Web API Authorization Guide for details.
  * @apiParam {string} id	The Spotify ID for the track.
- * @apiSuccess (Track) {ArtistId[]} artists
- * @apiSuccess (Track) {String} description
- * @apiSuccess (Track) {String[]} likers
- * @apiSuccess (Track) {String} url
- * @apiSuccess (Track) {String} name
- * @apiSuccess (Track) {Number} playcount
- * @apiSuccess (Track) {Number} duration
- * @apiSuccess (Track) {CategoryId[]} genres
+ * @apiSuccess (Track object) {ArtistId[]} artists
+ * @apiSuccess (Track object) {String} description
+ * @apiSuccess (Track object) {String[]} likers
+ * @apiSuccess (Track object) {String} url
+ * @apiSuccess (Track object) {String} imageUrl
+ * @apiSuccess (Track object) {String} name
+ * @apiSuccess (Track object) {Number} playcount
+ * @apiSuccess (Track object) {Number} duration
+ * @apiSuccess (Track object) {CategoryId[]} genres
  * @apiSuccess {Object} track
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
