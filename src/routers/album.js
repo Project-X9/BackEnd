@@ -4,9 +4,9 @@ const router = new express.Router();
 const AController = require(`./../controllers/albumController`); 
 
 
-router
-    .route("/")
-    .get(AController.getAllAlbums());
+// router
+//     .route("/")
+//     .get(AController.getAllAlbums());
 
 
 router
