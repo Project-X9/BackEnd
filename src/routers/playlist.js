@@ -14,7 +14,9 @@ router
   .post(PController.createPlaylist);
 
 
-
+router
+    .route("/playlists")
+    .get(PController.getAllPlaylists);
 
 router
     .route("/:id/tracks")                          
