@@ -82,6 +82,26 @@ exports.getPlaylistTracks  = async (req, res) => {
 //     }
 //     }; 
 
+exports.getAllPlaylists= async(req, res) =>
+{
+  try 
+  {
+    const playlists = await Playlist.find();
+    res.status(200).json({
+      status: "success",
+      data: {playlists}
+    });
+  } catch (err)
+  {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message
+    });
+  }
+
+}
+
 
 //                                    ----DELETE :----
 
