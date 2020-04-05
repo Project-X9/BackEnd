@@ -51,10 +51,9 @@
  * @api {get} /artists/{id}/top-tracks 
  * @apiName getArtistTopTracks 
  * @apiGroup Artist
- * @apiDescription Get Spotify catalog information about an artist’s top tracks by country.
+ * @apiDescription Get Spotify catalog information about an artist’s top tracks.
  * @apiHeader {String} Authorization 	(Required.) A valid access token from the Spotify Accounts service
  * @apiParam {string} artistID
- * @apiParam (Query Parameters) {string} country Required. An ISO 3166-1 alpha-2 country code or the string from_token.
  * @apiSuccess {Object[]} tracks
  * @apiSuccessExample 
  *  HTTP/1.1 200 OK 
@@ -73,7 +72,7 @@
  * @apiDescription Get Spotify catalog information about artists similar to a given artist. Similarity is based on analysis of the Spotify community’s listening history.
  * @apiHeader {String} Authorization Required A valid access token from the Spotify Accounts service
  * @apiParam {string} artistID
- * @apiSuccess {Object[]} artists
+ * @apiSuccess {string[]} artists ids
  * @apiSuccessExample Success-Example:
  *  HTTP/1.1 200 OK 
  * 

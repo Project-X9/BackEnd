@@ -6,25 +6,25 @@
  * @apiDefine PlayList
  * @apiVersion 0.1.0
  * 
- * @apiSuccess {Number} PlayList_ID The playlist ID Number.
- * @apiSuccess {String} PlayList_Name The playlist's name.
- * @apiSuccess {Number} PlayList_Owner_ID The user ID Number of the user who created the playlist.
- * @apiSuccess {String[]} Track_IDs The IDs of all the track in this playlist
- * @apiSuccess {String} Description The playlist discription.
- * @apiSuccess {String} PlayList_image_url A HTTP-based URL pointing to the icon image pf the palylist.
+ * @apiSuccess {String} _id The playlist ID Number.
+ * @apiSuccess {String} name The playlist's name.
+ * @apiSuccess {String} author The user ID Number of the user who created the playlist.
+ * @apiSuccess {String[]} trackIds The IDs of all the track in this playlist
+ * @apiSuccess {String} description The playlist description.
+ * @apiSuccess {String} image A HTTP-based URL pointing to the icon image pf the palylist.
  * @apiSuccess {Boolean} Is_Private Indecation to if this playlist a private one ust for the user or it can be vied by other users.
- * @apiSuccess {String[]} Followers_IDs The IDs of all the followers of this playlist
+ * @apiSuccess {String[]} followers The IDs of all the followers of this playlist
  * 
  *  @apiSuccessExample {json} Success-Response:
  *     {
- *      "PlayList_ID":12345
- *      "PlayList_Name": "Todays Hits",
- *      "Track_IDs":[2563A242121 , 33FG726443],
- *      "Discription": "A playlist that contains all the new hits you would like to hear",
- *      "PlayList_image_url":"https://images.squarespace-cdn.com/content/v1/587d4a02bebafb893ba07d90/1484886557050-V261JTTHHGX0O3KHW5OX/ke17ZwdGBToddI8pDm48kGfiFqkITS6axXxhYYUCnlRZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpxQ1ibo-zdhORxWnJtmNCajDe36aQmu-4Z4SFOss0oowgxUaachD66r8Ra2gwuBSqM/ui-ux-playlist-gen-icon.png",
+ *      "_id":12345
+ *      "name": "Todays Hits",
+ *      "tracksIds":[2563A242121 , 33FG726443],
+ *      "description": "A playlist that contains all the new hits you would like to hear",
+ *      "image":"https://images.squarespace-cdn.com/content/v1/587d4a02bebafb893ba07d90/1484886557050-V261JTTHHGX0O3KHW5OX/ke17ZwdGBToddI8pDm48kGfiFqkITS6axXxhYYUCnlRZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpxQ1ibo-zdhORxWnJtmNCajDe36aQmu-4Z4SFOss0oowgxUaachD66r8Ra2gwuBSqM/ui-ux-playlist-gen-icon.png",
  *      "Is_Private":false,
- *      "PlayList_Owner_ID": 3RT9056,
- *      "Followers_IDs": [385437856CX3 , 93QT832948]
+ *      "author": 3RT9056,
+ *      "followers": [385437856CX3 , 93QT832948]
  *     }
  *  
  */
@@ -69,7 +69,7 @@
 
 // CREATE PLAYLIST :
 /**
- * @api {post} /me/PlayList To creat a new playlist
+ * @api {post} /playlist To creat a new playlist
  * @apiVersion 0.1.0
  * @apiName Create PlayList
  * @apiGroup PlayList
@@ -81,9 +81,9 @@
  * @apiSuccessExample {Object} Success-Response:
  * HTTP/1.1 OK
  * {
- *     "PlayList_ID":1234RY5
- *     "PlayList_Name": "Gym Hits",
- *     "Discription": "A playlist that contains all the new hits you would like to hear",     
+ *     "_id":1234RY5
+ *     "name": "Gym Hits",
+ *     "description": "A playlist that contains all the new hits you would like to hear",     
  *      ...
  * }
  * 
@@ -110,7 +110,7 @@
  * HTTP/1.1 200 OK
  *     {
  *         description : "A 2016 pop track realesed as a part of the top selling ablum of that year by Wegz ",
- *         likers : [HY668WI9, YPQ0038Z],
+ *         followers : [HY668WI9, YPQ0038Z],
  *         name : "Honey",
  *          ...
  *     }
@@ -135,9 +135,9 @@
  * @apiSuccessExample {Object} Success-Response:
  * HTTP/1.1 OK
  * {
- *     "PlayList_ID":1234RY5
- *     "PlayList_Name": "Gym Hits",
- *     "Discription": "A playlist that contains all the new hits you would like to hear",     
+ *     "_id":1234RY5
+ *     "name": "Gym Hits",
+ *     "description": "A playlist that contains all the new hits you would like to hear",     
  *      ...
  * }
  * 

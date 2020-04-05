@@ -6,21 +6,21 @@
  * @apiDefine Album
  * @apiVersion 0.1.0
  * 
- * @apiSuccess {String} Album_Name The album's name.
- * @apiSuccess {String[]} Album_Track_IDs The IDs of all the track in this album.
- * @apiSuccess {String} Description The albums discription/info.
- * @apiSuccess {String} Album_image_url A HTTP-based URL pointing to the icon image pf the album.
- * @apiSuccess {String} Artist_Of_Album_ID The ID Number of the artist whom this album belongs to.
- * @apiSuccess {String[]} Albums_Genres The IDs of all the genres in this album.
+ * @apiSuccess {String} name The album's name.
+ * @apiSuccess {String[]} trackIds The IDs of all the track in this album.
+ * @apiSuccess {String} description The albums description/info.
+ * @apiSuccess {String} image A HTTP-based URL pointing to the icon image pf the album.
+ * @apiSuccess {String} artist The ID Number of the artist whom this album belongs to.
+ * @apiSuccess {String[]} genres The IDs of all the genres in this album.
  * @apiSuccessExample {json} Success-Response:
  *     {
- *      "ID":34500
- *      "Album_Name": "Sahran",
- *      "Track_IDs":[2vf42121 , 33437zx],
- *      "Discription": "Amr Diabs latest Album . Relesed by Feb 2020",
- *      "Album_image_url":"",
- *      "Artist_Of_Album_ID": 3488wqx56,
- *      "Genres": [1Y4 , R22 , 5]
+ *      "_id":34500
+ *      "name": "Sahran",
+ *      "trackIds":[2vf42121 , 33437zx],
+ *      "description": "Amr Diabs latest Album . Relesed by Feb 2020",
+ *      "image":"",
+ *      "artist": 3488wqx56,
+ *      "genres": [1Y4 , R22 , 5]
  *     }
  *  
  */
@@ -51,7 +51,7 @@
 
 // Get Album BY ID:
 /**
- * @api {get} /Album/Album_ID   Get Album
+ * @api {get} /album/Album_ID   Get Album
  * @apiVersion 0.1.0
  * @apiName getAlbum
  * @apiGroup Album
@@ -64,9 +64,9 @@
  * @apiSuccessExample {Object} Success-Response:
  * HTTP/1.1 200 OK
  * {
- *     "Album_ID":1234RY5
- *     "Album_Name": "...",
- *     "Discription": "...",     
+ *     "_id":1234RY5
+ *     "name": "...",
+ *     "description": "...",     
  *      ...
  * }
  * 
@@ -90,11 +90,11 @@
  * @apiGroup Album
  * 
  *
- * @apiParam {String} Album_ID  The Spotify ID of the album.
+ * @apiParam {String} _id  The Spotify ID of the album.
  * 
  * @apiHeader {String} Authorization  (required) A valid user access token.The access token must have been issued on behalf of the current user. Getting details of the artists or users the current user follows requires authorization of the user-follow-read scope
  * 
- * @apiSuccess {Object} Tracks   returns simplified track objects wrapped in a paging object in JSON format.
+ * @apiSuccess {Object} Tracks   returns array of tracks id.
  * 
  * @apiSuccessExample Success-Response:
  * HTTP/1.1 200 OK

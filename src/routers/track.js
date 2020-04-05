@@ -3,12 +3,12 @@ const trackController = require(`./../controllers/trackController`);
 const router = new express.Router();
 
 router
-.route("/tracks")
+.route("/")
 .get(trackController.getTracks);
 
 
 router
-.route("/tracks/:id")
+.route("/:id")
 .get(trackController.getTrack)
 .delete(trackController.deleteTrack);
 
