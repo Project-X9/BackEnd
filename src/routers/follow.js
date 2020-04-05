@@ -15,7 +15,7 @@ router
     .route("/playlist")
     .patch(followController.likePlaylist)
     .delete(followController.dislikePlaylist)
-    //.get(followController.getAllplaylist)
+    .get(followController.getAllplaylist)
 
 router
     .route("/album")

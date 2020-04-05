@@ -27,7 +27,7 @@ exports.createCategory = async (req, res) => {
 //update a category
 exports.updateCategory = async (req, res) => {
   try {
-    const category = await Category.findByIdAndUpdate(req.query.id, req.body);
+    const category = await Category.findByIdAndUpdate(req.params.id, req.body);
     res.status(200).json({
       status: "success",
       data: {
@@ -70,7 +70,7 @@ exports.getAllCategories = async (req, res) => {
 exports.getCategoryById = async (req, res) => {
   try 
   {
-    const categ=  await Category.findById(req.query.id);
+    const categ=  await Category.findById(req.params.id);
     res.status(200).json({
       status: "success",
       data: {categ}
@@ -90,7 +90,7 @@ exports.getCategoryById = async (req, res) => {
 //delete category by id
 exports.deleteCategoryById = async (req, res) => {
   try {
-    await Category.findByIdAndDelete(req.query.id);
+    await Category.findByIdAndDelete(req.params.id);
     res.status(204).json({
       status: "success",
       data: null
@@ -109,14 +109,14 @@ exports.deleteCategoryById = async (req, res) => {
   /*add playlist*/
    exports.addPlaylist = async (req, res) => {
     try {
-      const IN_Category= await Category.findById(req.query.id);
+      const IN_Category= await Category.findById(req.params.id);
        var count =0;
        for(var i = 0; i < IN_Category.playlists.length; i++){
-         if( req.query.id1 === IN_Category.playlists[i]){ count++; } }
+         if( req.body.id1 === IN_Category.playlists[i]){ count++; } }
 
       if(count!==0){ return res.status(403).json({ data : "already exists"})}
       
-      await Category.findByIdAndUpdate(req.query.id,{ $push:{playlists: req.query.id1} });
+      await Category.findByIdAndUpdate(req.params.id,{ $push:{playlists: req.body.id1} });
       res.status(200).json({
         status: "success"
       });
@@ -132,13 +132,13 @@ exports.deleteCategoryById = async (req, res) => {
   /*remove playlist*/
   exports.removePlaylist = async (req, res) => {
     try { 
-      const IN_Category= await Category.findById(req.query.id);
+      const IN_Category= await Category.findById(req.params.id);
       var count =0;
-      for(var i = 0; i < IN_Category.playlists.length; i++){if( req.query.id1 === IN_Category.playlists[i]){ count++;} }
+      for(var i = 0; i < IN_Category.playlists.length; i++){if( req.body.id1 === IN_Category.playlists[i]){ count++;} }
 
       if(count===0) { return res.status(403).json({ data : "invalid deletion"}) }
       
-      await Category.findByIdAndUpdate(req.query.id,{ $pull:{artists: req.query.id1} });
+      await Category.findByIdAndUpdate(req.params.id,{ $pull:{playlists: req.body.id1} });
       res.status(200).json({
         status: "success"
       });
