@@ -11,12 +11,10 @@ router.route("/:id")
 
 router
   .route("/")
-  .post(PController.createPlaylist);
+  .post(PController.createPlaylist)
+  .get(PController.getAllPlaylists);
 
 
-router
-    .route("/playlists")
-    .get(PController.getAllPlaylists);
 
 router
     .route("/:id/tracks")                          
