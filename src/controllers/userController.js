@@ -22,7 +22,7 @@ exports.getAllUsers = async (req, res) => {
 };
 exports.getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).populate('playlists');
+    const user = await User.findById(req.params.id).populate(['playlists', 'albums', 'artists']);
     if (user) {
       res.status(200).json({
         status: "success",

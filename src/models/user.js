@@ -37,8 +37,7 @@ userSchema = mongoose.Schema({
     followers:[String],
     following:[String],
     tracks:[String],
-    albums:[String],
-    artists:[String],
+    
 
 //==============AUTH======================
     tokens: [{
