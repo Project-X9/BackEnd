@@ -46,11 +46,11 @@ exports.getPlaylistById  = async (req, res) => {
 
 exports.getPlaylistTracks  = async (req, res) => {    
   try {
-    const playlistTracks = await Playlist.findById(req.params.id, "trackIds");
+    const playlistTracks = await Playlist.findById(req.params.id, "trackIds").populate('trackIds');
     res.status(200).json({
       status: "success",
       data: {
-        trackIds                 // should i return tracks or track ids ?
+        playlistTracks                 // should i return tracks or track ids ?
       }
     });
   } catch (err) {
