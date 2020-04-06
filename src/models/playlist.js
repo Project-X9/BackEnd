@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const playlistSchema = mongoose.Schema({
     name: String,
-    author: String,
+    author: {type: mongoose.Schema.Types.ObjectId,ref:'Artist'},
     artists: [{type: mongoose.Schema.Types.ObjectId,ref:'Artist'}],
     tracks: [{type: mongoose.Schema.Types.ObjectId,ref:'Track'}],
     description: String,
