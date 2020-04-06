@@ -72,12 +72,23 @@ exports.createUser = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
+  const updates = Object.keys(req.body);
+  console.log(updates);
+  const allowedUpdates = ['name', 'email', 'password', 'age'];
+  const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
   try {
+    if(!isValidOperation) {
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Bad Request'
+      });  
+    }
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
     });
-    res.status(200).json({
+    user.save();
+    return res.status(200).json({
       status: "success",
       data: {
         user
