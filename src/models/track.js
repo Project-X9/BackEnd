@@ -10,7 +10,8 @@ const trackSchema = new mongoose.Schema({
     url : String,
     duration : Number,
     genres: [{type: mongoose.Schema.Types.ObjectId,ref:'Category'}],
-    imageUrl : String
+    imageUrl : String,
+    album: {type: mongoose.Schema.Types.ObjectId, ref: 'Album'}
 });
 
 const Track = mongoose.model('Track',trackSchema);
