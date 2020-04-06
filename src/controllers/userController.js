@@ -38,19 +38,6 @@ exports.getUser = async (req, res) => {
       error: err.message
     });
   }
-  const user = await User.findById(req.params.id);
-  if (user) {
-    res.status(200).json({
-      status: "success",
-      data: {
-        user
-      }
-    });
-  }
-  res.status(404).json({
-    status: "fail",
-    message: "Id not found"
-  });
 };
 
 exports.createUser = async (req, res) => {
