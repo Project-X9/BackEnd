@@ -13,7 +13,7 @@ exports.getAlbumById =async (req, res)=>
 {
     try {
         console.log(req);
-        const album = await Album.findById(req.params.id);
+        const album = await Album.findById(req.params.id).populate([{path: 'followers'},{path: 'artists'},{path: 'author'},{path: 'tracks', populate: ['artists','genres']}]);;
         res.status(200).json({
           status: "success",
           data: {

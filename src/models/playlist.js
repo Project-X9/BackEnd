@@ -4,7 +4,7 @@ const playlistSchema = mongoose.Schema({
     name: String,
     author: String,
     artists: [{type: mongoose.Schema.Types.ObjectId,ref:'Artist'}],
-    trackIds: [{type: mongoose.Schema.Types.ObjectId,ref:'Track'}],
+    tracks: [{type: mongoose.Schema.Types.ObjectId,ref:'Track'}],
     description: String,
     image: String,
     dateCreated:{
