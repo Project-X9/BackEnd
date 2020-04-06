@@ -36,7 +36,11 @@ exports.getUser = async (req, res) => {
     path: 'artists'
   },
 {
-  path: 'tracks'
+  path: 'tracks',
+  populate: {
+
+    path: 'artists'
+  }
 }]); 
     if (user) {
       res.status(200).json({

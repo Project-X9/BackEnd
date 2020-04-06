@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const artistSchema = new mongoose.Schema({
     Bio : String,
-    followers : [{type: mongoose.Schema.Types.ObjectId,ref:'Users'}],
+    followers : [{type: mongoose.Schema.Types.ObjectId,ref:'User'}],
     genres :[{type: mongoose.Schema.Types.ObjectId,ref:'Category'}],
     tracks: [{type: mongoose.Schema.Types.ObjectId,ref:'Track'}],
     image: String,
