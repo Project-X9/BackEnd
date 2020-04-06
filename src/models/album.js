@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const albumSchema = mongoose.Schema({
     name: String,
-    author: String,
+    author: { type: mongoose.Schema.Types.ObjectId,ref:'Artist'},
     artists: [String],
     trackIds: [String],
     description: String,

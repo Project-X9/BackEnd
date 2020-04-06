@@ -36,7 +36,6 @@ userSchema = mongoose.Schema({
     previouslyPremium: Boolean,
     followers:[String],
     following:[String],
-    tracks:[String],
     
 
 //==============AUTH======================
