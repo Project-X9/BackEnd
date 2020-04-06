@@ -80,7 +80,7 @@ exports.createUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   const updates = Object.keys(req.body);
   console.log(updates);
-  const allowedUpdates = ['name', 'email', 'password', 'age'];
+  const allowedUpdates = ['name', 'email', 'password', 'age', 'premium' , 'previouslyPremium'];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
   try {
     if(!isValidOperation) {
