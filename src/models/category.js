@@ -17,7 +17,7 @@ categorySchema = mongoose.Schema({
         minlength:5,
         maxlength:255
     },
-    playlists:[String]
+    playlists:[{type: mongoose.Schema.Types.ObjectId,ref:'Playlist'}]
 });
 
 const Category = mongoose.model('Category',categorySchema);

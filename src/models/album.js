@@ -3,15 +3,15 @@ const mongoose = require('mongoose');
 const albumSchema = mongoose.Schema({
     name: String,
     author: { type: mongoose.Schema.Types.ObjectId,ref:'Artist'},
-    artists: [String],
-    trackIds: [String],
+    artists: [{type: mongoose.Schema.Types.ObjectId,ref:'Artist'}],
+    trackIds: [{type: mongoose.Schema.Types.ObjectId,ref:'Track'}],
     description: String,
     image: String,
     dateCreated:{
         type: Date,
         default: Date.now()
     },
-    genres: [String]
+    genres: [{type: mongoose.Schema.Types.ObjectId,ref:'Category'}]
 
 });
 

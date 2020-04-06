@@ -4,7 +4,7 @@ const mongoose= require('mongoose');
 const trackSchema = new mongoose.Schema({
     artists :[{type: mongoose.Schema.Types.ObjectId,ref:'Artist'}],
     description : String,
-    likers : [String],
+    likers : [{type: mongoose.Schema.Types.ObjectId,ref:'User'}],
     name : String,
     playCount : Number,
     url : String,
