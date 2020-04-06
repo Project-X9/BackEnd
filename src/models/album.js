@@ -11,8 +11,8 @@ const albumSchema = mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    genres: [{type: mongoose.Schema.Types.ObjectId,ref:'Category'}]
-
+    genres: [{type: mongoose.Schema.Types.ObjectId,ref:'Category'}],
+    followers: [{type: mongoose.Schema.Types.ObjectId,ref:'User'}]
 });
 
 const Album= mongoose.model('Album', albumSchema);

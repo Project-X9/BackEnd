@@ -7,28 +7,27 @@ router
     .get(followController.getAllfollowers)
 
 router
-    .route("/user")
+    .route("/user/:id")
     .patch(followController.followUser)
     .delete(followController.unfollowUser)
 
 router
-    .route("/playlist")
+    .route("/playlist/:id")
     .patch(followController.likePlaylist)
     .delete(followController.dislikePlaylist)
-    .get(followController.getAllplaylist)
 
 router
-    .route("/album")
+    .route("/album/:id")
     .patch(followController.likeAlbum)
     .delete(followController.dislikeAlbum);
 
 router
-     .route("/track")
+     .route("/track/:id")
      .patch(followController.likeTracks)
      .delete(followController.dislikeTracks)
 
 router
-     .route("/artist")
+     .route("/artist/:id")
      .patch(followController.likeArtist)
      .delete(followController.dislikeArtist)
 
