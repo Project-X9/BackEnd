@@ -7,8 +7,8 @@ userSchema = mongoose.Schema({
     name: {
         type: String,
         required: [true, 'A user must have a name'],
-        maxlength: 50,
-        minlength: 10
+        // maxlength: 50,
+        // minlength: 10
     },
     email: {
         type: String,
@@ -27,8 +27,8 @@ userSchema = mongoose.Schema({
     age: {
         type: Number,
         required: [true, 'An age must be specified'],
-        min: [16, 'A ProjectX User must be over 16'],
-        max: [120]
+        // min: [16, 'A ProjectX User must be over 16'],
+        // max: [120]
     },
     gender: String,
     image: String,
