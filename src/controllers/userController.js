@@ -217,3 +217,12 @@ exports.login = async (req,res) => {
 
   }
 }
+
+
+// exports.changePassword = async (req, res) => {
+//   try{
+//     const user = await User.findByCredentials(req.body.email, req.body.currentPassword);
+
+
+//   }
+// }
