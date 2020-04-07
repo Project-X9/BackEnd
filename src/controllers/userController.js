@@ -232,7 +232,7 @@ exports.login = async (req,res) => {
     const user = await User.findByCredentials(req.body.email, req.body.password);
     console.log(user);
     const token = await user.generateAuthToken();
-    res.send({user, token}); // we will just send json with user info untill its implemented to direct user to his homepage.
+    res.status(200).send({user, token}); // we will just send json with user info untill its implemented to direct user to his homepage.
 
 
   } catch (e) {
