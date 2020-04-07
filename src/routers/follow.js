@@ -13,8 +13,8 @@ router
 
 router
     .route("/playlist/:id")
-    //.patch(followController.likePlaylist)
-    .patch(followController.dislikePlaylist)
+    .patch(followController.likePlaylist)
+    .delete(followController.dislikePlaylist)
 
 router
     .route("/album/:id")
