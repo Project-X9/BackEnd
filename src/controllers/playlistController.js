@@ -46,7 +46,7 @@ exports.getPlaylistById  = async (req, res) => {
 
 exports.getPlaylistTracks  = async (req, res) => {    
   try {
-    const playlistTracks = await Playlist.findById(req.params.id, "trackIds").populate({path: 'tracks', populate: ['artists','genres']});
+    const playlistTracks = await Playlist.findById(req.params.id, "tracks").populate({path: 'tracks', populate: ['artists','genres']});
     res.status(200).json({
       status: "success",
       data: {
