@@ -132,7 +132,13 @@ exports.getCurrentUser = async (req, res) => {
 
 exports.getTracks = async (req, res) => {
   try {
-    const tracks = await User.findById(req.params.id, "tracks");
+    const tracks = await User.findById(req.params.id, "tracks").populate({
+      path: 'tracks',
+      populate: {
+    
+        path: 'artists'
+      }
+    });
     res.status(200).json({
       status: "success",
       data: {
@@ -226,11 +232,11 @@ exports.login = async (req,res) => {
     const user = await User.findByCredentials(req.body.email, req.body.password);
     console.log(user);
     const token = await user.generateAuthToken();
-    res.send({user, token}); // we will just send json with user info untill its implemented to direct user to his homepage.
+    res.status(200).send({status: 'success',user, token}); // we will just send json with user info untill its implemented to direct user to his homepage.
 
 
   } catch (e) {
-    res.status(400).send(e);
+    res.status(400).send({status: 'fail', error:e});
 
   }
 }
