@@ -34,12 +34,7 @@ userSchema = mongoose.Schema({
     image: String,
     premium: Boolean,
     previouslyPremium: Boolean,
-    followers:[String],
-    following:[String],
-    playlists:[String],
-    tracks:[String],
-    albums:[String],
-    artists:[String],
+    
 
 //==============AUTH======================
     tokens: [{
@@ -61,7 +56,7 @@ userSchema = mongoose.Schema({
     }],
     following:[{
         type: mongoose.Types.ObjectId,
-        ref: 'User Artist'
+        ref: 'Artist'
     }],
     playlists:[{
         type: mongoose.Types.ObjectId,

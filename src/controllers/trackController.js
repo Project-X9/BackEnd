@@ -3,7 +3,7 @@ const Track = require(`./../models/track.js`);
 
 exports.getTracks = async (req, res) => {
     try {
-      const tracks = await Track.findById(req.params.id, "tracks");
+      const tracks = await Track.find();
       res.status(200).json({
         status: "success",
         data: {
@@ -22,7 +22,7 @@ exports.getTracks = async (req, res) => {
 
 exports.getTrack = async (req, res) => {
   try {
-    const track = await Track.findById(req.params.id);
+    const track = await Track.findById(req.params.id).populate([{path: 'likers'},{path: 'album'},{path: 'artists'}]);
     res.status(200).json({
       status: "success",
       data: {

@@ -3,7 +3,7 @@ const ObjectId = require("mongodb").ObjectId;
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().populate('playlists');
     res.status(200).json({
       status: "success",
       results: users.length,
@@ -21,7 +21,26 @@ exports.getAllUsers = async (req, res) => {
 };
 exports.getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id).populate([{
+      path: 'albums',
+      populate: {
+        path: 'author'
+      }
+    },
+    {
+      path: 'playlists'
+  
+    },
+  {
+    path: 'artists'
+  },
+{
+  path: 'tracks',
+  populate: {
+
+    path: 'artists'
+  }
+}]); 
     if (user) {
       res.status(200).json({
         status: "success",
@@ -37,19 +56,6 @@ exports.getUser = async (req, res) => {
       error: err.message,
     });
   }
-  const user = await User.findById(req.params.id);
-  if (user) {
-    res.status(200).json({
-      status: "success",
-      data: {
-        user,
-      },
-    });
-  }
-  res.status(404).json({
-    status: "fail",
-    message: "Id not found",
-  });
 };
 
 exports.createUser = async (req, res) => {
@@ -72,10 +78,8 @@ exports.createUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ["name", "email", "password", "age"];
-  const isValidOperation = updates.every((update) =>
-    allowedUpdates.includes(update)
-  );
+  const allowedUpdates = ['name', 'email', 'password', 'age', 'premium' , 'previouslyPremium'];
+  const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
   try {
     if (!isValidOperation) {
       return res.status(400).json({
@@ -127,7 +131,13 @@ exports.getCurrentUser = async (req, res) => {
 
 exports.getTracks = async (req, res) => {
   try {
-    const tracks = await User.findById(req.params.id, "tracks");
+    const tracks = await User.findById(req.params.id, "tracks").populate({
+      path: 'tracks',
+      populate: {
+    
+        path: 'artists'
+      }
+    });
     res.status(200).json({
       status: "success",
       data: {
@@ -225,9 +235,12 @@ exports.login = async (req, res) => {
     );
     console.log(user);
     const token = await user.generateAuthToken();
-    res.send({ user, token }); // we will just send json with user info untill its implemented to direct user to his homepage.
+    res.status(200).send({status: 'success',user, token}); // we will just send json with user info untill its implemented to direct user to his homepage.
+
+
   } catch (e) {
-    res.status(400).send(e);
+    res.status(400).send({status: 'fail', error:e});
+
   }
 };
 

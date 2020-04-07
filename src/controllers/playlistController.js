@@ -26,7 +26,7 @@ exports.createPlaylist = async (req, res) => {
 
 exports.getPlaylistById  = async (req, res) => {    
     try {
-      const playlist = await Playlist.findById(req.params.id);
+      const playlist = await Playlist.findById(req.params.id).populate([{path: 'artists'},{path: 'author'},{path: 'tracks', populate: ['artists','genres']}]);;
       res.status(200).json({
         status: "success",
         data: {
@@ -46,11 +46,11 @@ exports.getPlaylistById  = async (req, res) => {
 
 exports.getPlaylistTracks  = async (req, res) => {    
   try {
-    const playlistTracks = await Playlist.findById(req.params.id, "trackIds");
+    const playlistTracks = await Playlist.findById(req.params.id, "tracks").populate({path: 'tracks', populate: ['artists','genres']});
     res.status(200).json({
       status: "success",
       data: {
-        trackIds                 // should i return tracks or track ids ?
+        playlistTracks                 // should i return tracks or track ids ?
       }
     });
   } catch (err) {

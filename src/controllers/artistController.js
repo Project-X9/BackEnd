@@ -21,7 +21,10 @@ exports.getArtists = async (req, res) => {
 
 exports.getArtist = async (req, res) => {
   try {
-    const artist = await Artist.findById(req.params.id);
+    const artist = await Artist.findById(req.params.id).populate([{path: 'followers'},{path: 'tracks', populate: ['artists','genres']}]);
+
+
+
     res.status(200).json({
       status: "success",
       data: {

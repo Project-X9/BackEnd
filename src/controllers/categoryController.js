@@ -70,7 +70,7 @@ exports.getAllCategories = async (req, res) => {
 exports.getCategoryById = async (req, res) => {
   try 
   {
-    const categ=  await Category.findById(req.params.id);
+    const categ=  await Category.findById(req.params.id).populate({path: 'playlists'});
     res.status(200).json({
       status: "success",
       data: {categ}
