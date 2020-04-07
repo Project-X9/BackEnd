@@ -1,7 +1,6 @@
 const User = require(`./../models/user.js`);
 const ObjectId = require("mongodb").ObjectId;
 
-
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
@@ -9,14 +8,14 @@ exports.getAllUsers = async (req, res) => {
       status: "success",
       results: users.length,
       data: {
-        users
-      }
+        users,
+      },
     });
   } catch (err) {
     console.log(err);
     res.status(404).json({
       status: "fail",
-      message: err.message
+      message: err.message,
     });
   }
 };
@@ -27,15 +26,15 @@ exports.getUser = async (req, res) => {
       res.status(200).json({
         status: "success",
         data: {
-          user
-        }
+          user,
+        },
       });
     }
   } catch (err) {
     res.status(404).json({
       status: "fail",
       message: "Id not found",
-      error: err.message
+      error: err.message,
     });
   }
   const user = await User.findById(req.params.id);
@@ -43,13 +42,13 @@ exports.getUser = async (req, res) => {
     res.status(200).json({
       status: "success",
       data: {
-        user
-      }
+        user,
+      },
     });
   }
   res.status(404).json({
     status: "fail",
-    message: "Id not found"
+    message: "Id not found",
   });
 };
 
@@ -59,46 +58,48 @@ exports.createUser = async (req, res) => {
     res.status(201).json({
       status: "success",
       data: {
-        user: newUser
-      }
+        user: newUser,
+      },
     });
   } catch (err) {
     console.log(err);
     res.status(400).json({
       status: "fail",
-      message: err.message
+      message: err.message,
     });
   }
 };
 
 exports.updateUser = async (req, res) => {
   const updates = Object.keys(req.body);
-  console.log(updates);
-  const allowedUpdates = ['name', 'email', 'password', 'age'];
-  const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
+  const allowedUpdates = ["name", "email", "password", "age"];
+  const isValidOperation = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
   try {
-    if(!isValidOperation) {
+    if (!isValidOperation) {
       return res.status(400).json({
-        status: 'fail',
-        message: 'Bad Request'
-      });  
+        status: "fail",
+        message: "Bad Request",
+      });
     }
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
+    const user = await User.findById(req.params.id)
+    updates.forEach((update) => (user[update] = req.body[update]));
+
+    await user.save({
+      validateBeforeSave: true
     });
-    user.save();
     return res.status(200).json({
       status: "success",
       data: {
-        user
-      }
+        user,
+      },
     });
   } catch (err) {
     console.log(err);
     res.status(404).json({
       status: "fail",
-      message: err.message
+      message: err.message,
     });
   }
 };
@@ -108,13 +109,13 @@ exports.deleteUser = async (req, res) => {
     await User.findByIdAndDelete(req.params.id);
     res.status(204).json({
       status: "success",
-      data: null
+      data: null,
     });
   } catch (err) {
     console.log(err);
     res.status(404).json({
       status: "fail",
-      message: err.message
+      message: err.message,
     });
   }
 };
@@ -130,20 +131,20 @@ exports.getTracks = async (req, res) => {
     res.status(200).json({
       status: "success",
       data: {
-        user: tracks
-      }
+        user: tracks,
+      },
     });
   } catch (err) {
     res.status(404).json({
       status: "fail",
-      message: err.message
+      message: err.message,
     });
   }
 };
 
 // exports.addTracks = async (req, res) => {
 //   try {
-    
+
 //   } catch (err) {
 //     res.status(404).json({
 //       status: "fail",
@@ -152,21 +153,22 @@ exports.getTracks = async (req, res) => {
 //   }
 // }
 
-
 exports.deleteTracks = async (req, res) => {
   try {
-    await User.findByIdAndUpdate(req.params.id, {$pullAll: {tracks: req,params, trackId}});
+    await User.findByIdAndUpdate(req.params.id, {
+      $pullAll: { tracks: req, params, trackId },
+    });
 
     res.status(204).json({
-      status: 'success'
-    })
+      status: "success",
+    });
   } catch (err) {
     res.status(404).json({
       status: "fail",
-      message: err.message
+      message: err.message,
     });
   }
-}
+};
 
 exports.getAlbums = async (req, res) => {
   try {
@@ -174,21 +176,21 @@ exports.getAlbums = async (req, res) => {
     res.status(200).json({
       status: "success",
       data: {
-        albums
-      }
+        albums,
+      },
     });
   } catch (err) {
     console.log(err);
     res.status(404).json({
       status: "fail",
-      message: err.message
+      message: err.message,
     });
   }
 };
 
 // exports.addAlbums = async (req, res) => {
 //   try {
-    
+
 //   } catch (err) {
 //     res.status(404).json({
 //       status: "fail",
@@ -197,43 +199,41 @@ exports.getAlbums = async (req, res) => {
 //   }
 // }
 
-
 exports.deleteAlbums = async (req, res) => {
   try {
-    await User.findByIdAndUpdate(req.params.id, {$pullAll: {albums: req,params, albumId}});
+    await User.findByIdAndUpdate(req.params.id, {
+      $pullAll: { albums: req, params, albumId },
+    });
 
     res.status(204).json({
-      status: 'success'
-    })
+      status: "success",
+    });
   } catch (err) {
     res.status(404).json({
       status: "fail",
-      message: err.message
+      message: err.message,
     });
   }
-}
+};
 
 //============================== (AUTHENTICATION) =========================
-exports.login = async (req,res) => {
-
+exports.login = async (req, res) => {
   try {
-    const user = await User.findByCredentials(req.body.email, req.body.password);
+    const user = await User.findByCredentials(
+      req.body.email,
+      req.body.password
+    );
     console.log(user);
     const token = await user.generateAuthToken();
-    res.send({user, token}); // we will just send json with user info untill its implemented to direct user to his homepage.
-
-
+    res.send({ user, token }); // we will just send json with user info untill its implemented to direct user to his homepage.
   } catch (e) {
     res.status(400).send(e);
-
   }
-}
-
+};
 
 // exports.changePassword = async (req, res) => {
 //   try{
 //     const user = await User.findByCredentials(req.body.email, req.body.currentPassword);
-
 
 //   }
 // }
