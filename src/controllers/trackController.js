@@ -3,7 +3,7 @@ const Track = require(`./../models/track.js`);
 
 exports.getTracks = async (req, res) => {
     try {
-      const tracks = await Track.findById(req.params.id, "tracks");
+      const tracks = await Track.find();
       res.status(200).json({
         status: "success",
         data: {

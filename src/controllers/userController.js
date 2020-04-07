@@ -132,7 +132,13 @@ exports.getCurrentUser = async (req, res) => {
 
 exports.getTracks = async (req, res) => {
   try {
-    const tracks = await User.findById(req.params.id, "tracks");
+    const tracks = await User.findById(req.params.id, "tracks").populate({
+      path: 'tracks',
+      populate: {
+    
+        path: 'artists'
+      }
+    });
     res.status(200).json({
       status: "success",
       data: {
