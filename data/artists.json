@@ -1,0 +1,4 @@
+[
+{"_id":{"$oid":"5e877b8fae42032b7c867feb"},"name":"Artist 1","Bio":"Artist 1 bio","genres":[{"$oid":"5e89f67c47f4092a9080d94b"}],"tracks":[{"$oid":"5e86459124471028e4d3539b"}],"image":"https://i.scdn.co/image/ee11ffb4c0f334e4c958ed051bbaf5f720751c9d","email":"artist1@mail.com","followers":[{"$oid":"5e8643edd411aa54c0357fbd"}]},
+{"_id":{"$oid":"5e8ba889e729a540dc9409be"},"name":"Artist 2","Bio":"Artist 2 bio","genres":[],"tracks":[],"image":"https://i.scdn.co/image/ee11ffb4c0f334e4c958ed051bbaf5f720751c9d","email":"artist1@mail.com","followers":[{"$oid":"5e89fc634cd1d420fc3096c0"}]}
+]

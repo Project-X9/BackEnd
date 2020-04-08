@@ -1,0 +1,4 @@
+[{"_id":{"$oid":"5e89f67c47f4092a9080d94b"},"playlists":[{"$oid":"5e8cf0be7d231c3bec30c4e2"},{"$oid":"5e8cf0bc7d231c3bec30c4e1"}],"name":"Rock","icon":"https://i.scdn.co/image/ab67616d0000b273a108e07c661f9fc54de9c43a","__v":{"$numberInt":"0"}},
+{"_id":{"$oid":"5e89f9ea399549014c9a674e"},"playlists":{"$oid":"5e8741dadfdb0a35d429a128"},"name":"Jazz","icon":"https://i.scdn.co/image/ab67616d0000b273a108e07c661f9fc54de9c43a","__v":{"$numberInt":"0"}},
+{"_id":{"$oid":"5e8a37b3b519e006b83cfcb6"},"playlists":[],"name":"Blues","icon":"https://i.scdn.co/image/ab67616d0000b273a108e07c661f9fc54de9c43a","__v":{"$numberInt":"0"}}
+]
