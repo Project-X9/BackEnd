@@ -1,0 +1,6 @@
+download migration folder "projectx-migrations"
+write in terminal the following
+npm install -g migrate-mongo
+migrate-mongo
+cd <name of migration folder>
+migrate-mongo up
