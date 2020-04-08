@@ -49,7 +49,7 @@ exports.updateCategory = async (req, res) => {
 exports.getAllCategories = async (req, res) => {
   try 
   {
-    const Categories = await Category.find();
+    const Categories = await Category.find().populate({path: "playlists"});
     console.log(Categories);
     res.status(200).json({
       status: "success",
