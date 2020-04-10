@@ -2,9 +2,20 @@ const Category = require(`./../models/category.js`);
 
 //-------------------------------------------------------CREATE--------------------------------------------------------------------//
 
-//Create a Category
+/**
+   * @property {Function} createCategory  create a category
+   * @param {object} req - request object
+   * @param {string} req.body.name  -category name
+   * @param {string} req.body.icon  -category icon    (optional)
+   * @param {string} req.body.href  -category href    (optional)
+   * @param {object} res - response object
+   * @param {string} res.body.id    -category id
+   * @param {string} res.body.name  -category name
+   * @param {string} res.body.icon  -category icon    
+   * @param {string} res.body.href  -category href  
+   * @param {string[]} res.body.playlists  -category playlist array  
+*/
 exports.createCategory = async (req, res) => {
-  console.log("hehreeeee")
   try {
     const newcategory = await Category.create(req.body);
     res.status(201).json({
@@ -24,7 +35,20 @@ exports.createCategory = async (req, res) => {
 
 //-------------------------------------------------------UPDATE--------------------------------------------------------------------//
 
-//update a category
+/**
+   * @property {Function} updateCategory  update a category
+   * @param {object} req - request object
+   * @param {string} req.params.id  -category id
+   * @param {string} req.body.name  -category name    (optional)
+   * @param {string} req.body.icon  -category icon    (optional)
+   * @param {string} req.body.href  -category href    (optional)
+   * @param {object} res - response object
+   * @param {string} res.body.id    - updated category id
+   * @param {string} res.body.name  - updated category name
+   * @param {string} res.body.icon  - updated category icon    
+   * @param {string} res.body.href  - updated category href  
+   * @param {string[]} res.body.playlists  - updated category playlist array  
+*/
 exports.updateCategory = async (req, res) => {
   try {
     const category = await Category.findByIdAndUpdate(req.params.id, req.body);
@@ -45,7 +69,11 @@ exports.updateCategory = async (req, res) => {
 
 //-------------------------------------------------------GET--------------------------------------------------------------------//
 
-//getAllCategories
+/**
+   * @property {Function} getAllCategories  get all categories
+   * @param {object} res - response object
+   * @param {object[]} res.body.Categories  - categories list
+*/
 exports.getAllCategories = async (req, res) => {
   try 
   {
@@ -66,7 +94,17 @@ exports.getAllCategories = async (req, res) => {
 };
 
 
-//get category by id
+/**
+   * @property {Function} getCategoryById  get a category by id
+   * @param {object} req - request object
+   * @param {string} req.params.id  -category id
+   * @param {object} res - response object
+   * @param {string} res.body.id    -  category id
+   * @param {string} res.body.name  -  category name
+   * @param {string} res.body.icon  -  category icon    
+   * @param {string} res.body.href  -  category href  
+   * @param {string[]} res.body.playlists  -  category playlist array 
+*/
 exports.getCategoryById = async (req, res) => {
   try 
   {
@@ -87,7 +125,11 @@ exports.getCategoryById = async (req, res) => {
 
 
 //-------------------------------------------------------DELETE--------------------------------------------------------------------//
-//delete category by id
+/**
+   * @property {Function} deleteCategoryById  delete a category by id
+   * @param {object} req - request object
+   * @param {string} req.params.id  -category id
+*/
 exports.deleteCategoryById = async (req, res) => {
   try {
     await Category.findByIdAndDelete(req.params.id);
@@ -106,17 +148,22 @@ exports.deleteCategoryById = async (req, res) => {
 
 //--------------------------------------------add/remove playlist---------------------------------------------------------//
 
-  /*add playlist*/
+  /**
+   * @property {Function} addPlaylist  add a playlist to a category
+   * @param {object} req - request object
+   * @param {string} req.body.id    -category id
+   * @param {string} req.params.id  -playlist id
+*/
    exports.addPlaylist = async (req, res) => {
     try {
-      const IN_Category= await Category.findById(req.params.id);
+      const IN_Category= await Category.findById(req.body.id);
        var count =0;
        for(var i = 0; i < IN_Category.playlists.length; i++){
-         if( req.body.id1 === IN_Category.playlists[i]){ count++; } }
+         if( req.params.id === IN_Category.playlists[i]){ count++; } }
 
       if(count!==0){ return res.status(403).json({ data : "already exists"})}
       
-      await Category.findByIdAndUpdate(req.params.id,{ $push:{playlists: req.body.id1} });
+      await Category.findByIdAndUpdate(req.body.id,{ $push:{playlists: req.params.id} });
       res.status(200).json({
         status: "success"
       });
@@ -129,16 +176,21 @@ exports.deleteCategoryById = async (req, res) => {
     }
   };
 
-  /*remove playlist*/
+  /**
+   * @property {Function} removePlaylist  remove a playlist from a category
+   * @param {object} req - request object
+   * @param {string} req.body.id    -category id
+   * @param {string} req.params.id  -playlist id
+*/
   exports.removePlaylist = async (req, res) => {
     try { 
-      const IN_Category= await Category.findById(req.params.id);
+      const IN_Category= await Category.findById(req.body.id);
       var count =0;
-      for(var i = 0; i < IN_Category.playlists.length; i++){if( req.body.id1 === IN_Category.playlists[i]){ count++;} }
+      for(var i = 0; i < IN_Category.playlists.length; i++){if( req.params.id === IN_Category.playlists[i]){ count++;} }
 
       if(count===0) { return res.status(403).json({ data : "invalid deletion"}) }
       
-      await Category.findByIdAndUpdate(req.params.id,{ $pull:{playlists: req.body.id1} });
+      await Category.findByIdAndUpdate(req.body.id,{ $pull:{playlists: req.params.id} });
       res.status(200).json({
         status: "success"
       });

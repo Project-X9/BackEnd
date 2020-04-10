@@ -1,12 +1,3 @@
-/**---------------------------------------------------ERROR DEFINE API -------------------------------------------------------------------------- */
-/**
- * @apiDefine ERROR
- * @apiDescription message a brief description of the error.
- * 
- * @apiError BadRequest The request could not be understood by the server due to malformed syntax. The message body will contain more information; see Response Schema.
- * @apiError Forbidden The server understood the request, but is refusing to fulfill it.
- * @apiError NotFound The requested resource could not be found. This error can be due to a temporary or permanent condition.
- 
 /**---------------------------------------------------------------create a category --------------------------------------------------------------- */
 
 /**
@@ -15,10 +6,10 @@
  * @apiName Create Category
  * @apiVersion 0.2.0
  *
- * 
+ * @apiParam {string} name  (required)
  * @apiParam {string} href 
- * @apiParam {string} icon 
- * @apiParam {string} name 
+ * @apiParam {string} icon  
+ * 
  * 
  * @apiParamExample {json} Request-Example:
  * {
@@ -56,13 +47,13 @@
 
  /**---------------------------------------------------------------update a category --------------------------------------------------------------- */
 /**
- * @api {patch} /browse/category?=  update a single category 
+ * @api {patch} /browse/category/:id  update a single category 
  * @apiGroup Browse
  * @apiName update a category
  * @apiVersion 0.2.0
- * @apiHeader {string} id  category Id
- * @apiHeaderExample {json} Request-Example:
- *      id       5e85fd12bd68be36d86ca316
+ * @apiHeader {string} id  category Id in path
+ * @apiParamExample {json} PathParameter-Example:
+ *     /browse/category/5e89fc634cd1d420fc309234
  * 
  * @apiParam {string} href 
  * @apiParam {string} icon 
@@ -139,14 +130,15 @@
 
 /**---------------------------------------------------------------get a category --------------------------------------------------------------- */
 /**
- * @api {get} /browse/category?=  Get a single category 
+ * @api {get} /browse/category/:id  Get a single category 
  * @apiGroup Browse
  * @apiName get a Category
- * @apiVersion 0.2.0
+ * @apiVersion 0.3.0
  * 
- * @apiHeader {string} id   category Id
- * @apiHeaderExample {json} Request-Example:
- *      id       5e85fd12bd68be36d86ca316
+ * @apiHeader {string} id  category Id in path
+ * @apiParamExample {json} PathParameter-Example:
+ *     /browse/category/5e89fc634cd1d420fc309234
+ * 
  * @apiSuccess {Object}    category         category object
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 201 OK
@@ -172,13 +164,14 @@
 
   /**---------------------------------------------------------------delete a category --------------------------------------------------------------- */
 /**
- * @api {delete} /browse/category?=  delete a single category 
+ * @api {delete} /browse/category/:id  delete a single category 
  * @apiGroup Browse
  * @apiName delete a category
- * @apiVersion 0.2.0
- * @apiHeader {string} id  category Id
- * @apiHeaderExample {json} Request-Example:
- *      id       5e85fd12bd68be36d86ca316
+ * @apiVersion 0.3.0
+ * @apiHeader {string} id  category Id in path
+ * @apiParamExample {json} PathParameter-Example:
+ *     /browse/category/5e89fc634cd1d420fc309234
+ * 
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 201 OK
  *     {
@@ -198,16 +191,19 @@
 
    /**---------------------------------------------------------------add a playlist to category --------------------------------------------------------------- */
 /**
- * @api {post} /browse/categoryPlaylist  add a playlist to category
+ * @api {patch} /browse/categoryPlaylist/:id  add a playlist to category
  * @apiGroup Browse
  * @apiName add a playlist to category
- * @apiVersion 0.2.0
- * @apiHeader {string} id   category Id
- * @apiHeader {string} id1  playlist Id
+ * @apiVersion 0.3.0
+ * @apiParam {string} id  category Id in body
+ * @apiHeader {string} id  playlist Id to be followed in path
+ * @apiParamExample {json} bodyParameter-Example:
+ *      {
+	       "id":"5e89fc634cd1d420fc3096c0"
+        }
+ * @apiParamExample {json} PathParameter-Example:
+ *     /browse/categoryplaylist/5e89fc634cd1d420fc309234
  * 
- * @apiHeaderExample {json} Request-Example:
- *      id       5e85fd12bd68be36d86ca316
- *      id1      5e85fd12bd68be36d86ca352
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 201 OK
  *     {
@@ -236,16 +232,20 @@
 
   /**---------------------------------------------------------------remove a playlist to category --------------------------------------------------------------- */
 /**
- * @api {post} /browse/categoryPlaylist  remove a playlist to category
+ * @api {patch} /browse/categoryPlaylist/un/:id  remove a playlist to category
  * @apiGroup Browse
  * @apiName remove a playlist to category
- * @apiVersion 0.2.0
- * @apiHeader {string} id   category Id
- * @apiHeader {string} id1  playlist Id
+ * @apiVersion 0.3.0
  * 
- * @apiHeaderExample {json} Request-Example:
- *      id       5e85fd12bd68be36d86ca316
- *      id1      5e85fd12bd68be36d86ca352
+ * @apiParam {string} id  category Id in body
+ * @apiHeader {string} id  playlist Id to be followed in path
+ * @apiParamExample {json} bodyParameter-Example:
+ *      {
+	       "id":"5e89fc634cd1d420fc3096c0"
+        }
+ * @apiParamExample {json} PathParameter-Example:
+ *     /browse/categoryplaylist/un/5e89fc634cd1d420fc309234
+ * 
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 201 OK
  *     {
