@@ -184,6 +184,15 @@ exports.getAllPlaylists= async(req, res) =>
 
   //                                    ----UPDATE :----
 
+  /**
+   * @property {Function} updatePlaylist  updates playlist with specified ID
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {string} req.params.id - playlist id 
+   * @param {object} res.body.data - returns the  playlist with specified ID after update
+   
+*/
+
   exports.updatePlaylist = async (req, res) => {      //for anything except adding & deleting tracks
     try {
       const playlist = await Playlist.findByIdAndUpdate(req.params.id, req.body, {
@@ -205,7 +214,14 @@ exports.getAllPlaylists= async(req, res) =>
     }
   };
 
-
+ /**
+   * @property {Function} addPlaylistTrack  updates playlist with specified ID
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {string} req.query.id - playlist id 
+   * @param {object} res.body.data - returns the  playlist with specified ID after adding the track specified
+   * @param {string} req.query.id1 - track id to be added
+*/
 
   exports.addPlaylistTrack= async (req, res) =>
   {
