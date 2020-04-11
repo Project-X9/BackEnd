@@ -1,5 +1,19 @@
+
+
 const Track = require(`./../models/track.js`);
 
+/** 
+ * @module controller/tracks
+ */
+
+
+
+ 
+/**
+   * @property {Function} getTracks  get all categories
+   * @param {object} res - response object
+   * @param {object[]} res.body.Tracks  - categories list
+*/
 
 exports.getTracks = async (req, res) => {
     try {
@@ -18,6 +32,29 @@ exports.getTracks = async (req, res) => {
       });
     }
   };
+
+
+
+/**
+ * 
+ * @property {Function} getCategoryById
+ * @param {object} req - request object
+  * @param {string} req.params.id  -tracks id
+  * @param {object} res - response object
+  * @param  {String} res.body.name
+  * @param  {String} res.body.description
+  * @param  {String} res.body.url
+  * @param  {ArtistId[]} res.body.artists
+  * @param  {Number} res.body.playcount
+  * @param  {Number} res.body.duration
+  * @param  {String} res.body.imageUrl
+  * @param  {CategoryId[]} res.body.genres
+  * @param  {String[]} res.body.body.likers
+  * 
+  * 
+  */
+
+
 
 
 exports.getTrack = async (req, res) => {
