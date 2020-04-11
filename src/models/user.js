@@ -1,3 +1,7 @@
+/**  Functions related to user model 
+ * @module models/users
+ */
+
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -79,6 +83,13 @@ userSchema = mongoose.Schema({
 
 // Generate toekn for a specific user: 
 
+/**
+ * Generates token for a specific user , using userid and secretcode
+ * @name generateAuthToken
+ * @function
+ * @inner
+ * @return {strnig} token
+ */
 userSchema.methods.generateAuthToken = async function () {
     const user = this;
     const token = jwt.sign({_id: user._id.toString()}, 'secretcode');
@@ -91,6 +102,18 @@ userSchema.methods.generateAuthToken = async function () {
 
 
 // so we can access function directly through the model:
+
+
+/**
+ * Main function to authenticate user, Could be accessed through model
+ * @name findByCredentials
+ *@function
+ *@inner
+ * @param {string} email - user email
+ * @param {string} password - user password
+ * @return {object} user 
+ * 
+ */
 userSchema.statics.findByCredentials = async (email, password) => {
     
     //find them by email first:

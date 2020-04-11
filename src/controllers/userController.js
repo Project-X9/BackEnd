@@ -1,3 +1,6 @@
+/**  controllers for user related routes
+ * @module controller/users
+ */
 const User = require(`./../models/user.js`);
 const ObjectId = require("mongodb").ObjectId;
 
@@ -227,6 +230,16 @@ exports.deleteAlbums = async (req, res) => {
 };
 
 //============================== (AUTHENTICATION) =========================
+/**
+ * Controller serving login route.
+ * @name login
+ * @function
+ * @inner
+ * @param {object} req -  contains email and password
+ * @param {object} res - on success contains status , user object , token string , on failure
+ * 
+ * Wrong user credentials result in status code 400 , status:fail
+ */
 exports.login = async (req, res) => {
   try {
     const user = await User.findByCredentials(

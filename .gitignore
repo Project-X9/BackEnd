@@ -6,3 +6,4 @@ tmp/
 npm-debug.log
 .idea
 package-lock.json
+out/
