@@ -4,7 +4,9 @@ const Album = require(`./../models/album.js`);
 const track = require(`./../models/track.js`);
 const Artist = require(`./../models/artist.js`);
 
-
+/**
+ * @module controller/follow
+*/
 
 
 
