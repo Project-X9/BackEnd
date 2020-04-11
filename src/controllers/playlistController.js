@@ -1,8 +1,22 @@
 const Playlist = require(`./../models/playlist.js`);
 
-
+/**
+ * @module controller/playlist
+*/
 
 //                                    ----CREATE :----
+
+
+
+
+
+/**
+   * @property {Function} createPlaylist  creats a new playlist 
+   * @param {object} req - request object
+   * @param {string} req.body.id - playlist id 
+   * @param {object} res - response object
+   * @param {object} res.body.data - returns the newly created playlist object
+*/
 
 exports.createPlaylist = async (req, res) => {    
   try {
@@ -24,6 +38,14 @@ exports.createPlaylist = async (req, res) => {
 
 //                                    ----GET :----
 
+/**
+   * @property {Function} getPlaylistById  gets the playlist object with the specified ID 
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {string} req.params.id - playlist id 
+   * @param {object} res.body.data - returns the playlist object with specified ID
+*/
+
 exports.getPlaylistById  = async (req, res) => {    
     try {
       const playlist = await Playlist.findById(req.params.id).populate([{path: 'artists'},{path: 'author'},{path: 'tracks', populate: ['artists','genres']}]);;
@@ -43,6 +65,13 @@ exports.getPlaylistById  = async (req, res) => {
   };
 
 // DO I NEED GET PLAYLIST BY NAME ??
+/**
+   * @property {Function} getPlaylistTracks  gets the tracks of thr specified playlist
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {string} req.params.id - playlist id 
+   * @param {object} res.body.data - returns the tracks of playlist with specified ID
+*/
 
 exports.getPlaylistTracks  = async (req, res) => {    
   try {
@@ -82,6 +111,12 @@ exports.getPlaylistTracks  = async (req, res) => {
 //     }
 //     }; 
 
+/**
+   * @property {Function} getAllPlaylists  gets all playlists in database
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {object} res.body.data - returns the playlists objects
+*/
 exports.getAllPlaylists= async(req, res) =>
 {
   try 
@@ -123,6 +158,13 @@ exports.getAllPlaylists= async(req, res) =>
 //       });
 //     }
 //   };
+
+/**
+   * @property {Function} deletePlaylistTarck  gets all playlists in database
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {string} req.params.id - playlist id 
+*/
 
   exports.deletePlaylistTarck = async (req, res) => {
     try {
