@@ -1,4 +1,13 @@
+/**
+ * @module controller/artist
+*/
+
 const Artist = require(`./../models/artist.js`);
+
+
+
+
+
 
 exports.getArtists = async (req, res) => {
   try {
@@ -18,6 +27,25 @@ exports.getArtists = async (req, res) => {
     });
   }
 };
+
+/**
+ * @property  {Function} getArtist
+ * @param  {String} Bio 
+ * @param  {String[]} followers
+ * @param  {CategoryId[]} genres
+ * @param  {TrackId[]} tracks
+ * @param  {String} image
+ * @param  {String} name
+ * @param  {ArtistId[]} relatedArtists
+ * @param  {String} email
+ * @param  {String} password
+ * @param  {Date} dateAdded
+ * 
+ */
+
+
+
+
 
 exports.getArtist = async (req, res) => {
   try {
