@@ -23,7 +23,7 @@ const Category = require(`./../models/category.js`);
 exports.createCategory = async (req, res) => {
   try {
     const newcategory = await Category.create(req.body);
-    res.status(201).json({
+      res.status(201).json({
       status: "success",
       data: {
         Category: newcategory
@@ -57,17 +57,21 @@ exports.createCategory = async (req, res) => {
 exports.updateCategory = async (req, res) => {
   try {
     const category = await Category.findByIdAndUpdate(req.params.id, req.body);
+    if(category!==null)
+    {
     res.status(200).json({
       status: "success",
-      data: {
-        category
-      }
+      data: {category}
     });
+    }else{
+      var err ="invalid id";
+      throw err;
+    }
   } catch (err) {
     console.log(err);
     res.status(404).json({
       status: "fail",
-      message: err.message
+      message: err
     });
   }
 };
@@ -83,17 +87,22 @@ exports.getAllCategories = async (req, res) => {
   try 
   {
     const Categories = await Category.find().populate({path: "playlists"});
-    console.log(Categories);
-    res.status(200).json({
-      status: "success",
-      data: {Categories}
-    });
+    if(Categories!==null)
+    {
+      res.status(200).json({
+        status: "success",
+        data: {Categories}
+      });
+    }else{
+      var err = "no categories in db";
+      throw err;
+    }
   } catch (err)
   {
     console.log(err);
     res.status(404).json({
       status: "fail",
-      message: err.message
+      message: err
     });
   }
 };
@@ -114,16 +123,22 @@ exports.getCategoryById = async (req, res) => {
   try 
   {
     const categ=  await Category.findById(req.params.id).populate({path: 'playlists'});
+    if(categ!==null)
+    {
     res.status(200).json({
       status: "success",
       data: {categ}
     });
+    }else{
+      var err = "invalid id";
+      throw err ;
+    }
   } catch (err)
   {
     console.log(err);
     res.status(404).json({
       status: "fail",
-      message: err.message
+      message: err
     });
   }
 };
@@ -137,16 +152,23 @@ exports.getCategoryById = async (req, res) => {
 */
 exports.deleteCategoryById = async (req, res) => {
   try {
-    await Category.findByIdAndDelete(req.params.id);
-    res.status(204).json({
-      status: "success",
-      data: null
-    });
+    const categ=  await Category.findById(req.params.id).populate({path: 'playlists'});
+    if(categ!==null)
+    {
+      await Category.findByIdAndDelete(req.params.id);
+      res.status(204).json({
+        status: "success",
+        data: null
+      });
+    }else{
+      var err = "invalid id";
+      throw err;
+    }
   } catch (err) {
     console.log(err);
     res.status(404).json({
       status: "fail",
-      message: err.message
+      message: err
     });
   }
 };
@@ -162,21 +184,29 @@ exports.deleteCategoryById = async (req, res) => {
    exports.addPlaylist = async (req, res) => {
     try {
       const IN_Category= await Category.findById(req.body.id);
-       var count =0;
-       for(var i = 0; i < IN_Category.playlists.length; i++){
-         if( req.params.id === IN_Category.playlists[i]){ count++; } }
+      if(IN_Category!==null)
+      {
+        var count =0;
+        for(var i = 0; i < IN_Category.playlists.length; i++)
+        {
+          if( req.params.id == IN_Category.playlists[i])
+          { count++; }
+        }
+        if(count!==0){ return res.status(403).json({ data : "already followed "})}
 
-      if(count!==0){ return res.status(403).json({ data : "already exists"})}
-      
-      await Category.findByIdAndUpdate(req.body.id,{ $push:{playlists: req.params.id} });
-      res.status(200).json({
-        status: "success"
-      });
+        await Category.findByIdAndUpdate(req.body.id,{ $push:{playlists: req.params.id} });
+        res.status(200).json({
+          status: "success"
+        });
+      }else{
+        var err = "invalid id";
+        throw err;
+      }
     } catch (err) {
       console.log(err);
       res.status(404).json({
         status: "fail",
-        message: err.message
+        message: err
       });
     }
   };
@@ -190,20 +220,29 @@ exports.deleteCategoryById = async (req, res) => {
   exports.removePlaylist = async (req, res) => {
     try { 
       const IN_Category= await Category.findById(req.body.id);
-      var count =0;
-      for(var i = 0; i < IN_Category.playlists.length; i++){if( req.params.id === IN_Category.playlists[i]){ count++;} }
-
-      if(count===0) { return res.status(403).json({ data : "invalid deletion"}) }
-      
-      await Category.findByIdAndUpdate(req.body.id,{ $pull:{playlists: req.params.id} });
-      res.status(200).json({
-        status: "success"
-      });
+      if(IN_Category!==null)
+      {
+        var count =0;
+        for(var i = 0; i < IN_Category.playlists.length; i++)
+        {
+          if( req.params.id == IN_Category.playlists[i])
+          { count++; }
+        }
+        if(count==0) { return res.status(403).json({ data : "invalid deletion"}) }
+        
+        await Category.findByIdAndUpdate(req.body.id,{ $pull:{playlists: req.params.id} });
+        res.status(200).json({
+          status: "success"
+        });
+      }else{
+        var err = "invalid id";
+        throw err;
+      }
     } catch (err) {
       console.log(err);
       res.status(404).json({
         status: "fail",
-        message: err.message
+        message: err
       });
     }
   };

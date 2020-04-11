@@ -20,10 +20,16 @@ const Artist = require(`./../models/artist.js`);
 exports.getAllfollowers = async (req, res) => {
   try {
     const user = await User.findById(req.body.id);
-    res.status(200).json({
-      status: "success",
-      followers: user.followers
-    });
+    if(user!==null)
+      {
+        res.status(200).json({
+          status: "success",
+          followers: user.followers
+        });
+      }else{
+        var err= "invalid id";
+        throw err;
+      }
   } catch (err) {
     console.log(err);
     res.status(404).json({
@@ -46,23 +52,29 @@ exports.getAllfollowers = async (req, res) => {
 exports.followUser = async (req, res) => {
     try {
       const IN_User= await User.findById(req.body.id);
-      var count =0;
-      for(var i = 0; i < IN_User.following.length; i++)
+      if(IN_User!==null)
       {
-        if( req.params.id == IN_User.following[i])
-        { count++; }
-       }
-      if(count!==0){ return res.status(403).json({ data : "already followed "})}
-      await User.findByIdAndUpdate(req.body.id,{ $push:{following: req.params.id} });
-      await User.findByIdAndUpdate(req.params.id,{ $push:{followers: req.body.id} });
-      res.status(200).json({
-        status: "success"
-      });
+        var count =0;
+        for(var i = 0; i < IN_User.following.length; i++)
+        {
+          if( req.params.id == IN_User.following[i])
+          { count++; }
+        }
+        if(count!==0){ return res.status(403).json({ data : "already followed "})}
+        await User.findByIdAndUpdate(req.body.id,{ $push:{following: req.params.id} });
+        await User.findByIdAndUpdate(req.params.id,{ $push:{followers: req.body.id} });
+        res.status(200).json({
+          status: "success"
+        });
+      }else{
+        var err= "invalid id";
+        throw err;
+      }
     } catch (err) {
       console.log(err);
       res.status(404).json({
         status: "fail",
-        message: err.message
+        message: err
       });
     }
   };
@@ -77,22 +89,29 @@ exports.followUser = async (req, res) => {
   exports.unfollowUser = async (req, res) => {
     try {
       const IN_User_Artist= await User.findById(req.body.id);
-      var count =0;
-      for(var i = 0; i < IN_User_Artist.following.length; i++){if( req.params.id == IN_User_Artist.following[i]){ count++;} }
-
-      if(count===0) { return res.status(403).json({ data : "invalid deletion"}) }
-
-      await User.findByIdAndUpdate(req.body.id,{ $pull:{following: req.params.id} });
-      await User.findByIdAndUpdate(req.params.id,{ $pull:{followers: req.body.id} });
-
-      res.status(200).json({
-        status: "success"
-      });
+      if(IN_User_Artist!==null)
+      {
+        var count =0;
+        for(var i = 0; i < IN_User_Artist.following.length; i++){if( req.params.id == IN_User_Artist.following[i]){ count++;} }
+  
+        if(count===0) { return res.status(403).json({ data : "invalid deletion"}) }
+  
+        await User.findByIdAndUpdate(req.body.id,{ $pull:{following: req.params.id} });
+        await User.findByIdAndUpdate(req.params.id,{ $pull:{followers: req.body.id} });
+  
+        res.status(200).json({
+          status: "success"
+        });
+      }
+      else{
+        var err= "invalid id";
+        throw err;
+      }
     } catch (err) {
       console.log(err);
       res.status(404).json({
         status: "fail",
-        message: err.message
+        message: err
       });
     }
   };
@@ -111,25 +130,31 @@ exports.followUser = async (req, res) => {
    exports.likePlaylist = async (req, res) => {
     try {
       const IN_User= await User.findById(req.body.id);
+      if(IN_User!==null)
+      {
        var count =0;
        
-      console.log(req.body.id)
-      console.log(req.params.id)
-       for(var i = 0; i < IN_User.playlists.length; i++){
-         if( req.params.id == IN_User.playlists[i]){ count++; } }
+        console.log(req.body.id)
+        console.log(req.params.id)
+        for(var i = 0; i < IN_User.playlists.length; i++){
+          if( req.params.id == IN_User.playlists[i]){ count++; } }
 
-      if(count!==0){ return res.status(403).json({ data : "already followed"})}
-      
-      await User.findByIdAndUpdate(req.body.id,{ $push:{playlists: req.params.id} });
-      await Playlist.findByIdAndUpdate(req.params.id,{ $push:{followers:req.body.id} });
-      res.status(200).json({
-        status: "success"
-      });
+        if(count!==0){ return res.status(403).json({ data : "already followed"})}
+        
+        await User.findByIdAndUpdate(req.body.id,{ $push:{playlists: req.params.id} });
+        await Playlist.findByIdAndUpdate(req.params.id,{ $push:{followers:req.body.id} });
+        res.status(200).json({
+          status: "success"
+        });
+    }else{
+        var err= "invalid id";
+        throw err;
+      }
     } catch (err) {
       console.log(err);
       res.status(404).json({
         status: "fail",
-        message: err.message
+        message: err
       });
     }
   };
@@ -147,22 +172,28 @@ exports.followUser = async (req, res) => {
     try {
 
       const IN_User= await User.findById(req.body.id);
-      var count =0;
-      
-      for(var i = 0; i < IN_User.playlists.length; i++){if( req.params.id == IN_User.playlists[i]){ count++;} }
+      if(IN_User!==null)
+      {
+        var count =0;
+        
+        for(var i = 0; i < IN_User.playlists.length; i++){if( req.params.id == IN_User.playlists[i]){ count++;} }
 
-      if(count===0) { return res.status(403).json({ data : "invalid deletion"}) }
+        if(count===0) { return res.status(403).json({ data : "invalid deletion"}) }
 
-      await User.findByIdAndUpdate(req.body.id,{ $pull:{playlists: req.params.id} });
-      await Playlist.findByIdAndUpdate(req.params.id,{ $pull:{followers:req.body.id} });
-      res.status(200).json({
-        status: "success"
-      });
+        await User.findByIdAndUpdate(req.body.id,{ $pull:{playlists: req.params.id} });
+        await Playlist.findByIdAndUpdate(req.params.id,{ $pull:{followers:req.body.id} });
+        res.status(200).json({
+          status: "success"
+        });
+    }else{
+      var err= "invalid id";
+      throw err;
+    }
     } catch (err) {
       console.log(err);
       res.status(404).json({
         status: "fail",
-        message: err.message
+        message: err
       });
     }
   };
@@ -184,22 +215,29 @@ exports.followUser = async (req, res) => {
   exports.likeTracks = async (req, res) => {
     try {
       const IN_User= await User.findById(req.body.id);
-      var count =0;
-      for(var i = 0; i < IN_User.tracks.length; i++){
-        if( req.params.id == IN_User.tracks[i]){ count++; } }
-        
-      if(count!==0){ return res.status(403).json({ data : "already followed"})}
+      if(IN_User!==null)
+      {
+        var count =0;
+        for(var i = 0; i < IN_User.tracks.length; i++){
+          if( req.params.id == IN_User.tracks[i]){ count++; } }
+          
+        if(count!==0){ return res.status(403).json({ data : "already followed"})}
 
-      await User.findByIdAndUpdate(req.body.id,{ $push:{tracks: req.params.id} });
-      await track.findByIdAndUpdate(req.params.id,{ $push:{likers: req.body.id} });
-      res.status(200).json({
-        status: "success"
-      });
+        await User.findByIdAndUpdate(req.body.id,{ $push:{tracks: req.params.id} });
+        await track.findByIdAndUpdate(req.params.id,{ $push:{likers: req.body.id} });
+        res.status(200).json({
+          status: "success"
+        });
+      }
+      else{
+        var err= "invalid id";
+        throw err;
+      }
     } catch (err) {
       console.log(err);
       res.status(404).json({
         status: "fail",
-        message: err.message
+        message: err
       });
     }
   };
@@ -214,21 +252,27 @@ exports.followUser = async (req, res) => {
    exports.dislikeTracks= async (req, res) => {
     try {
       const IN_User= await User.findById(req.body.id);
-      var count =0;
-      for(var i = 0; i < IN_User.tracks.length; i++){if( req.params.id == IN_User.tracks[i]){ count++;} }
+      if(IN_User!==null)
+      {
+        var count =0;
+        for(var i = 0; i < IN_User.tracks.length; i++){if( req.params.id == IN_User.tracks[i]){ count++;} }
 
-      if(count===0) { return res.status(403).json({ data : "invalid deletion"}) }
+        if(count===0) { return res.status(403).json({ data : "invalid deletion"}) }
 
-      await User.findByIdAndUpdate(req.body.id,{ $pull:{tracks: req.params.id} });
-      await track.findByIdAndUpdate(req.params.id,{ $pull:{likers: req.body.id} });
-      res.status(200).json({
-        status: "success"
-      });
+        await User.findByIdAndUpdate(req.body.id,{ $pull:{tracks: req.params.id} });
+        await track.findByIdAndUpdate(req.params.id,{ $pull:{likers: req.body.id} });
+        res.status(200).json({
+          status: "success"
+        });
+      }else{
+        var err= "invalid id";
+        throw err;
+      }
     } catch (err) {
       console.log(err);
       res.status(404).json({
         status: "fail",
-        message: err.message
+        message: err
       });
     }
   };
@@ -250,22 +294,28 @@ exports.followUser = async (req, res) => {
   exports.likeArtist = async (req, res) => {
     try {
        const IN_User= await User.findById(req.body.id);
-       var count =0;
-       for(var i = 0; i < IN_User.artists.length; i++){
-         if( req.params.id == IN_User.artists[i]){ count++; } }
+      if(IN_User!==null)
+      {
+        var count =0;
+        for(var i = 0; i < IN_User.artists.length; i++){
+          if( req.params.id == IN_User.artists[i]){ count++; } }
 
-      if(count!==0){ return res.status(403).json({ data : "already followed"})}
-      
-      await User.findByIdAndUpdate(req.body.id,{ $push:{artists: req.params.id} });
-      await Artist.findByIdAndUpdate(req.params.id,{ $push:{followers: req.body.id} });
-      res.status(200).json({
-        status: "success"
-      });
+        if(count!==0){ return res.status(403).json({ data : "already followed"})}
+        
+        await User.findByIdAndUpdate(req.body.id,{ $push:{artists: req.params.id} });
+        await Artist.findByIdAndUpdate(req.params.id,{ $push:{followers: req.body.id} });
+        res.status(200).json({
+          status: "success"
+        });
+      }else{
+        var err= "invalid id";
+        throw err;
+      }
     } catch (err) {
       console.log(err);
       res.status(404).json({
         status: "fail",
-        message: err.message
+        message: err
       });
     }
   };
@@ -281,21 +331,28 @@ exports.followUser = async (req, res) => {
    exports.dislikeArtist= async (req, res) => {
     try { 
       const IN_User= await User.findById(req.body.id);
-      var count =0;
-      for(var i = 0; i < IN_User.artists.length; i++){if( req.params.id == IN_User.artists[i]){ count++;} }
+      if(IN_User!==null)
+      {
+        var count =0;
+        for(var i = 0; i < IN_User.artists.length; i++){if( req.params.id == IN_User.artists[i]){ count++;} }
 
-      if(count===0) { return res.status(403).json({ data : "invalid deletion"}) }
-      
-      await User.findByIdAndUpdate(req.body.id,{ $pull:{artists: req.params.id} });
-      await Artist.findByIdAndUpdate(req.params.id,{ $pull:{followers: req.body.id} });
-      res.status(200).json({
-        status: "success"
-      });
-    } catch (err) {
+        if(count===0) { return res.status(403).json({ data : "invalid deletion"}) }
+        
+        await User.findByIdAndUpdate(req.body.id,{ $pull:{artists: req.params.id} });
+        await Artist.findByIdAndUpdate(req.params.id,{ $pull:{followers: req.body.id} });
+        res.status(200).json({
+          status: "success"
+        });
+      }else{
+        var err= "invalid id";
+        throw err;
+      }
+    } catch (err) 
+    {
       console.log(err);
       res.status(404).json({
         status: "fail",
-        message: err.message
+        message: err
       });
     }
   };
@@ -315,23 +372,29 @@ exports.followUser = async (req, res) => {
    exports.likeAlbum = async (req, res) => {
     try {
       const IN_User= await User.findById(req.body.id);
-      var count =0;
-      for(var i = 0; i < IN_User.albums.length; i++){
-        if( req.params.id == IN_User.albums[i]){ count++; } }
-        
-      if(count!==0){ return res.status(403).json({ data : "already followed "})}
+      if(IN_User!==null)
+      {
+        var count =0;
+        for(var i = 0; i < IN_User.albums.length; i++){
+          if( req.params.id == IN_User.albums[i]){ count++; } }
+          
+        if(count!==0){ return res.status(403).json({ data : "already followed "})}
 
-      
-      await User.findByIdAndUpdate(req.body.id,{ $push:{albums: req.params.id} });
-      await Album.findByIdAndUpdate(req.params.id,{ $push:{followers: req.body.id} });
-      res.status(200).json({
-        status: "success"
-      });
+        
+        await User.findByIdAndUpdate(req.body.id,{ $push:{albums: req.params.id} });
+        await Album.findByIdAndUpdate(req.params.id,{ $push:{followers: req.body.id} });
+        res.status(200).json({
+          status: "success"
+        });
+      }else{
+        var err= "invalid id";
+        throw err;
+      }
     } catch (err) {
       console.log(err);
       res.status(404).json({
         status: "fail",
-        message: err.message
+        message: err
       });
     }
   };
@@ -347,22 +410,28 @@ exports.followUser = async (req, res) => {
    exports.dislikeAlbum = async (req, res) => {
     try {
       const IN_User= await User.findById(req.body.id);
-      var count =0;
-      for(var i = 0; i < IN_User.albums.length; i++){if( req.params.id == IN_User.albums[i]){ count++;} }
+      if(IN_User!==null)
+      {
+        var count =0;
+        for(var i = 0; i < IN_User.albums.length; i++){if( req.params.id == IN_User.albums[i]){ count++;} }
 
-      if(count===0) { return res.status(403).json({ data : "invalid deletion"}) }
+        if(count===0) { return res.status(403).json({ data : "invalid deletion"}) }
 
-      const us =await User.findByIdAndUpdate(req.body.id,{ $pull:{albums: req.params.id} });
-      await Album.findByIdAndUpdate(req.params.id,{ $pull:{followers: req.body.id} });
-      console.log(us)
-      res.status(200).json({
-        status: "success"
-      });
+        const us =await User.findByIdAndUpdate(req.body.id,{ $pull:{albums: req.params.id} });
+        await Album.findByIdAndUpdate(req.params.id,{ $pull:{followers: req.body.id} });
+        console.log(us)
+        res.status(200).json({
+          status: "success"
+        });
+      }else{
+        var err= "invalid id";
+        throw err;
+      }
     } catch (err) {
       console.log(err);
       res.status(404).json({
         status: "fail",
-        message: err.message
+        message: err
       });
     }
   };
