@@ -1,5 +1,11 @@
 const Album = require(`./../models/album.js`);
 
+/**
+ * @module controller/album
+*/
+
+
+
 
 //I NEED TO KNOW WILL ARTIST ONLY ACCESS THIS ?
 
@@ -8,6 +14,13 @@ const Album = require(`./../models/album.js`);
 
 // }
 
+/**
+   * @property {Function} getAlbumById  creats a new album 
+   * @param {object} req - request object
+   * @param {string} req.params.id - album id 
+   * @param {object} res - response object
+   * @param {object} res.body.data - returns the newly created album object
+*/
 
 exports.getAlbumById =async (req, res)=>
 {
@@ -28,6 +41,13 @@ exports.getAlbumById =async (req, res)=>
         });
       }
 }
+/**
+   * @property {Function} getAlbumTracks  get album tracks 
+   * @param {object} req - request object
+   * @param {string} req.params.id - album id 
+   * @param {object} res - response object
+   * @param {object} res.body.data - returns the added track ids
+*/
 
 exports.getAlbumTracks  = async (req, res) => {    //api done
     try {
