@@ -77,7 +77,14 @@ userSchema = mongoose.Schema({
     artists:[{
         type: mongoose.Types.ObjectId,
         ref: 'Artist'
-    }]
+    }],
+    notifications: [{
+        event: String,
+        read: Boolean,
+        details:{}
+
+    }],
+    pushSubscription: String
 });
 
 
