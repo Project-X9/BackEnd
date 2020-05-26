@@ -1,6 +1,6 @@
  const superagent = require("superagent");
  const domainName = `http://localhost:${process.env.PORT}/api/v1`;
- require("./../src/index");
+ require("./../src/index.js");
 
  var valid_id="5e877b8fae42032b7c867feb";
 

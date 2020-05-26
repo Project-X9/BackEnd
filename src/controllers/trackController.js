@@ -36,9 +36,9 @@ exports.getTracks = async (req, res) => {
 
 
 /**
- * 
- * @property {Function} getCategoryById
- * @param {object} req - request object
+  * 
+  * @property {Function} getCategoryById
+  * @param {object} req - request object
   * @param {string} req.params.id  -tracks id
   * @param {object} res - response object
   * @param  {String} res.body.name

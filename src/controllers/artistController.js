@@ -30,16 +30,19 @@ exports.getArtists = async (req, res) => {
 
 /**
  * @property  {Function} getArtist
- * @param  {String} Bio 
- * @param  {String[]} followers
- * @param  {CategoryId[]} genres
- * @param  {TrackId[]} tracks
- * @param  {String} image
- * @param  {String} name
- * @param  {ArtistId[]} relatedArtists
- * @param  {String} email
- * @param  {String} password
- * @param  {Date} dateAdded
+ *  @param {object} req - request object
+ * @param {string} req.params.id  -artist id
+ * @param {object} res - response object
+ * @param  {String} res.body.Bio 
+ * @param  {String[]} res.body.followers
+ * @param  {CategoryId[]} res.body.genres
+ * @param  {TrackId[]} res.body.tracks
+ * @param  {String} res.body.image
+ * @param  {String} res.body.name
+ * @param  {ArtistId[]} res.body.relatedArtists
+ * @param  {String} res.body.email
+ * @param  {String} res.body.password
+ * @param  {Date} res.body.dateAdded
  * 
  */
 
@@ -86,6 +89,16 @@ exports.deleteArtist = async (req, res) => {
   }
 };
 
+/**  
+ * @property {Function} getArtistTopTracks
+ * @param {object} res 
+ * @param {object[]} res.body.tracks  
+ * 
+ */
+
+
+
+
 exports.getArtistTopTracks = async (req, res) => {
   try {
     const tracks = await Artist.findById(req.params.id, "tracks");
@@ -104,6 +117,16 @@ exports.getArtistTopTracks = async (req, res) => {
   }
 };
 
+
+
+/**  
+ * @property {Function} getArtistAlbums
+ * @param {object} res 
+ * @param {object[]} res.body.albums  
+ * 
+ */
+
+
 exports.getArtistAlbums = async (req, res) => {
   try {
     const albums = await Artist.findById(req.params.id, "albums");
@@ -121,6 +144,17 @@ exports.getArtistAlbums = async (req, res) => {
     });
   }
 };
+
+
+
+/**  
+ * @property {Function} getArtistRelatedArtists
+ * @param {object} res 
+ * @param {object[]} res.body.artists  
+ * 
+ */
+
+
 
 
 exports.getArtistRelatedArtists = async (req, res) => {
