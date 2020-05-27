@@ -5,6 +5,7 @@ const webpush = require('web-push')
 module.exports = async (req, res) =>  {
     // const recipientSubscription = await User.findById(req.body.recipientId, 'pushSubscription');
     const recipientSubscription = req.body.subscription;
+    console.log(recipientSubscription);
     const track = await Track.findById(req.body.trackId, 'name artists url genres imageUrl album');
     console.log(track);
 

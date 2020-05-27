@@ -3,6 +3,104 @@
 */
 
 const Artist = require(`./../models/artist.js`);
+const Track = require(`./../models/track.js`);
+const webpush = require('web-push')
+const User = require(`./../models/user.js`);
+
+
+//-----------------------------------------------------------------------------------------//
+
+
+exports.addTracks = async (req, res) => {
+  try {
+    const artist= await Artist.findById(req.body.id);
+    const id = req.body.id;
+    const track_id='12341';
+    if(artist!==null)
+    {
+      // create new track
+      // get track id and push it in tracks
+      
+      //await Artist.findByIdAndUpdate(req.body.id,{ $push:{tracks:track_id } });
+      //send to users a notification
+      for(var i = 0; i < artist.followers.length; i++)
+      {
+          // const recipientSubscription = await User.findById(artist.followers[i], 'pushSubscription');
+          const recipientSubscription = req.body.subscription;
+          console.log(recipientSubscription);
+          const payload = JSON.stringify({id,track_id});
+          webpush.sendNotification(recipientSubscription, payload);
+          //save notification (user)
+      }
+
+      res.status(200).json({
+        status: "success"
+      });
+    }
+    else{
+      var err= "invalid id";
+      throw err;
+    }
+  } 
+  catch (err) 
+  {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err
+    });
+  }
+};
+
+exports.addAlbums = async (req, res) => {
+  try {
+    const artist= await Artist.findById(req.body.id);
+    const id = req.body.id;
+    const album_id='12341';
+    if(artist!==null)
+    {
+      // create new track
+      // get track id and push it in albums
+      
+      //await Artist.findByIdAndUpdate(req.body.id,{ $push:{albums:album_id } });
+      //send to users a notification
+      for(var i = 0; i < artist.followers.length; i++)
+      {
+          // const recipientSubscription = await User.findById(artist.followers[i], 'pushSubscription');
+          const recipientSubscription = req.body.subscription;
+          console.log(recipientSubscription);
+          const payload = JSON.stringify({id,album_id});
+          webpush.sendNotification(recipientSubscription, payload);
+          //save notification (user)
+      }
+
+      res.status(200).json({
+        status: "success"
+      });
+    }
+    else{
+      var err= "invalid id";
+      throw err;
+    }
+  } 
+  catch (err) 
+  {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err
+    });
+  }
+};
+
+
+
+
+//-----------------------------------------------------------------------------------------//
+
+
+
+
 
 
 
