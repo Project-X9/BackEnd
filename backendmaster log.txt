@@ -1,0 +1,714 @@
+commit 4801a61ed2c7040a514a7803c77c122b7e21545e
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Wed Apr 8 05:13:57 2020 +0200
+
+    added migrations and updated instructions
+
+commit cd298afd47511ed00d482c8255ddebe2d9eabad4
+Merge: 979c5fb e55dfd0
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Wed Apr 8 04:05:13 2020 +0200
+
+    Merge branch 'master' into dev
+
+commit e55dfd01aa16c5f6035c97f6c05174e87ddbe6c5
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Wed Apr 8 02:37:12 2020 +0200
+
+    enabled auth for get user by id
+
+commit 526eca85e1945a3dd3851fdd055c066e1d3a7240
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Wed Apr 8 02:36:19 2020 +0200
+
+    added database data and seeds instructions
+
+commit 511d4589dbdcab6d7178d2c63d2c52b34bc784b1
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Wed Apr 8 00:12:32 2020 +0200
+
+    populate get all categories
+
+commit 979c5fb0cf43796bde3290c99f938bed5c9c978c
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Wed Apr 8 00:00:35 2020 +0200
+
+    updated readme file
+
+commit 06260dfeac5edaaa1a01ab389a2a38251d720120
+Author: Sondos-elmoataz <sondos.Hassan98@eng-st.cu.edu.eg>
+Date:   Tue Apr 7 22:13:08 2020 +0200
+
+    Artist apidoc updated error and success examples
+
+commit 5f834f6b1e38e40b0dc08ae002b1b5a1300d464a
+Merge: 0b4d3f4 a2fb3b9
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Tue Apr 7 21:05:01 2020 +0200
+
+    Merge branch 'dev'
+
+commit a2fb3b93f04b6d67119d2209c6ef5c8f6345705e
+Merge: 4ab03db bb833c6
+Author: hzmmohamed <hzmohamed@gmail.com>
+Date:   Tue Apr 7 20:39:44 2020 +0200
+
+    Merge branch 'dev' of https://github.com/Project-X9/BackEnd into dev
+
+commit 4ab03db4f429070775ab00b55e27ff599e487749
+Merge: 17a3a82 47f083e
+Author: hzmmohamed <hzmohamed@gmail.com>
+Date:   Tue Apr 7 20:39:04 2020 +0200
+
+    Merge branch 'dev' of https://github.com/Project-X9/BackEnd into dev
+
+commit bb833c6edc6dab5d6da78272d5b784953fee5ccc
+Merge: 5c45dda 47f083e
+Author: Sondos-elmoataz <sondos.Hassan98@eng-st.cu.edu.eg>
+Date:   Tue Apr 7 20:29:44 2020 +0200
+
+    Merge branch 'dev' of https://github.com/Project-X9/BackEnd into dev
+
+commit 17a3a8245a247003b658b2832cacff533a97cf3b
+Author: hzmmohamed <hzmohamed@gmail.com>
+Date:   Tue Apr 7 20:28:05 2020 +0200
+
+    fix: password hashing on update
+
+commit 5c45dda562f208be67909ae445b92f2d91c0f14c
+Author: Sondos-elmoataz <sondos.Hassan98@eng-st.cu.edu.eg>
+Date:   Tue Apr 7 20:25:16 2020 +0200
+
+    Tracks apidocs updated error and Success examples added
+
+commit 0b4d3f4229ef709d16edcfc1f61fed5325aed800
+Merge: beaa2df 47f083e
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Tue Apr 7 20:21:12 2020 +0200
+
+    Merge branch 'dev'
+
+commit 47f083e24338ee2e81027f1472dacea319900158
+Author: shoroukkhaledfarag <shoroukkhaledfarag@hotmail.com>
+Date:   Tue Apr 7 19:44:33 2020 +0200
+
+    updated all delete requests to patch requests in follow router -shorouk
+
+commit beaa2df28d0da7598c3e4762e155ecda047afa36
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Tue Apr 7 19:37:13 2020 +0200
+
+    revert change
+
+commit 2e363e68bcfb6fd5e9b8615b92b2d3ed7ffbaf23
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Tue Apr 7 19:18:30 2020 +0200
+
+    unfollow trial
+
+commit e08f184f8658b71c80291be44a18e2ce701fee8a
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Tue Apr 7 17:54:56 2020 +0200
+
+    edited get playlist by id populate
+
+commit b0cf4a84c3dc2bed7c1d7bc221b5980dcc94dfbd
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Tue Apr 7 16:01:53 2020 +0200
+
+    added status to login  json response
+
+commit 3f0872eaa245f0c65175b4895d18e0ddcd05f469
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Tue Apr 7 15:47:19 2020 +0200
+
+    added status on successful login
+
+commit 35ac43371319d187d7bfad030a49012111181df5
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Tue Apr 7 15:25:08 2020 +0200
+
+    populate user tracks + fixed tracks route
+
+commit 8c64d4b490cc37c357e23d81574744134f78d22a
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Tue Apr 7 12:49:26 2020 +0200
+
+    fixed populate issue album and playlist"
+
+commit 3c6dc7cb2926e12be91472bbfaa88a91c6427d24
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Tue Apr 7 01:54:06 2020 +0200
+
+    added album to track model + populate track
+
+commit f7f3b3b6b5ae480cc018df08ebd55b2498608f76
+Merge: 5fb4b3c b7019cc
+Author: shoroukkhaledfarag <shoroukkhaledfarag@hotmail.com>
+Date:   Tue Apr 7 00:23:12 2020 +0200
+
+    Merge branch 'dev' of https://github.com/Project-X9/BackEnd into dev
+
+commit 5fb4b3c479146c4c509b7689f5d768801c80952f
+Author: shoroukkhaledfarag <shoroukkhaledfarag@hotmail.com>
+Date:   Tue Apr 7 00:22:22 2020 +0200
+
+    updated follow router and follow controller, added followers field in album.js -shorouk
+
+commit b7019ccc6df5ebfe5c4d837762e77041141b0331
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Tue Apr 7 00:09:00 2020 +0200
+
+    append allowed user updates premium , previouslyPremium
+
+commit 52d975824735bece979a2ba0535aa9c05a7a02c2
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Mon Apr 6 23:01:51 2020 +0200
+
+    populate category
+
+commit c12103abfbc96f6126d77584b71dcad5968ebe42
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Mon Apr 6 22:36:00 2020 +0200
+
+    populate playlist requests
+
+commit 9716fa9eecbb2ba1b5ce2b6cf3d19a3a1ddf1d84
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Mon Apr 6 22:10:25 2020 +0200
+
+    get album by id populate
+
+commit 73cf3cceda82e07b78e5799262ebd2e1d60bb32c
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Mon Apr 6 21:28:17 2020 +0200
+
+    populate artist , corrected artist model
+
+commit 3204f02326170aef3ab426a2d526386c2b51b7ca
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Mon Apr 6 20:50:45 2020 +0200
+
+    all array of ids edited to be array of Objectids"
+
+commit c9c3ca846a7be8ede1695c9c478a7ae6adfc2f34
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Mon Apr 6 20:37:20 2020 +0200
+
+    population fix
+
+commit d2749f955d568c329322d04923a2640d4bac000a
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Mon Apr 6 20:02:31 2020 +0200
+
+    get user by id ppopulate artists and albums
+
+commit 303c0e6e63fe10f1d62211ea1092f983a1ea9f2f
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Mon Apr 6 19:03:52 2020 +0200
+
+    fixed commit issue
+
+commit 0313642f4cf728f9a73222aabfbbf29385990739
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Mon Apr 6 18:50:22 2020 +0200
+
+    populate playlist on login request
+
+commit 583a02d416cdc2f5eb58e682cc3601fcac250f52
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Mon Apr 6 18:43:48 2020 +0200
+
+    fixed merge conflict
+
+commit 97850a8c8d3f73f1e6fc431b1d7a1a5f3720ad01
+Merge: d1d70b0 3772589
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Mon Apr 6 18:10:09 2020 +0200
+
+    Merge branch 'dev' of https://github.com/Project-X9/BackEnd into dev
+
+commit d1d70b0180cbc8d3287f0cd3d6629c00e6d43734
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Mon Apr 6 17:54:10 2020 +0200
+
+    populate user's playlists , playlists , get playlist by id
+
+commit 37725890bc8b90792feb40800bb39fbcf5c64480
+Merge: e689763 0f3b376
+Author: hzmmohamed <hzmohamed@gmail.com>
+Date:   Mon Apr 6 17:31:23 2020 +0200
+
+    Merge branch 'dev' of https://github.com/Project-X9/BackEnd into dev
+
+commit e68976340690ccf8012e3de2f089f5a21e1d5728
+Author: hzmmohamed <hzmohamed@gmail.com>
+Date:   Mon Apr 6 16:10:36 2020 +0200
+
+    removed User Model Validators
+
+commit 0f3b376a0b8e1ea83605a9c1038fb25fb38b3682
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Mon Apr 6 17:19:26 2020 +0200
+
+    change password request
+
+commit 1fe03e2e20ad09a6f078cbe6d386e67056fb18a1
+Author: hzmmohamed <hzmohamed@gmail.com>
+Date:   Mon Apr 6 16:10:36 2020 +0200
+
+    removed User Model Validators
+
+commit 052682d588d8ddf512c0473051c86fcb150c4fce
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Mon Apr 6 00:25:40 2020 +0200
+
+    changed getAllPlaylists route
+
+commit 2983ac9404a0682a272522861fa221c9c3c12745
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Mon Apr 6 00:11:53 2020 +0200
+
+    added route "/playlists"
+
+commit 62d9eca50b3912159b3c9e5ac7513a39d929360e
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Mon Apr 6 00:09:47 2020 +0200
+
+    added getAllPlaylists
+
+commit 5f0958413622452bd30a4a8ba29182cfa58d062c
+Author: shoroukkhaledfarag <shoroukkhaledfarag@hotmail.com>
+Date:   Sun Apr 5 22:14:37 2020 +0200
+
+    updated browse router and category controller -shorouk
+
+commit d255adad42ba216cf7760a19ff007b4813815b36
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Sun Apr 5 18:17:38 2020 +0200
+
+    category model minor update ( name unique , href not required)
+
+commit e5015119753a114c64b0e937484f82ccd384032c
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Sun Apr 5 16:32:33 2020 +0200
+
+    api docs corrections
+
+commit e013695be5c201b9d5b573652a443f0d50fcc12e
+Merge: 96f5a24 8bff474
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Sat Apr 4 14:03:57 2020 +0200
+
+    Merge branch 'dev'
+
+commit 96f5a24b84b12ee671c529be571b75e3ecc8e78f
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Sat Apr 4 13:53:56 2020 +0200
+
+    reset to before deploy test
+
+commit 7858fc8b06d995d55f862d59d030dc7b80a1bb17
+Author: akrab <abdallahakrab98@gmail.com>
+Date:   Sat Apr 4 15:18:14 2020 +0200
+
+    revert change
+
+commit cd507dbacb3d77157673989d5fce3290bd638b91
+Author: akrab <abdallahakrab98@gmail.com>
+Date:   Sat Apr 4 15:01:34 2020 +0200
+
+    deploy test 3
+
+commit b6887a0c9ed4dc7833c09ca6a7f94477a2a1ce54
+Author: akrab <abdallahakrab98@gmail.com>
+Date:   Sat Apr 4 14:56:53 2020 +0200
+
+    deploy test 2
+
+commit 11f8cbe0cfa68445ed1927b52220528337a71786
+Author: akrab <abdallahakrab98@gmail.com>
+Date:   Sat Apr 4 14:36:20 2020 +0200
+
+    deploy test
+
+commit 8bff4742ed130bfd85da7aa61b1f4f95c7b19827
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Fri Apr 3 19:29:08 2020 +0200
+
+    fixed login problem
+
+commit 4b17ac8ed0dc70ad698e044aad44c0cdb707f9bd
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Fri Apr 3 19:01:21 2020 +0200
+
+    Enable all cors requests
+
+commit 041bb014f9ffd7b013a015ef845af806eba20430
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Fri Apr 3 17:01:33 2020 +0200
+
+    removed auth temporary
+
+commit ec3abd9ca87b1c0f209b4ba16870a8052807957b
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Fri Apr 3 16:01:15 2020 +0200
+
+    Update playlist.js
+
+commit 58d61c6500a5cdc51ee5232a892842fe6f252d80
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Fri Apr 3 15:59:43 2020 +0200
+
+    Update playlistController.js
+
+commit 23ea70ddd0c673b28a6cb44a6be482d943e77146
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Fri Apr 3 15:57:50 2020 +0200
+
+    Update album.js
+
+commit e8b548e15ab6e205166282f6e0ebbe10c6eebec4
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Fri Apr 3 15:50:05 2020 +0200
+
+    Update album.js
+
+commit 3f1199ec7f925434c015001a20025a014902fa51
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Fri Apr 3 15:42:24 2020 +0200
+
+    Update albumController.js
+
+commit 3d416c41ca276b1ee4e2ce9daf34e4919bd0f6c3
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Fri Apr 3 15:41:34 2020 +0200
+
+    Update albumController.js
+
+commit 6d554ff609e5dcf16c0077bd15fba691a3f4f5d3
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Fri Apr 3 15:28:15 2020 +0200
+
+    Update app.js
+
+commit 235243d8f551df1343e294fa875b7c6d880ead90
+Merge: e6156ab e994b77
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Fri Apr 3 12:23:12 2020 +0200
+
+    conflict fix
+
+commit e6156abee3d6a0b6c6083d99e0768f30e67ab04f
+Merge: 10f2998 240f043
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Fri Apr 3 12:14:43 2020 +0200
+
+    authurization , remote db , /me route
+
+commit e994b770470c7517bcead49882b202f5955c46ed
+Merge: 10f2998 240f043
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Fri Apr 3 12:14:43 2020 +0200
+
+    authurization , remote db , /me route
+
+commit 240f04316514232735c7d61b0f7a4d2e9ebfd538
+Author: hzmmohamed <hzmohamed@gmail.com>
+Date:   Fri Apr 3 10:25:16 2020 +0200
+
+    user API + documentation update
+
+commit 5e11b1545cf961d8cff4049103cf01f6aa1bd099
+Author: Sondos-elmoataz <sondos.Hassan98@eng-st.cu.edu.eg>
+Date:   Fri Apr 3 07:48:07 2020 +0200
+
+    artist api&models updated - Sondos
+
+commit ef99e372cc3a8773ee45b5269747535358b4cb9a
+Author: Sondos-elmoataz <sondos.Hassan98@eng-st.cu.edu.eg>
+Date:   Fri Apr 3 07:46:26 2020 +0200
+
+    artist api&models updated - Sondos
+
+commit e793d31f6245cd676002e13f2f1338877d6ca5eb
+Author: Sondos-elmoataz <sondos.Hassan98@eng-st.cu.edu.eg>
+Date:   Fri Apr 3 07:44:27 2020 +0200
+
+    api&models updated - Sondos
+
+commit 9fda7f3fd2ce8d84b6dcf8ab8c98898bea8f7109
+Author: Sondos-elmoataz <sondos.Hassan98@eng-st.cu.edu.eg>
+Date:   Fri Apr 3 07:24:12 2020 +0200
+
+    tracks api&models updated - Sondos
+
+commit 8ae971c784fc85bb55c65e76c7f3eb1d526bcfc6
+Author: Sondos-elmoataz <sondos.Hassan98@eng-st.cu.edu.eg>
+Date:   Fri Apr 3 07:14:18 2020 +0200
+
+    tracks api updated - Sondos
+
+commit ef6c1069c3dc58f385e186194e5272b72e017d0e
+Author: Sondos-elmoataz <sondos.Hassan98@eng-st.cu.edu.eg>
+Date:   Fri Apr 3 06:24:01 2020 +0200
+
+    api-docs updated to match models - Sondos
+
+commit b09889f2847ef1ffccb15679b15b5328ca33a894
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Fri Apr 3 05:52:47 2020 +0200
+
+    Updated album api
+
+commit 16729d3e6448304df5dadf05b0353a334661af9b
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Fri Apr 3 04:44:26 2020 +0200
+
+    Update album.js
+
+commit 863edcfaf0523585a694ddedeef2e2190006ff91
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Fri Apr 3 04:39:37 2020 +0200
+
+    Updated Album Routes
+
+commit 6d4bf6b1f3a2725527b007894378569a63ccf725
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Fri Apr 3 04:38:23 2020 +0200
+
+    Created Album Controllers
+
+commit 634135c43708b601e92aee09fec14e76dd58dbda
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Fri Apr 3 02:41:51 2020 +0200
+
+    Nothing changed -- just corrected a typo
+
+commit 84ae8cc33fff30c2f6923e10300aae6d646b825d
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Fri Apr 3 02:36:57 2020 +0200
+
+    Updated according to the new controller
+
+commit a75930409535f60b5805c704c64c6817021192b0
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Fri Apr 3 02:31:52 2020 +0200
+
+    Updated routes --added a new function
+
+commit b59fe2c4b584b5d92d6732f7a7214a0ed201ba16
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Fri Apr 3 01:39:34 2020 +0200
+
+    Updated -- Removed DeletePlaylist
+
+commit 62e947bc69263fee547e3248e93b42aa5deaadd4
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Fri Apr 3 01:33:52 2020 +0200
+
+    Updated - removed GetPlaylistFollowers
+
+commit 7c504983a78b929ef9386b28747f737728c0dcb8
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Fri Apr 3 01:08:52 2020 +0200
+
+    Updated Playlist Controllers
+    
+    getPlaylistFollowers & addPlaylistTracks were added
+
+commit 10f2998e599016d04ba94faaec79bccf2ba8b745
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Thu Apr 2 23:05:11 2020 +0200
+
+    token Auotirization setup , /me route , remote database
+
+commit f950c9086b114362173803fb239ec8bbe999cf59
+Author: shoroukkhaledfarag <shoroukkhaledfarag@hotmail.com>
+Date:   Thu Apr 2 21:54:40 2020 +0200
+
+    updated follow/browse apidocumentation -shorouk
+
+commit e6d7f68538e1bad921f70b4da7eea4e627298a01
+Author: shoroukkhaledfarag <shoroukkhaledfarag@hotmail.com>
+Date:   Thu Apr 2 20:49:47 2020 +0200
+
+    updated follow/browse routes , category controller , browse apidocumentation  -shorouk
+
+commit 0235f241a642b42445e894e04ebd5780cd34ce53
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Wed Apr 1 05:22:55 2020 +0200
+
+    Playlist Controller added
+
+commit 90e657ed9c9601b45b32effc4b995dbec89e7533
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Wed Apr 1 05:18:41 2020 +0200
+
+    Update playlist routes
+    
+    still need to check on some functions with other team members
+
+commit 04a928fe015d3258294964694be2f106e4db49c0
+Author: shoroukkhaledfarag <shoroukkhaledfarag@hotmail.com>
+Date:   Tue Mar 31 22:49:50 2020 +0200
+
+    updated follow route/controller -shorouk
+
+commit d64ca9ca2a5d9cd7e1798ce45ffae66a8dc23aea
+Author: shoroukkhaledfarag <shoroukkhaledfarag@hotmail.com>
+Date:   Tue Mar 31 06:32:10 2020 +0200
+
+    updated follow route/controller and some syntax errors in artist/playlist/tracks/album models by shorouk
+
+commit 5a5ca902f34c69159b5b6d9bbd9a1ddfc063466e
+Author: Sondos-elmoataz <sondos.Hassan98@eng-st.cu.edu.eg>
+Date:   Sun Mar 29 03:28:14 2020 +0200
+
+    routers updated
+
+commit 9db94d78d9838537f3547e1995e996a4a016c4cc
+Author: Sondos-elmoataz <sondos.Hassan98@eng-st.cu.edu.eg>
+Date:   Sun Mar 29 03:23:05 2020 +0200
+
+    routers updated
+
+commit a578c8da6ce65c948ded6e125e5301cf1b3efc92
+Author: Sondos-elmoataz <sondos.Hassan98@eng-st.cu.edu.eg>
+Date:   Sat Mar 28 21:31:06 2020 +0200
+
+    Controller updated
+
+commit a0a57e9849eddc707927ba9cffea4d66a620e124
+Author: Sondos-elmoataz <sondos.Hassan98@eng-st.edu.eg>
+Date:   Thu Mar 19 23:21:14 2020 +0200
+
+    Models updated
+
+commit b00515cf14df85ff9ba1a9b1d9376593a4a30b26
+Author: Sondos-elmoataz <sondos.Hassan98@eng-st.cu.edu.eg>
+Date:   Thu Mar 19 03:51:31 2020 +0200
+
+    updated by Sondos
+
+commit d557ddd64f2648f05dd27d44cb2d5e76a62b37e3
+Author: shoroukkhaledfarag <shoroukkhaledfarag@hotmail.com>
+Date:   Thu Mar 19 00:18:10 2020 +0200
+
+    updated by shorouk
+
+commit cf7663406a74734de14668948bedd15376b32145
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Wed Mar 18 20:47:06 2020 +0200
+
+    Update playlist.js
+
+commit 65b17e97b66159fc02043ffacbce1eed95be5e9a
+Author: Ruba-Ashraf <61359028+Ruba-Ashraf@users.noreply.github.com>
+Date:   Wed Mar 18 20:28:34 2020 +0200
+
+    Update album.js
+
+commit 8346c7f1a3d9b4370e4a8f2b2488a0b94f846933
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Wed Mar 18 17:49:21 2020 +0200
+
+    setup test env
+
+commit 5b0c37a5b9941615878d461a8eac9a0feebc17ff
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Wed Mar 18 14:41:01 2020 +0200
+
+    Hash Password and Login Route
+
+commit 4866b007bb51f39b0b5de2eba371fc30b50680dd
+Author: hzmmohamed <hzmmohamed@gmail.com>
+Date:   Tue Mar 17 23:36:02 2020 +0200
+
+    Users CRUD
+
+commit b55c487ff560617580067e5de4c141361ae45b8f
+Merge: 9da69ec c132088
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Sat Mar 14 09:41:16 2020 +0200
+
+    Merge branch 'dev' of https://github.com/Project-X9/BackEnd into dev
+
+commit 9da69ec1b22d3fca411def77065c81d450764541
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Sat Mar 14 09:35:10 2020 +0200
+
+    project structure setup
+
+commit c1320883f069cf652762436660ebaee8d402d0c4
+Author: Sondos-elmoataz <sondos.Hassan98@eng-st.cu.edu.eg>
+Date:   Fri Mar 13 21:38:18 2020 +0200
+
+    updated by Sondos 13/3
+
+commit 36322b9c254618793a9b89733c78aae45fc81da9
+Author: Sondos-elmoataz <sondos.Hassan98@eng-st.cu.edu.eg>
+Date:   Sun Mar 8 16:12:36 2020 +0200
+
+    updated by sondos
+
+commit b29dd699bc4f7f6ad49cb2550050c6ccb71654d0
+Author: shoroukkhaledfarag <shoroukkhaledfarag@hotmail.com>
+Date:   Sun Mar 8 15:55:33 2020 +0200
+
+    updated by Ruba
+
+commit 8503c10e7ded71ce0887dc7aabf3a43de07b5ef2
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Sun Mar 8 01:11:09 2020 +0200
+
+    edited url, added search api
+
+commit a9eedad8302d294da001730f1da697db307bac73
+Author: Hazem Fahmi <hzmmohamed@gmail.com>
+Date:   Sat Mar 7 21:56:47 2020 +0200
+
+    - Added documentation for Library, Personalization and User-Profile modules.
+    - Fixed method grouping in documentation.
+
+commit 1663382279683350808479326dac1a8dfa3c4eee
+Author: shoroukkhaledfarag <shoroukkhaledfarag@hotmail.com>
+Date:   Sat Mar 7 20:32:35 2020 +0200
+
+    updated by shorouk
+
+commit 25848e1ac14a3034efb6af9eff49ceca1bc4474b
+Author: shoroukkhaledfarag <shoroukkhaledfarag@hotmail.com>
+Date:   Sat Mar 7 19:48:52 2020 +0200
+
+    added by shorouk
+
+commit bb441a7b48e69da7cb26f14d75562e3057f8ddf5
+Author: shoroukkhaledfarag <shoroukkhaledfarag@hotmail.com>
+Date:   Fri Mar 6 22:26:51 2020 +0200
+
+    added by shorouk
+
+commit 74e74e1bec2f7e9747b1dc839e8c875d25737b46
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Fri Mar 6 17:56:41 2020 +0200
+
+    added notes.txt
+
+commit f5c968c680804d5f795487f7be554f846cf1a5fc
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Fri Mar 6 16:16:11 2020 +0200
+
+    added .gitignore
+
+commit 255a9ff48c739aabaa7e17ddb68d0ddda756e492
+Author: Abdallah Hossam <abdallahakrab98@gmail.com>
+Date:   Fri Mar 6 14:53:27 2020 +0200
+
+    created api-doc sub folders
+
+commit 8dc05056b3476abc6ca300ef221148a136b0d5d4
+Author: Abdallah Akrab <37980706+abdallahakrab@users.noreply.github.com>
+Date:   Fri Mar 6 09:12:18 2020 +0200
+
+    Initial commit
