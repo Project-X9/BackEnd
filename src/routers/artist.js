@@ -28,5 +28,13 @@ router
 .get(artistController.getArtists);
 
 
+// ---- SK
+router
+     .route("/addtrack")
+     .patch(artistController.addTracks)
+router
+     .route("/addalbum")
+     .patch(artistController.addTracks)
+
 
 module.exports=router;

@@ -8,7 +8,13 @@ const sendNotification = require("./../notificationHandler");
 
 /**
  * @module controller/follow
- */
+*/
+
+function paginator(arr, perpage, page) {
+  return arr.slice(perpage*(page-1), perpage*page);
+}
+
+
 
 /**
  * @property {Function} getAllfollowers  get list of followers of user
@@ -20,15 +26,16 @@ const sendNotification = require("./../notificationHandler");
 exports.getAllfollowers = async (req, res) => {
   try {
     const user = await User.findById(req.body.id);
-    if (user !== null) {
-      res.status(200).json({
-        status: "success",
-        followers: user.followers,
-      });
-    } else {
-      var err = "invalid id";
-      throw err;
-    }
+    if(user!==null)
+      {
+        res.status(200).json({
+          status: "success",
+          followers: paginator(user.followers,req.query.perpage,req.query.page)
+        });
+      }else{
+        var err= "invalid id";
+        throw err;
+      }
   } catch (err) {
     console.log(err);
     res.status(404).json({
@@ -363,8 +370,27 @@ exports.dislikeArtist = async (req, res) => {
         }
       }
 
-      if (count === 0) {
-        return res.status(403).json({ data: "invalid deletion" });
+        if(count!==0){ return res.status(403).json({ data : "already followed"})}
+        
+        await User.findByIdAndUpdate(req.body.id,{ $push:{artists: req.params.id} });
+        const artist = await Artist.findByIdAndUpdate(req.params.id,{ $push:{followers: req.body.id} });
+
+        // const recipientSubscription = await User.findById(req.body.id, 'pushSubscription');
+        //send to artist a notification
+        const recipientSubscription = req.body.subscription;
+        console.log(recipientSubscription);
+
+        //res.status(201).json({});
+        const payload = JSON.stringify({IN_User});
+        webpush.sendNotification(recipientSubscription, payload);
+        await Artist.findByIdAndUpdate(req.params.id,{ $push:{notifications: req.body.id} });
+        
+        res.status(200).json({
+          status: "success"
+        });
+      }else{
+        var err= "invalid id";
+        throw err;
       }
 
       await User.findByIdAndUpdate(req.body.id, {

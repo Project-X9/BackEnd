@@ -10,8 +10,9 @@ const artistSchema = new mongoose.Schema({
     relatedArtists: [{type: mongoose.Schema.Types.ObjectId,ref:'Artist'}],
     email:String,
     password: String,
-    dateAdded:Date
-
+    dateAdded:Date,
+    albums: [{type: mongoose.Schema.Types.ObjectId,ref:'Album'}],
+    notifications: [{type: mongoose.Schema.Types.ObjectId,ref:'User'}]
 
 });
 
