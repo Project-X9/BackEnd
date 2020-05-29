@@ -32,8 +32,8 @@ router.route('/:id/albums')
 router.route('/:id/tracks/:albumId')
 .delete(userController.deleteAlbums);
 
-// router.route("/:id/top/:type")
-// .get(userController.getTopTracksAndAlbums);
+router.route('/:id/notifs')
+.get(userController.getNotifications)
 
 
 //====================  (AUTHENTICATION) Login ======================

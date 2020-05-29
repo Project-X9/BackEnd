@@ -6,7 +6,7 @@ const ObjectId = require("mongodb").ObjectId;
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().populate('playlists');
+    const users = await User.find().populate("playlists");
     res.status(200).json({
       status: "success",
       results: users.length,
@@ -24,26 +24,26 @@ exports.getAllUsers = async (req, res) => {
 };
 exports.getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).populate([{
-      path: 'albums',
-      populate: {
-        path: 'author'
-      }
-    },
-    {
-      path: 'playlists'
-  
-    },
-  {
-    path: 'artists'
-  },
-{
-  path: 'tracks',
-  populate: {
-
-    path: 'artists'
-  }
-}]); 
+    const user = await User.findById(req.params.id).populate([
+      {
+        path: "albums",
+        populate: {
+          path: "author",
+        },
+      },
+      {
+        path: "playlists",
+      },
+      {
+        path: "artists",
+      },
+      {
+        path: "tracks",
+        populate: {
+          path: "artists",
+        },
+      },
+    ]);
     if (user) {
       res.status(200).json({
         status: "success",
@@ -81,8 +81,17 @@ exports.createUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ['name', 'email', 'password', 'age', 'premium' , 'previouslyPremium'];
-  const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
+  const allowedUpdates = [
+    "name",
+    "email",
+    "password",
+    "age",
+    "premium",
+    "previouslyPremium",
+  ];
+  const isValidOperation = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
   try {
     if (!isValidOperation) {
       return res.status(400).json({
@@ -90,11 +99,11 @@ exports.updateUser = async (req, res) => {
         message: "Bad Request",
       });
     }
-    const user = await User.findById(req.params.id)
+    const user = await User.findById(req.params.id);
     updates.forEach((update) => (user[update] = req.body[update]));
 
     await user.save({
-      validateBeforeSave: true
+      validateBeforeSave: true,
     });
     return res.status(200).json({
       status: "success",
@@ -135,11 +144,10 @@ exports.getCurrentUser = async (req, res) => {
 exports.getTracks = async (req, res) => {
   try {
     const tracks = await User.findById(req.params.id, "tracks").populate({
-      path: 'tracks',
+      path: "tracks",
       populate: {
-    
-        path: 'artists'
-      }
+        path: "artists",
+      },
     });
     res.status(200).json({
       status: "success",
@@ -237,7 +245,7 @@ exports.deleteAlbums = async (req, res) => {
  * @inner
  * @param {object} req -  contains email and password
  * @param {object} res - on success contains status , user object , token string , on failure
- * 
+ *
  * Wrong user credentials result in status code 400 , status:fail
  */
 exports.login = async (req, res) => {
@@ -248,12 +256,9 @@ exports.login = async (req, res) => {
     );
     console.log(user);
     const token = await user.generateAuthToken();
-    res.status(200).send({status: 'success',user, token}); // we will just send json with user info untill its implemented to direct user to his homepage.
-
-
+    res.status(200).send({ status: "success", user, token }); // we will just send json with user info untill its implemented to direct user to his homepage.
   } catch (e) {
-    res.status(400).send({status: 'fail', error:e});
-
+    res.status(400).send({ status: "fail", error: e });
   }
 };
 
@@ -263,3 +268,19 @@ exports.login = async (req, res) => {
 
 //   }
 // }
+
+exports.getNotifications = async (req, res) => {
+  try {
+    const notifications = await User.findById(req.params.id, "notifications");
+    console.log(notifications);
+    res.status(200).json({
+      status: "success",
+      data: notifications,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
