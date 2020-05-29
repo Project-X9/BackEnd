@@ -3,7 +3,7 @@ const Playlist = require(`./../models/playlist.js`);
 const Album = require(`./../models/album.js`);
 const track = require(`./../models/track.js`);
 const Artist = require(`./../models/artist.js`);
-
+const webpush = require('web-push')
 const sendNotification = require("./../notificationHandler");
 
 /**
@@ -310,48 +310,54 @@ exports.dislikeTracks = async (req, res) => {
   }
 };
 
-/**
- * @property {Function} likeArtist  add an artist to the user's artists array and add the user to the array of followers of this artist
- * @param {object} req - request object
- * @param {string} req.body.id - user id
- * @param {string} req.params.id -  id of artist to be followed
- */
+ /**
+   * @property {Function} likeArtist  add an artist to the user's artists array and add the user to the array of followers of this artist
+   * @param {object} req - request object
+   * @param {string} req.body.id - user id   
+   * @param {string} req.params.id -  id of artist to be followed
+*/
 exports.likeArtist = async (req, res) => {
   try {
-    const IN_User = await User.findById(req.body.id);
-    if (IN_User !== null) {
-      var count = 0;
-      for (var i = 0; i < IN_User.artists.length; i++) {
-        if (req.params.id == IN_User.artists[i]) {
-          count++;
-        }
-      }
+     const IN_User= await User.findById(req.body.id);
+    if(IN_User!==null)
+    {
+      var count =0;
+      for(var i = 0; i < IN_User.artists.length; i++){
+        if( req.params.id == IN_User.artists[i]){ count++; } }
 
-      if (count !== 0) {
-        return res.status(403).json({ data: "already followed" });
-      }
+      if(count!==0){ return res.status(403).json({ data : "already followed"})}
+      
+      await User.findByIdAndUpdate(req.body.id,{ $push:{artists: req.params.id} });
+      const artist = await Artist.findByIdAndUpdate(req.params.id,{ $push:{followers: req.body.id} });
 
-      await User.findByIdAndUpdate(req.body.id, {
-        $push: { artists: req.params.id },
-      });
-      await Artist.findByIdAndUpdate(req.params.id, {
-        $push: { followers: req.body.id },
-      });
+      // const recipientSubscription = await User.findById(req.body.id, 'pushSubscription');
+      //send to artist a notification
+      const recipientSubscription = req.body.subscription;
+      console.log(recipientSubscription);
+
+      //res.status(201).json({});
+      const payload = JSON.stringify({IN_User});
+      webpush.sendNotification(recipientSubscription, payload);
+      await Artist.findByIdAndUpdate(req.params.id,{ $push:{notifications: req.body.id} });
+      
       res.status(200).json({
-        status: "success",
+        status: "success"
       });
-    } else {
-      var err = "invalid id";
+    }else{
+      var err= "invalid id";
       throw err;
     }
   } catch (err) {
     console.log(err);
     res.status(404).json({
       status: "fail",
-      message: err,
+      message: err
     });
   }
 };
+
+
+
 
 /**
  * @property {Function} dislikeArtist  remove an artist from the user's artists array and remove the user to the array of followers of this artist
@@ -362,46 +368,23 @@ exports.likeArtist = async (req, res) => {
 exports.dislikeArtist = async (req, res) => {
   try {
     const IN_User = await User.findById(req.body.id);
-    if (IN_User !== null) {
-      var count = 0;
-      for (var i = 0; i < IN_User.artists.length; i++) {
-        if (req.params.id == IN_User.artists[i]) {
-          count++;
-        }
-      }
+    if (IN_User !== null) 
+    {
+          var count = 0;
+          for (var i = 0; i < IN_User.artists.length; i++) {
+            if (req.params.id == IN_User.artists[i]) {
+              count++;
+            }
+          }
 
         if(count!==0){ return res.status(403).json({ data : "already followed"})}
         
-        await User.findByIdAndUpdate(req.body.id,{ $push:{artists: req.params.id} });
-        const artist = await Artist.findByIdAndUpdate(req.params.id,{ $push:{followers: req.body.id} });
-
-        // const recipientSubscription = await User.findById(req.body.id, 'pushSubscription');
-        //send to artist a notification
-        const recipientSubscription = req.body.subscription;
-        console.log(recipientSubscription);
-
-        //res.status(201).json({});
-        const payload = JSON.stringify({IN_User});
-        webpush.sendNotification(recipientSubscription, payload);
-        await Artist.findByIdAndUpdate(req.params.id,{ $push:{notifications: req.body.id} });
+        await User.findByIdAndUpdate(req.body.id,{ $pull:{artists: req.params.id} });
+        await Artist.findByIdAndUpdate(req.params.id,{ $pull:{followers: req.body.id} });
         
         res.status(200).json({
           status: "success"
         });
-      }else{
-        var err= "invalid id";
-        throw err;
-      }
-
-      await User.findByIdAndUpdate(req.body.id, {
-        $pull: { artists: req.params.id },
-      });
-      await Artist.findByIdAndUpdate(req.params.id, {
-        $pull: { followers: req.body.id },
-      });
-      res.status(200).json({
-        status: "success",
-      });
     } else {
       var err = "invalid id";
       throw err;
