@@ -86,7 +86,7 @@ exports.updateCategory = async (req, res) => {
 exports.getAllCategories = async (req, res) => {
   try 
   {
-    const Categories = await Category.find().populate({path: "playlists", populate: ['tracks']});
+    const Categories = await Category.find().populate({path: "playlists", populate: ['tracks','artists']});
     if(Categories!==null)
     {
       res.status(200).json({
