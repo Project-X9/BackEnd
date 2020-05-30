@@ -13,4 +13,8 @@ router
 .delete(trackController.deleteTrack);
 
 
+router
+.route("/getTracksByGenresid/:id")
+.get(trackController.getTracksByGenresid)
+
 module.exports=router;

@@ -1,16 +1,73 @@
 
 
 const Track = require(`./../models/track.js`);
-
+const Category = require(`./../models/category.js`);
 /** 
  * @module controller/tracks
  */
 
-
-
- 
+//--------------------------------------------SHOW SONGS BY GENRE------------------------------------------------//
 /**
    * @property {Function} getTracks  get all categories
+   * @param {object} res - response object
+   * @param {object[]} res.body.Tracks  - categories list
+*/
+
+    
+    exports.getTracksByGenresid = async (req, res) => {
+      try {
+        const tracks_arr = await Track.find().populate("genres","name");
+        const category = await Category.findById(req.params.id);
+        const tracks = [];
+        for(var i =0;i<tracks_arr.length;i++)
+        {
+          if(tracks_arr[i].genres[0].name == category.name)
+              tracks.push(tracks_arr[i]);
+        }
+        res.status(200).json({
+          status: "success",
+          data: {
+            tracks
+          }
+        });
+      } catch (err) {
+        console.log(err);
+        res.status(404).json({
+          status: "fail",
+          message: err.message
+        });
+      }
+    };
+
+
+    exports.getTracksByGenresName = async (req, res) => {
+      try {
+        const tracks_arr = await Track.find().populate("genres","name");;
+        const tracks = [];
+        for(var i =0;i<tracks_arr.length;i++)
+        {
+          if(tracks_arr[i].genres[0].name == req.body.genre)
+              tracks.push(tracks_arr[i]);
+        }
+        res.status(200).json({
+          status: "success",
+          data: {
+            tracks
+          }
+        });
+      } catch (err) {
+        console.log(err);
+        res.status(404).json({
+          status: "fail",
+          message: err.message
+        });
+      }
+    };
+//---------------------------------------------------------------------------------------------------------------//
+
+
+/**
+   * @property {Function} getTracks  get all tracks
    * @param {object} res - response object
    * @param {object[]} res.body.Tracks  - categories list
 */
@@ -37,7 +94,7 @@ exports.getTracks = async (req, res) => {
 
 /**
   * 
-  * @property {Function} getCategoryById
+  * @property {Function} getTrack
   * @param {object} req - request object
   * @param {string} req.params.id  -tracks id
   * @param {object} res - response object
