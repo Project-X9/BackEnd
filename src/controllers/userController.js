@@ -3,13 +3,21 @@
  */
 const User = require(`./../models/user.js`);
 const ObjectId = require("mongodb").ObjectId;
+const sendNotification = require("./../notificationHandler");
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().populate("playlists");
+    let totalCount = await User.countDocuments();
+    totalCount = totalCount.valueOf();
+    const users = await User.find()
+      .populate("playlists")
+      .skip(10 * req.query.page - 1)
+      .limit(10);
     res.status(200).json({
       status: "success",
-      results: users.length,
+      totalCount,
+      page: req.query.page,
+      count: users.length,
       data: {
         users,
       },
@@ -64,6 +72,7 @@ exports.getUser = async (req, res) => {
 exports.createUser = async (req, res) => {
   try {
     const newUser = await User.create(req.body);
+    sendNotification("share-song", newUser._id);
     res.status(201).json({
       status: "success",
       data: {
@@ -271,16 +280,77 @@ exports.login = async (req, res) => {
 
 exports.getNotifications = async (req, res) => {
   try {
-    const notifications = await User.findById(req.params.id, "notifications");
-    console.log(notifications);
+    const user = await User.findById(req.params.id, "notifications");
+    let notifications = user.notifications;
+    const page = req.query.page || 1;
+    notifications = notifications.slice(10 * (page - 1), 10 * page);
     res.status(200).json({
       status: "success",
-      data: notifications,
+      totalCount: user.notifications.length,
+      page: req.query.page,
+      count: notifications.length,
+      data: {
+        notifications,
+      },
     });
   } catch (err) {
     res.status(404).json({
       status: "fail",
       message: err.message,
+    });
+  }
+};
+
+exports.deleteNotifications = async (req, res) => {
+  try {
+    await User.findByIdAndUpdate(req.params.id, { notifications: [] });
+
+    res.status(204).json({
+      status: "success",
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: "fail",
+    });
+  }
+};
+
+exports.updatePushSubscription = async (req, res) => {
+  try {
+    await User.findByIdAndUpdate(req.params.id, {
+      pushSubscription: req.body.pushSubscription,
+    });
+    const user = await User.findById(req.params.id);
+    res.status(200).json({
+      status: "success",
+      data: user,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
+
+exports.shareTrack = async (req, res) => {
+  try {
+    const senderId = req.params.id;
+    const payload = {
+      event: "share-song",
+      senderId,
+      trackId: req.body.trackId,
+      albumId: req.body.trackId,
+    };
+    sendNotification(payload, req.body.recipientId);
+
+    res.status(201).json({
+      status: "success",
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
     });
   }
 };

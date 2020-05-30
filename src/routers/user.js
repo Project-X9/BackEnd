@@ -32,8 +32,16 @@ router.route('/:id/albums')
 router.route('/:id/tracks/:albumId')
 .delete(userController.deleteAlbums);
 
-router.route('/:id/notifs')
+router.route('/:id/notifications')
 .get(userController.getNotifications)
+.delete(userController.deleteNotifications)
+
+router.route('/:id/update-push')
+.post(userController.updatePushSubscription);
+
+router.route('/:id/share-track')
+.post(userController.shareTrack)
+
 
 
 //====================  (AUTHENTICATION) Login ======================
