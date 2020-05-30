@@ -27,8 +27,11 @@ router
 .route("/artists")
 .get(artistController.getArtists);
 
-
 // ---- SK
+
+router
+     .route("/getTopTracks")
+     .get(artistController.getTopTracks)
 router
      .route("/addtrack")
      .patch(artistController.addTracks)

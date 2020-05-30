@@ -8,6 +8,60 @@ const webpush = require('web-push')
 const User = require(`./../models/user.js`);
 
 
+
+
+function paginator(arr, perpage, page) {
+  return arr.slice(perpage*(page-1), perpage*page);
+}
+
+//-------------------------------------------top tracks of an artist----------------------------------------------//
+/**
+ * @property {Function} getTopTracks  get Top Tracks played of tis artist
+ * @param {object} req - request object
+ * @param {string} req.body.id - artist id
+ * @param {int} req.query.perpage - numbers of tracks needed per page  (used for pagination)
+ * @param {int} req.query.page - page number (used for pagination)
+ * @param {object} res - response object
+ * @param {string[]}res.body.tracks - array of top tracks retrieved ids
+ */
+ 
+exports.getTopTracks= async (req, res) => {
+  try {
+    const artist = await Artist.findById(req.body.id).populate("tracks","playCount");
+    const array = [];
+    const compare_value=20;
+    for(var i =0; i<artist.tracks.length;i++)
+    {
+      track_playcount= await Track.findById(artist.tracks[i]);
+      console.log(track_playcount.playcount)
+      if(track_playcount.playcount> compare_value)
+      {
+          array.push(artist.tracks[i]);
+          console.log(track_playcount)
+      }
+    }
+    const tracks = paginator(array,req.query.perpage,req.query.page);
+    res.status(200).json({
+      status: "success",
+      data: {
+        tracks
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message
+    });
+  }
+};
+
+
+
+
+
+
+
 //-----------------------------------------------------------------------------------------//
 
 

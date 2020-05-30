@@ -6,7 +6,7 @@ const trackSchema = new mongoose.Schema({
     description : String,
     likers : [{type: mongoose.Schema.Types.ObjectId,ref:'User'}],
     name : String,
-    playCount : Number,
+    playcount : Number,
     url : String,
     duration : Number,
     genres: [{type: mongoose.Schema.Types.ObjectId,ref:'Category'}],
