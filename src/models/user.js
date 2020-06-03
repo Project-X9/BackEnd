@@ -102,7 +102,13 @@ userSchema = mongoose.Schema({
       ref: "Artist",
     },
   ],
-  notifications: [notificationSchema]
+  notifications: [notificationSchema],
+  deletedPlaylists: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Playlist",
+    },
+  ]
 });
 
 // Generate toekn for a specific user:

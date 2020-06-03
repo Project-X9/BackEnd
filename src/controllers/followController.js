@@ -143,12 +143,18 @@ exports.likePlaylist = async (req, res) => {
     const IN_User = await User.findById(req.body.id);
     if (IN_User !== null) {
       var count = 0;
+      var not_deleted = 0;
 
       console.log(req.body.id);
       console.log(req.params.id);
       for (var i = 0; i < IN_User.playlists.length; i++) {
         if (req.params.id == IN_User.playlists[i]) {
           count++;
+        }
+      }
+      for (var i = 0; i < IN_User.deletedPlaylists.length; i++) {
+        if (req.params.id == IN_User.deletedPlaylists[i]) {
+          not_deleted++;
         }
       }
 
@@ -162,8 +168,16 @@ exports.likePlaylist = async (req, res) => {
       await Playlist.findByIdAndUpdate(req.params.id, {
         $push: { followers: req.body.id },
       });
+
+      //remove from deleted playlists 
+      if (not_deleted !== 0) {
+        await User.findByIdAndUpdate(req.body.id, {
+          $pull: { deletedPlaylists: req.params.id },
+        });
+      }
+     
       res.status(200).json({
-        status: "success",
+        status: "success"
       });
 
       sendNotification(req.body.recipientId);
@@ -191,13 +205,17 @@ exports.dislikePlaylist = async (req, res) => {
     const IN_User = await User.findById(req.body.id);
     if (IN_User !== null) {
       var count = 0;
-
+      var deleted = 0;
       for (var i = 0; i < IN_User.playlists.length; i++) {
         if (req.params.id == IN_User.playlists[i]) {
           count++;
         }
       }
-
+      for (var i = 0; i < IN_User.deletedPlaylists.length; i++) {
+        if (req.params.id == IN_User.deletedPlaylists[i]) {
+            deleted++;
+        }
+      }
       if (count === 0) {
         return res.status(403).json({ data: "invalid deletion" });
       }
@@ -208,8 +226,16 @@ exports.dislikePlaylist = async (req, res) => {
       await Playlist.findByIdAndUpdate(req.params.id, {
         $pull: { followers: req.body.id },
       });
+      //add to deleted playlists 
+
+      if (deleted === 0) {
+        await User.findByIdAndUpdate(req.body.id, {
+          $push: { deletedPlaylists: req.params.id },
+        });
+      }
+    
       res.status(200).json({
-        status: "success",
+        status: "success"
       });
     } else {
       var err = "invalid id";
