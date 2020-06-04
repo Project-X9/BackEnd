@@ -7,34 +7,20 @@ router
 .get(artistController.getArtist)
 .delete(artistController.deleteArtist);
 
-
 router
 .route("/artists/:id/albums")
 .get(artistController.getArtistAlbums);
 
 router
-.route("/artists/:id/top-tracks")
-.get(artistController.getArtistTopTracks);
-
-
-router
 .route("/artists/:id/related-artists")
 .get(artistController.getArtistRelatedArtists);
-
-
 
 router
 .route("/artists")
 .get(artistController.getArtists);
 
-
-// ---- SK
 router
-     .route("/addtrack")
-     .patch(artistController.addTracks)
-router
-     .route("/addalbum")
-     .patch(artistController.addTracks)
-
+     .route("/getTopTracks")
+     .get(artistController.getTopTracks)
 
 module.exports=router;

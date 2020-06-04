@@ -8,103 +8,56 @@ const webpush = require('web-push')
 const User = require(`./../models/user.js`);
 
 
-//-----------------------------------------------------------------------------------------//
 
 
-exports.addTracks = async (req, res) => {
+function paginator(arr, perpage, page) {
+  return arr.slice(perpage*(page-1), perpage*page);
+}
+
+//-------------------------------------------top tracks of an artist----------------------------------------------//
+/**
+ * @property {Function} getTopTracks  get Top Tracks played of tis artist
+ * @param {object} req - request object
+ * @param {string} req.body.id - artist id
+ * @param {int} req.query.perpage - numbers of tracks needed per page  (used for pagination)
+ * @param {int} req.query.page - page number (used for pagination)
+ * @param {object} res - response object
+ * @param {string[]}res.body.tracks - array of top tracks retrieved ids
+ */
+ 
+exports.getTopTracks= async (req, res) => {
   try {
-    const artist= await Artist.findById(req.body.id);
-    const id = req.body.id;
-    const track_id='12341';
-    if(artist!==null)
+    const artist = await Artist.findById(req.body.id).populate("tracks","playCount");
+    const array = [];
+    const compare_value=20;
+    for(var i =0; i<artist.tracks.length;i++)
     {
-      // create new track
-      // get track id and push it in tracks
-      
-      //await Artist.findByIdAndUpdate(req.body.id,{ $push:{tracks:track_id } });
-      //send to users a notification
-      for(var i = 0; i < artist.followers.length; i++)
+      track_playcount= await Track.findById(artist.tracks[i]);
+      console.log(track_playcount.playcount)
+      if(track_playcount.playcount> compare_value)
       {
-          // const recipientSubscription = await User.findById(artist.followers[i], 'pushSubscription');
-          const recipientSubscription = req.body.subscription;
-          console.log(recipientSubscription);
-          const payload = JSON.stringify({id,track_id});
-          webpush.sendNotification(recipientSubscription, payload);
-          //save notification (user)
+          array.push(artist.tracks[i]);
+          console.log(track_playcount)
       }
-
-      res.status(200).json({
-        status: "success"
-      });
     }
-    else{
-      var err= "invalid id";
-      throw err;
-    }
-  } 
-  catch (err) 
-  {
-    console.log(err);
-    res.status(404).json({
-      status: "fail",
-      message: err
+    const tracks = paginator(array,req.query.perpage,req.query.page);
+    res.status(200).json({
+      status: "success",
+      data: {
+        tracks
+      }
     });
-  }
-};
-
-exports.addAlbums = async (req, res) => {
-  try {
-    const artist= await Artist.findById(req.body.id);
-    const id = req.body.id;
-    const album_id='12341';
-    if(artist!==null)
-    {
-      // create new track
-      // get track id and push it in albums
-      
-      //await Artist.findByIdAndUpdate(req.body.id,{ $push:{albums:album_id } });
-      //send to users a notification
-      for(var i = 0; i < artist.followers.length; i++)
-      {
-          // const recipientSubscription = await User.findById(artist.followers[i], 'pushSubscription');
-          const recipientSubscription = req.body.subscription;
-          console.log(recipientSubscription);
-          const payload = JSON.stringify({id,album_id});
-          webpush.sendNotification(recipientSubscription, payload);
-          //save notification (user)
-      }
-
-      res.status(200).json({
-        status: "success"
-      });
-    }
-    else{
-      var err= "invalid id";
-      throw err;
-    }
-  } 
-  catch (err) 
-  {
+  } catch (err) {
     console.log(err);
     res.status(404).json({
       status: "fail",
-      message: err
+      message: err.message
     });
   }
 };
 
 
-
-
 //-----------------------------------------------------------------------------------------//
-
-
-
-
-
-
-
-
 
 
 exports.getArtists = async (req, res) => {
@@ -171,40 +124,33 @@ exports.getArtist = async (req, res) => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 exports.deleteArtist = async (req, res) => {
   try {
     await Artist.findByIdAndDelete(req.params.id);
     res.status(204).json({
       status: "success",
       data: null
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(404).json({
-      status: "fail",
-      message: err.message
-    });
-  }
-};
-
-/**  
- * @property {Function} getArtistTopTracks
- * @param {object} res 
- * @param {object[]} res.body.tracks  
- * 
- */
-
-
-
-
-exports.getArtistTopTracks = async (req, res) => {
-  try {
-    const tracks = await Artist.findById(req.params.id, "tracks");
-    res.status(200).json({
-      status: "success",
-      data: {
-        tracks
-      }
     });
   } catch (err) {
     console.log(err);

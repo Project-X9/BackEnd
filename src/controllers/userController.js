@@ -355,3 +355,27 @@ exports.shareTrack = async (req, res) => {
     });
   }
 };
+
+
+
+
+
+//-------------------------------------------------------------sk----------------------------------------//
+
+exports.getDeletedPlaylist = async (req, res) => {
+  try {
+    const deletedplaylist = await User.findById(req.body.id, "deletedPlaylists");
+    res.status(200).json({
+      status: "success",
+      data: {
+        deletedplaylist,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};

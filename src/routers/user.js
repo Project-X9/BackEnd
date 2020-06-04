@@ -49,4 +49,11 @@ router.route('/:id/share-track')
 router.route('/login')
 .post(userController.login);
 
+
+//====================  sk ======================
+
+router.route('/deletedPlaylist')
+.get(userController.getDeletedPlaylist)
+
+
 module.exports = router;
