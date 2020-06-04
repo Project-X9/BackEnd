@@ -324,7 +324,7 @@ exports.updatePushSubscription = async (req, res) => {
     const user = await User.findById(req.params.id);
     res.status(200).json({
       status: "success",
-      data: "user",
+      data: user,
     });
   } catch (err) {
     res.status(404).json({
