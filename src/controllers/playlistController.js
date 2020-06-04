@@ -226,8 +226,8 @@ exports.getAllPlaylists= async(req, res) =>
   exports.addPlaylistTrack= async (req, res) =>
   {
     try {
-      const playlist = await Playlist.findByIdAndUpdate(req.query.id,{ $push:{trackIds: req.query.id1} });
-      res.status(200).json({
+      const playlist = await Playlist.findByIdAndUpdate(req.body.id,{ $push:{tracks: req.params.id} });   
+       res.status(200).json({
         status: "success",
         data: {
          playlist

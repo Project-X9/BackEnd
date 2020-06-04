@@ -19,7 +19,7 @@ router
 router
     .route("/:id/tracks")                          
     .get(PController.getPlaylistTracks)  
-    .post(PController.addPlaylistTrack)
+    .patch(PController.addPlaylistTrack)
     .delete(PController.deletePlaylistTarck);      
 
 
