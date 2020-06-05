@@ -108,6 +108,12 @@ userSchema = mongoose.Schema({
       type: mongoose.Types.ObjectId,
       ref: "Playlist",
     },
+  ],
+  likedPlaylists: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Playlist",
+    },
   ]
 });
 

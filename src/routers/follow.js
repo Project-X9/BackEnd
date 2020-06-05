@@ -16,11 +16,11 @@ router
 
 router
     .route("/playlist/:id")
-    .patch(followController.likePlaylist)
+    .patch(followController.followPlaylist)
 
 router
     .route("/playlist/un/:id")
-    .patch(followController.dislikePlaylist)
+    .patch(followController.unfollowPlaylist)
 
 router
     .route("/album/:id")
@@ -45,5 +45,21 @@ router
 router
      .route("/artist/un/:id")
      .patch(followController.dislikeArtist)
+
+
+
+     ///--------------------------------------------------LIKE
+
+
+
+
+router
+     .route("/likeplaylist/:id")
+     .patch(followController.likePlaylist)
+ 
+ router
+     .route("/dislikeplaylist/:id")
+     .patch(followController.dislikePlaylist)
+ 
 
 module.exports = router;

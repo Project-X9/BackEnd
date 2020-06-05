@@ -12,6 +12,7 @@ const playlistSchema = mongoose.Schema({
         default: Date.now()
     },
     followers: [{type: mongoose.Schema.Types.ObjectId,ref:'User'}],
+    likers: [{type: mongoose.Schema.Types.ObjectId,ref:'User'}],
     Is_private: Boolean
 
 });

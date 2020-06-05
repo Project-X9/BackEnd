@@ -42,5 +42,4 @@ app.use('/api/v1/album', albumRouter)
 app.use('/api/v1/playlist', playlistRouter)
 
 app.use('/api/v1/share', shareRouter)
-
 module.exports = app
