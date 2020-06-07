@@ -5,7 +5,14 @@ const router = new express.Router();
 router
 .route("/artists/:id")
 .get(artistController.getArtist)
-.delete(artistController.deleteArtist);
+.delete(artistController.deleteArtist)
+.patch(artistController.addArtistAlbum);
+
+
+router
+.route("/artists/:id/:id1")
+.delete(artistController.deleteArtistAlbum)
+.patch(artistController.UpdateArtistAlbum);
 
 router
 .route("/artists/:id/albums")
