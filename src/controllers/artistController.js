@@ -4,6 +4,7 @@
 
 const Artist = require(`./../models/artist.js`);
 const Track = require(`./../models/track.js`);
+const Album = require(`./../models/album.js`);
 const webpush = require('web-push')
 const User = require(`./../models/user.js`);
 
