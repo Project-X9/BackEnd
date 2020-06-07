@@ -274,66 +274,6 @@ exports.login = async (req, res) => {
 };
 
 
- /**
- * @property {Function} confirmation  
- * @param {object} req - request object contains email and password
- * @param {string} req.body.token - token id
- * @param {object} res - on success contains status , url string , on failure Wrong user credentials result in status code 400 , status:fail */
-
-exports.confirmation = async (req, res) => {
-  try {
-    jwt.verify(req.params.token, "secretcode");
-    await User.findByIdAndUpdate(req.body.id, {
-      $set: { "isVerified": true }
-    });
-    const result = "http://localhost:3000/api/v1/users/login";
-    res.status(201).json({
-      status: "success",
-      data: {
-        result
-      }
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({
-      status: "fail",
-      message: err.message,
-    });
-  }
-};
-
-
-/**
- * @property {Function} SignUp  
- * @param {object} req - request object contains email and password
- * @param {string} req.body - contains user info
- * @param {object} res - on success contains status , url string and token, on failure Wrong user credentials result in status code 400 , status:fail */
-
-exports.SignUp = async (req, res) => {
-  try {
-    const newUser = await User.create(req.body);
-    const token = jwt.sign({ _id: newUser._id.toString() }, "secretcode",{
-      expiresIn: '1d',
-    });
-    newUser.ConfirmationToken=token;
-    //newUser.save();
-    const auttoken = await newUser.generateAuthToken();
-    const url = 'http://localhost:3000/api/v1/users/confirmation/'+token;
-    res.status(201).json({
-      status: "success",
-      data: {
-        url
-      }
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({
-      status: "fail",
-      message: err.message,
-    });
-  }
-};
-
 // exports.changePassword = async (req, res) => {
 //   try{
 //     const user = await User.findByCredentials(req.body.email, req.body.currentPassword);
@@ -424,6 +364,65 @@ exports.shareTrack = async (req, res) => {
 
 
 //-------------------------------------------------------------sk----------------------------------------//
+
+ /**
+ * @property {Function} confirmation  
+ * @param {object} req - request object contains email and password
+ * @param {string} req.body.token - token id
+ * @param {object} res - on success contains status , url string , on failure Wrong user credentials result in status code 400 , status:fail */
+
+exports.confirmation = async (req, res) => {
+  try {
+    jwt.verify(req.params.token, "secretcode");
+    await User.findByIdAndUpdate(req.body.id, {
+      $set: { "isVerified": true }
+    });
+    const result = "http://localhost:3000/api/v1/users/login";
+    res.status(201).json({
+      status: "success",
+      data: {
+        result
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
+
+
+/**
+ * @property {Function} SignUp  
+ * @param {object} req - request object contains email and password
+ * @param {string} req.body - contains user info
+ * @param {object} res - on success contains status , url string and token, on failure Wrong user credentials result in status code 400 , status:fail */
+
+exports.SignUp = async (req, res) => {
+  try {
+    const newUser = await User.create(req.body);
+    const token = jwt.sign({ _id: newUser._id.toString() }, "secretcode",{
+      expiresIn: '1d',
+    });
+    newUser.ConfirmationToken=token;
+    await newUser.generateAuthToken();
+    const url = 'http://localhost:3000/api/v1/users/confirmation/'+token;
+    res.status(201).json({
+      status: "success",
+      data: {
+        url
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
 
 exports.getDeletedPlaylists = async (req, res) => {
   try {

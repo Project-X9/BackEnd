@@ -46,20 +46,4 @@ router
      .route("/artist/un/:id")
      .patch(followController.unfollowArtist)
 
-
-
-     ///--------------------------------------------------LIKE
-
-
-
-
-router
-     .route("/likeplaylist/:id")
-     .patch(followController.likePlaylist)
- 
- router
-     .route("/dislikeplaylist/:id")
-     .patch(followController.dislikePlaylist)
- 
-
 module.exports = router;
