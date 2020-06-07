@@ -7,7 +7,7 @@ const webpush = require('web-push')
 const sendNotification = require("./../notificationHandler");
 
 /**
- * @module controller/follow
+ * @module controller/follows
 */
 
 function paginator(arr, perpage, page) {
@@ -133,7 +133,7 @@ exports.unfollowUser = async (req, res) => {
 };
 
 /**
- * @property {Function} likePlaylist  add a playlist to the user's playlists array and add the user to the array of followers of this playlist
+ * @property {Function} followPlaylist  add a playlist to the user's playlists array and add the user to the array of followers of this playlist
  * @param {object} req - request object
  * @param {string} req.body.id - user id
  * @param {string} req.params.id - id of playlist to be followed
@@ -195,7 +195,7 @@ exports.followPlaylist = async (req, res) => {
 };
 
 /**
- * @property {Function} dislikePlaylist  remove a playlist from the user's playlists array and remove the user to the array of followers of this playlist
+ * @property {Function} unfollowPlaylist  remove a playlist from the user's playlists array and remove the user to the array of followers of this playlist
  * @param {object} req - request object
  * @param {string} req.body.id - user id
  * @param {string} req.params.id - id of playlist to be unfollowed
@@ -251,12 +251,12 @@ exports.unfollowPlaylist = async (req, res) => {
 };
 
 /**
- * @property {Function} likeTracks  add a track to the user's tracks array and add the user to the array of likers of this track
+ * @property {Function} followTracks  add a track to the user's tracks array and add the user to the array of likers of this track
  * @param {object} req - request object
  * @param {string} req.body.id - user id
  * @param {string} req.params.id - id of track to be followed
  */
-exports.likeTracks = async (req, res) => {
+exports.followTracks = async (req, res) => {
   try {
     const IN_User = await User.findById(req.body.id);
     if (IN_User !== null) {
@@ -294,12 +294,12 @@ exports.likeTracks = async (req, res) => {
 };
 
 /**
- * @property {Function} dislikeTracks  remove a track from the user's tracks array and remove the user to the array of likers of this track
+ * @property {Function} unfollowTracks  remove a track from the user's tracks array and remove the user to the array of likers of this track
  * @param {object} req - request object
  * @param {string} req.body.id - user id
  * @param {string} req.params.id - id of track to be unfollowed
  */
-exports.dislikeTracks = async (req, res) => {
+exports.unfollowTracks = async (req, res) => {
   try {
     const IN_User = await User.findById(req.body.id);
     if (IN_User !== null) {
@@ -337,12 +337,12 @@ exports.dislikeTracks = async (req, res) => {
 };
 
  /**
-   * @property {Function} likeArtist  add an artist to the user's artists array and add the user to the array of followers of this artist
+   * @property {Function} followArtist  add an artist to the user's artists array and add the user to the array of followers of this artist
    * @param {object} req - request object
    * @param {string} req.body.id - user id   
    * @param {string} req.params.id -  id of artist to be followed
 */
-exports.likeArtist = async (req, res) => {
+exports.followArtist = async (req, res) => {
   try {
      const IN_User= await User.findById(req.body.id);
     if(IN_User!==null)
@@ -386,12 +386,12 @@ exports.likeArtist = async (req, res) => {
 
 
 /**
- * @property {Function} dislikeArtist  remove an artist from the user's artists array and remove the user to the array of followers of this artist
+ * @property {Function} unfollowArtist  remove an artist from the user's artists array and remove the user to the array of followers of this artist
  * @param {object} req - request object
  * @param {string} req.body.id - user id
  * @param {string} req.params.id - id of artist to be unfollowed
  */
-exports.dislikeArtist = async (req, res) => {
+exports.unfollowArtist = async (req, res) => {
   try {
     const IN_User = await User.findById(req.body.id);
     if (IN_User !== null) 
@@ -425,12 +425,12 @@ exports.dislikeArtist = async (req, res) => {
 };
 
 /**
- * @property {Function} likeAlbum  add an Album to the user's album array and add the user to the array of followers of this album
+ * @property {Function} followAlbum  add an Album to the user's album array and add the user to the array of followers of this album
  * @param {object} req - request object
  * @param {string} req.body.id - user id
  * @param {string} req.params.id -  id of album to be followed
  */
-exports.likeAlbum = async (req, res) => {
+exports.followAlbum = async (req, res) => {
   try {
     const IN_User = await User.findById(req.body.id);
     if (IN_User !== null) {
@@ -468,12 +468,12 @@ exports.likeAlbum = async (req, res) => {
 };
 
 /**
- * @property {Function} dislikeAlbum  remove an Album from the user's album array and remove the user to the array of followers of this album
+ * @property {Function} unfollowAlbum  remove an Album from the user's album array and remove the user to the array of followers of this album
  * @param {object} req - request object
  * @param {string} req.body.id - user id
  * @param {string} req.params.id - id of album to be unfollowed
  */
-exports.dislikeAlbum = async (req, res) => {
+exports.unfollowAlbum = async (req, res) => {
   try {
     const IN_User = await User.findById(req.body.id);
     if (IN_User !== null) {

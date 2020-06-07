@@ -24,27 +24,27 @@ router
 
 router
     .route("/album/:id")
-    .patch(followController.likeAlbum)
+    .patch(followController.followAlbum)
 
 router
     .route("/album/un/:id")
-    .patch(followController.dislikeAlbum);
+    .patch(followController.unfollowAlbum);
 
 router
      .route("/track/:id")
-     .patch(followController.likeTracks)
+     .patch(followController.followTracks)
 
 router
      .route("/track/un/:id")
-     .patch(followController.dislikeTracks)
+     .patch(followController.unfollowTracks)
 
 router
      .route("/artist/:id")
-     .patch(followController.likeArtist)
+     .patch(followController.followArtist)
 
 router
      .route("/artist/un/:id")
-     .patch(followController.dislikeArtist)
+     .patch(followController.unfollowArtist)
 
 
 

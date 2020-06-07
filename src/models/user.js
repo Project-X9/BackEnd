@@ -114,11 +114,30 @@ userSchema = mongoose.Schema({
       type: mongoose.Types.ObjectId,
       ref: "Playlist",
     },
-  ]
+  ],
+  isVerified: {
+    type: Boolean,
+    defaultValue: false,
+  },
+  ConfirmationToken: {
+        type: String,
+        required: true
+  }
 });
 
 // Generate toekn for a specific user:
-
+/**
+ * Generates verification token 
+ * @name VerificationToken
+ * @function
+ * @inner
+ * @return {strnig} token
+ */
+userSchema.methods.VerificationToken = async function () {
+  const user = this;
+  const token = jwt.sign({ _id: user._id.toString() }, "secretcode");
+  return token;
+};
 /**
  * Generates token for a specific user , using userid and secretcode
  * @name generateAuthToken
@@ -150,15 +169,22 @@ userSchema.methods.generateAuthToken = async function () {
 userSchema.statics.findByCredentials = async (email, password) => {
   //find them by email first:
   const user = await User.findOne({ email });
-
+  var err = " empty";
   if (!user) {
-    throw new Error("Incorrect email or password");
+    err="Incorrect email or password";
+    throw err;
   }
-
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
-    throw new Error("Incorrect email or password");
+    err="Incorrect email or password";
+    throw err;
+  }
+
+  if(user.isVerified === false)
+  {
+    err = "User Not Verified";
+    throw err;
   }
 
   return user;

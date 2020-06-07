@@ -3,6 +3,7 @@
  */
 const User = require(`./../models/user.js`);
 const Playlist = require(`./../models/playlist.js`);
+const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectId;
 const sendNotification = require("./../notificationHandler");
 
@@ -269,6 +270,67 @@ exports.login = async (req, res) => {
     res.status(200).send({ status: "success", user, token }); // we will just send json with user info untill its implemented to direct user to his homepage.
   } catch (e) {
     res.status(400).send({ status: "fail", error: e });
+  }
+};
+
+
+ /**
+ * @property {Function} confirmation  
+ * @param {object} req - request object contains email and password
+ * @param {string} req.body.token - token id
+ * @param {object} res - on success contains status , url string , on failure Wrong user credentials result in status code 400 , status:fail */
+
+exports.confirmation = async (req, res) => {
+  try {
+    jwt.verify(req.params.token, "secretcode");
+    await User.findByIdAndUpdate(req.body.id, {
+      $set: { "isVerified": true }
+    });
+    const result = "http://localhost:3000/api/v1/users/login";
+    res.status(201).json({
+      status: "success",
+      data: {
+        result
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
+
+
+/**
+ * @property {Function} SignUp  
+ * @param {object} req - request object contains email and password
+ * @param {string} req.body - contains user info
+ * @param {object} res - on success contains status , url string and token, on failure Wrong user credentials result in status code 400 , status:fail */
+
+exports.SignUp = async (req, res) => {
+  try {
+    const newUser = await User.create(req.body);
+    const token = jwt.sign({ _id: newUser._id.toString() }, "secretcode",{
+      expiresIn: '1d',
+    });
+    newUser.ConfirmationToken=token;
+    //newUser.save();
+    const auttoken = await newUser.generateAuthToken();
+    const url = 'http://localhost:3000/api/v1/users/confirmation/'+token;
+    res.status(201).json({
+      status: "success",
+      data: {
+        url
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
   }
 };
 
