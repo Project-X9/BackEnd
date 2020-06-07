@@ -219,3 +219,114 @@ exports.getArtistRelatedArtists = async (req, res) => {
     })
   }
 };
+
+// NEW FEATURES: TESTED
+
+
+/**
+   * @property {Function} addArtistAlbum  adds an existing album 
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {string} req.body.id - artist id 
+   * @param {object} res.body.data - returns the artist with specified ID after adding the album specified
+   * @param {string} req.params.id - id of album to be added
+*/
+
+exports.addArtistAlbum= async (req, res) =>
+{
+  try {
+    const artist = await Artist.findByIdAndUpdate(req.body.id,{ $push:{albums: req.params.id} });   
+     res.status(200).json({
+      status: "success",
+      data: {
+       artist
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message
+    });
+  }
+}
+
+
+
+/**
+   * @property {Function} deleteArtistAlbum  delets the album with specified id
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {object} res.body.data - returns the artist with specified ID after deleting the album specified
+   * @param {string} req.params.id - id of artist 
+   * @param {string} req.params.id1 - id of album to be deleted
+*/
+
+exports.deleteArtistAlbum = async (req, res) => {
+  try {
+    const artist = await Artist.findByIdAndUpdate(req.params.id,{ $pull:{albums: req.params.id1} }); 
+    res.status(200).json({
+      status: "success",
+      data: {
+        artist
+       }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message
+    });
+  }
+};
+
+
+
+/**
+   * @property {Function} UpdateArtistAlbum  updates the album with specified id
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {object} res.body.data - contains the data to be modified for the album
+   * @param {string} req.params.id - id of artist 
+   * @param {string} req.params.id1 - id of album to be updated
+*/
+
+exports.UpdateArtistAlbum = async( req, res) =>{
+
+  try {
+    const artistAlbums = await Artist.findById(req.params.id, "albums"); // --> artist id
+    
+    if(artistAlbums!==null)
+    {
+      var count =0;
+      for(var i = 0; i < artistAlbums.albums.length; i++)
+      {
+        if( req.params.id1  == artistAlbums.albums[i]){ count++; } 
+      }
+
+      if (count === 0) {
+        return res.status(403).json({ data: "invalid update!" });
+      }
+
+      // the album exists in the atist --> now edit it :
+        const ArtistModifiedAlbum = await Album.findByIdAndUpdate(req.params.id1, req.body, {
+          new: true,
+          runValidators: true
+        });
+
+    res.status(200).json({
+      status: "success",
+      data:
+       {
+         ArtistModifiedAlbum
+       }
+    });
+  }
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message
+    });
+  }
+};
