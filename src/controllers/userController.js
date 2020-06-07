@@ -2,6 +2,7 @@
  * @module controller/users
  */
 const User = require(`./../models/user.js`);
+const Playlist = require(`./../models/playlist.js`);
 const ObjectId = require("mongodb").ObjectId;
 const sendNotification = require("./../notificationHandler");
 
@@ -362,15 +363,52 @@ exports.shareTrack = async (req, res) => {
 
 //-------------------------------------------------------------sk----------------------------------------//
 
-exports.getDeletedPlaylist = async (req, res) => {
+exports.getDeletedPlaylists = async (req, res) => {
   try {
-    const deletedplaylist = await User.findById(req.body.id, "deletedPlaylists");
+    const user = await User.findById(req.body.id);
+    console.log(req.body.id)
+    const ret = user.deletedPlaylists;
     res.status(200).json({
       status: "success",
       data: {
-        deletedplaylist,
+        ret
       },
     });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
+
+
+exports.recoverPlaylist = async (req, res) => {
+  try {
+    const IN_User = await User.findById(req.body.id);
+    if (IN_User !== null) 
+    {
+      var count = 0;
+      for (var i = 0; i < IN_User.deletedPlaylists.length; i++) {
+        if (req.params.id == IN_User.deletedPlaylists[i]) {
+          count++;
+        }
+      }
+      if(count!==0)
+      {
+        await User.findByIdAndUpdate(req.body.id, {
+          $pull: { deletedPlaylists: req.params.id },
+          $push: { playlists: req.params.id }
+        });
+        await Playlist.findByIdAndUpdate(req.params.id, {
+          $push: { followers: req.body.id },
+        });
+      }
+      res.status(200).json({
+        status: "success"
+      });
+    }
   } catch (err) {
     console.log(err);
     res.status(404).json({

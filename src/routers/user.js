@@ -3,6 +3,14 @@ const userController = require(`./../controllers/userController`);
 const router = new express.Router();
 const auth = require('../middleware/auth');
 
+
+//====================  sk ======================
+
+router.route("/deletedplaylist")
+.get(userController.getDeletedPlaylists);
+router.route("/recoverPlaylist/:id")
+.patch(userController.recoverPlaylist);
+
 router
   .route("/")
   .get(userController.getAllUsers)
@@ -48,12 +56,6 @@ router.route('/:id/share-track')
 
 router.route('/login')
 .post(userController.login);
-
-
-//====================  sk ======================
-
-router.route('/deletedPlaylist')
-.get(userController.getDeletedPlaylist)
 
 
 module.exports = router;
