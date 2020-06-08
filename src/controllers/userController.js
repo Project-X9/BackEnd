@@ -296,7 +296,6 @@ exports.getNotifications = async (req, res) => {
   } catch (err) {
     res.status(404).json({
       status: "fail",
-      message: err.message,
     });
   }
 };
@@ -337,13 +336,14 @@ exports.updatePushSubscription = async (req, res) => {
 exports.shareTrack = async (req, res) => {
   try {
     const senderId = req.params.id;
+    const recipientId = await User.findOne({email:req.body.recipientEmail});
     const payload = {
       event: "share-song",
       senderId,
       trackId: req.body.trackId,
       albumId: req.body.trackId,
     };
-    sendNotification(payload, req.body.recipientId);
+    sendNotification(payload, recipientId);
 
     res.status(201).json({
       status: "success",
@@ -356,6 +356,32 @@ exports.shareTrack = async (req, res) => {
   }
 };
 
+
+exports.updateNotification = async (req, res) => {
+  try{
+    const userId = req.params.userId;
+    const notificationId = req.params.notificationId;
+    await User.findOneAndUpdate({ _id: userId, "notifications._id": notificationId}, {
+      $set: { "notifications.$.read" : req.body.read}
+    })
+
+    const user = await User.findById(userId, 'notifications');
+    res.status(200).json({
+        status: 'success',
+        notification: user.notifications.find(val => {
+          return val._id == notificationId
+        })
+      })
+
+    
+  } catch (err) {
+    console.log(err.message)
+    res.status(404).json({
+      status: 'fail'
+    })
+  }
+
+}
 
 
 
