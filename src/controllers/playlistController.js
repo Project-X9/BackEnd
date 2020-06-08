@@ -1,4 +1,6 @@
 const Playlist = require(`./../models/playlist.js`);
+const Track = require(`./../models/track.js`);
+const mongoose = require('mongoose');
 
 /**
  * @module controller/playlist
@@ -136,6 +138,85 @@ exports.getAllPlaylists= async(req, res) =>
   }
 
 }
+
+//////////////////////////////////////////////////////////////////////////////
+// NEW FEATURE :
+
+/**
+   * @property {Function} getMostPlayedPlaylist  gets the most played playlists in database
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {object} res.body.data - returns the most played playlist's ID and the number of times it was played
+*/
+
+exports.getMostPlayedPlaylist= async(req, res) =>
+{
+
+  try 
+  {
+    
+    const getAllPlaylists = await Playlist.find();
+
+    if (getAllPlaylists !== null)
+    {
+      var count = 0;
+      var MaxPlayedCount=0;
+      var temp;
+      var MaxPlayedID = 0; 
+      var TotalPlayed=0;
+
+      for (var i = 0; i < getAllPlaylists.length; i++) 
+      {
+        
+        TotalPlayed=0;
+
+        var PlaylistTracks=getAllPlaylists[i].tracks;
+  
+        if (PlaylistTracks !== null)
+        {
+          console.log("PLAYLIST TRACKS NUMBER: "+ PlaylistTracks.length)
+          for(var j=0; j<PlaylistTracks.length; j++ )
+          {
+            const trackTemp= await Track.findById(PlaylistTracks[j]);
+            
+            var pc= trackTemp.playcount;
+            TotalPlayed=TotalPlayed + pc ;
+            
+          } 
+        
+          if(TotalPlayed > MaxPlayedCount)
+          {
+            MaxPlayedCount=TotalPlayed;
+            MaxPlayedID= getAllPlaylists[i]._id;
+
+          }
+        }
+
+        
+      }
+    
+    
+      res.status(200).json({
+        status: "success",
+        data:{"Max Played ID " :MaxPlayedID, "Max played count ":MaxPlayedCount, "Playlistls length: ": getAllPlaylists.length}
+      });
+    }
+
+  
+  } catch (err)
+  {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message
+    });
+  }
+
+
+}
+
+
+
 
 
 //                                    ----DELETE :----
