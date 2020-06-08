@@ -15,6 +15,10 @@ router
     .patch(AController.uploadAlbumPhoto);
 
 router
+    .route("/statistics/:id")
+    .get(AController.getAlbumStatistics);
+
+router
     .route("/:id/tracks")
     .get(AController.getAlbumTracks);
 
