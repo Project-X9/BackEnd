@@ -265,7 +265,7 @@ exports.login = async (req, res) => {
       req.body.email,
       req.body.password
     );
-    console.log(user);
+    //console.log(user);
     const token = await user.generateAuthToken();
     res.status(200).send({ status: "success", user, token }); // we will just send json with user info untill its implemented to direct user to his homepage.
   } catch (e) {
@@ -427,6 +427,10 @@ exports.SignUp = async (req, res) => {
   try {
     const newUser = await User.create(req.body);
     const token = jwt.sign({ _id: newUser._id.toString() }, "secretcode",{
+      expiresIn: '1d',
+    });
+
+    const akrab =jwt.sign({ _id: "5e8643edd411aa54c0357fbd" }, "secretcode",{
       expiresIn: '1d',
     });
     newUser.ConfirmationToken=token;
