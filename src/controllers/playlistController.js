@@ -1,4 +1,7 @@
 const Playlist = require(`./../models/playlist.js`);
+const Track = require(`./../models/track.js`);
+const mongoose = require('mongoose');
+const User = require(`./../models/user.js`);
 
 /**
  * @module controller/playlist
@@ -8,12 +11,11 @@ const Playlist = require(`./../models/playlist.js`);
 
 
 
-
-
 /**
    * @property {Function} createPlaylist  creats a new playlist 
    * @param {object} req - request object
    * @param {string} req.body.id - playlist id 
+   * @param {string} req.params.id - user's id 
    * @param {object} res - response object
    * @param {object} res.body.data - returns the newly created playlist object
 */
@@ -21,12 +23,18 @@ const Playlist = require(`./../models/playlist.js`);
 exports.createPlaylist = async (req, res) => {    
   try {
     const newPlaylist = await Playlist.create(req.body);
+    
+    await User.findByIdAndUpdate(req.params.id,{ $push:{CreatedPlaylists: newPlaylist._id} });
+
+
     res.status(201).json({
       status: "success",
       data: {
         playlist : newPlaylist
       }
     });
+
+    
   } catch (err) {
     console.log(err);
     res.status(400).json({
@@ -35,6 +43,8 @@ exports.createPlaylist = async (req, res) => {
     });
   }
 };
+
+
 
 //                                    ----GET :----
 
@@ -137,6 +147,85 @@ exports.getAllPlaylists= async(req, res) =>
 
 }
 
+//////////////////////////////////////////////////////////////////////////////
+// NEW FEATURE :
+
+/**
+   * @property {Function} getMostPlayedPlaylist  gets the most played playlists in database
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {object} res.body.data - returns the most played playlist's ID and the number of times it was played
+*/
+
+exports.getMostPlayedPlaylist= async(req, res) =>
+{
+
+  try 
+  {
+    
+    const getAllPlaylists = await Playlist.find();
+
+    if (getAllPlaylists !== null)
+    {
+      var count = 0;
+      var MaxPlayedCount=0;
+      var temp;
+      var MaxPlayedID = 0; 
+      var TotalPlayed=0;
+
+      for (var i = 0; i < getAllPlaylists.length; i++) 
+      {
+        
+        TotalPlayed=0;
+
+        var PlaylistTracks=getAllPlaylists[i].tracks;
+  
+        if (PlaylistTracks !== null)
+        {
+          console.log("PLAYLIST TRACKS NUMBER: "+ PlaylistTracks.length)
+          for(var j=0; j<PlaylistTracks.length; j++ )
+          {
+            const trackTemp= await Track.findById(PlaylistTracks[j]);
+            
+            var pc= trackTemp.playcount;
+            TotalPlayed=TotalPlayed + pc ;
+            
+          } 
+        
+          if(TotalPlayed > MaxPlayedCount)
+          {
+            MaxPlayedCount=TotalPlayed;
+            MaxPlayedID= getAllPlaylists[i]._id;
+
+          }
+        }
+
+        
+      }
+    
+    
+      res.status(200).json({
+        status: "success",
+        data:{"Max Played ID " :MaxPlayedID, "Max played count ":MaxPlayedCount, "Playlistls length: ": getAllPlaylists.length}
+      });
+    }
+
+  
+  } catch (err)
+  {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message
+    });
+  }
+
+
+}
+
+
+
+
 
 //                                    ----DELETE :----
 
@@ -226,8 +315,8 @@ exports.getAllPlaylists= async(req, res) =>
   exports.addPlaylistTrack= async (req, res) =>
   {
     try {
-      const playlist = await Playlist.findByIdAndUpdate(req.query.id,{ $push:{trackIds: req.query.id1} });
-      res.status(200).json({
+      const playlist = await Playlist.findByIdAndUpdate(req.body.id,{ $push:{tracks: req.params.id} });   
+       res.status(200).json({
         status: "success",
         data: {
          playlist

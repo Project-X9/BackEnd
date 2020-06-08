@@ -2,6 +2,8 @@
  * @module controller/users
  */
 const User = require(`./../models/user.js`);
+const Playlist = require(`./../models/playlist.js`);
+const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectId;
 const sendNotification = require("./../notificationHandler");
 
@@ -271,6 +273,7 @@ exports.login = async (req, res) => {
   }
 };
 
+
 // exports.changePassword = async (req, res) => {
 //   try{
 //     const user = await User.findByCredentials(req.body.email, req.body.currentPassword);
@@ -388,15 +391,111 @@ exports.updateNotification = async (req, res) => {
 
 //-------------------------------------------------------------sk----------------------------------------//
 
-exports.getDeletedPlaylist = async (req, res) => {
+ /**
+ * @property {Function} confirmation  
+ * @param {object} req - request object contains email and password
+ * @param {string} req.body.token - token id
+ * @param {object} res - on success contains status , url string , on failure Wrong user credentials result in status code 400 , status:fail */
+
+exports.confirmation = async (req, res) => {
   try {
-    const deletedplaylist = await User.findById(req.body.id, "deletedPlaylists");
+    jwt.verify(req.params.token, "secretcode");
+    await User.findByIdAndUpdate(req.body.id, {
+      $set: { "isVerified": true }
+    });
+    const result = "http://localhost:3000/api/v1/users/login";
+    res.status(201).json({
+      status: "success",
+      data: {
+        result
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
+
+
+/**
+ * @property {Function} SignUp  
+ * @param {object} req - request object contains email and password
+ * @param {string} req.body - contains user info
+ * @param {object} res - on success contains status , url string and token, on failure Wrong user credentials result in status code 400 , status:fail */
+
+exports.SignUp = async (req, res) => {
+  try {
+    const newUser = await User.create(req.body);
+    const token = jwt.sign({ _id: newUser._id.toString() }, "secretcode",{
+      expiresIn: '1d',
+    });
+    newUser.ConfirmationToken=token;
+    await newUser.generateAuthToken();
+    const url = 'http://localhost:3000/api/v1/users/confirmation/'+token;
+    res.status(201).json({
+      status: "success",
+      data: {
+        url
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
+
+exports.getDeletedPlaylists = async (req, res) => {
+  try {
+    const user = await User.findById(req.body.id);
+    console.log(req.body.id)
+    const ret = user.deletedPlaylists;
     res.status(200).json({
       status: "success",
       data: {
-        deletedplaylist,
+        ret
       },
     });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
+
+
+exports.recoverPlaylist = async (req, res) => {
+  try {
+    const IN_User = await User.findById(req.body.id);
+    if (IN_User !== null) 
+    {
+      var count = 0;
+      for (var i = 0; i < IN_User.deletedPlaylists.length; i++) {
+        if (req.params.id == IN_User.deletedPlaylists[i]) {
+          count++;
+        }
+      }
+      if(count!==0)
+      {
+        await User.findByIdAndUpdate(req.body.id, {
+          $pull: { deletedPlaylists: req.params.id },
+          $push: { playlists: req.params.id }
+        });
+        await Playlist.findByIdAndUpdate(req.params.id, {
+          $push: { followers: req.body.id },
+        });
+      }
+      res.status(200).json({
+        status: "success"
+      });
+    }
   } catch (err) {
     console.log(err);
     res.status(404).json({

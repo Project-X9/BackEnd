@@ -4,6 +4,22 @@ const router = new express.Router();
 const auth = require('../middleware/auth');
 
 router
+  .route("/deletedplaylist")
+  .get(userController.getDeletedPlaylists);
+
+router
+  .route("/recoverPlaylist/:id")
+  .patch(userController.recoverPlaylist);
+
+router
+  .route("/SignUp")
+  .post(userController.SignUp);
+
+router
+  .route("/confirmation/:token")
+  .patch(userController.confirmation);
+
+router
   .route("/")
   .get(userController.getAllUsers)
   .post(userController.createUser);
@@ -51,12 +67,6 @@ router.route('/:id/share-track')
 
 router.route('/login')
 .post(userController.login);
-
-
-//====================  sk ======================
-
-router.route('/deletedPlaylist')
-.get(userController.getDeletedPlaylist)
 
 
 module.exports = router;

@@ -10,6 +10,7 @@ const browseRouter = require('./routers/browse')
 const albumRouter = require('./routers/album')
 const playlistRouter = require ('./routers/playlist')
 const shareRouter = require('./routers/share')
+const likeRouter = require('./routers/like')
 // const taskRouter = require('./routers/task')
 
 const app = express()
@@ -28,19 +29,23 @@ webpush.setVapidDetails(
   privateVapidKey
 );
 
+app.use('/api/v1/like', likeRouter)
 
 app.use('/api/v1/users', userRouter)
 
 app.use('/api/v1/artist', artistRouter)
+
 app.use('/api/v1/track', trackRouter)
 
 app.use('/api/v1/follow', followRouter)
+
 app.use('/api/v1/browse',browseRouter)
-// app.use(taskRouter)
 
 app.use('/api/v1/album', albumRouter)
+
 app.use('/api/v1/playlist', playlistRouter)
 
 app.use('/api/v1/share', shareRouter)
 
+// app.use(taskRouter)
 module.exports = app

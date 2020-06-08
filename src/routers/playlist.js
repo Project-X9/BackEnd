@@ -5,21 +5,23 @@ const PController = require(`./../controllers/playlistController`);
 
 router.route("/:id")
     .get(PController.getPlaylistById)                  
-    .patch(PController.updatePlaylist);     
+    .patch(PController.updatePlaylist)
+    .post(PController.createPlaylist);     
 
 
 
 router
   .route("/")
-  .post(PController.createPlaylist)
   .get(PController.getAllPlaylists);
 
-
+router
+  .route("/p/maxPlayed")
+  .get(PController.getMostPlayedPlaylist);
 
 router
     .route("/:id/tracks")                          
     .get(PController.getPlaylistTracks)  
-    .post(PController.addPlaylistTrack)
+    .patch(PController.addPlaylistTrack)
     .delete(PController.deletePlaylistTarck);      
 
 
