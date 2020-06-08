@@ -24,7 +24,7 @@ exports.createPlaylist = async (req, res) => {
   try {
     const newPlaylist = await Playlist.create(req.body);
     
-    await User.findByIdAndUpdate(req.params.id,{ $push:{CreatedPlaylists: newPlaylist._id} });
+    await User.findByIdAndUpdate(req.params.id,{ $push:{playlists: newPlaylist._id} });
 
 
     res.status(201).json({
