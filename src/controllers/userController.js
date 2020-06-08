@@ -403,12 +403,9 @@ exports.confirmation = async (req, res) => {
     await User.findByIdAndUpdate(req.body.id, {
       $set: { "isVerified": true }
     });
-    const result = "http://localhost:3000/api/v1/users/login";
+    //const result = "http://localhost:3000/api/v1/users/login";
     res.status(201).json({
-      status: "success",
-      data: {
-        result
-      }
+      status: "success"
     });
   } catch (err) {
     console.log(err);
@@ -434,11 +431,11 @@ exports.SignUp = async (req, res) => {
     });
     newUser.ConfirmationToken=token;
     await newUser.generateAuthToken();
-    const url = 'http://localhost:3000/api/v1/users/confirmation/'+token;
+    //const url = 'http://localhost:3000/api/v1/users/confirmation/'+token;
     res.status(201).json({
       status: "success",
       data: {
-        url
+        token
       }
     });
   } catch (err) {
