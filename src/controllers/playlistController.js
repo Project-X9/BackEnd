@@ -1,6 +1,7 @@
 const Playlist = require(`./../models/playlist.js`);
 const Track = require(`./../models/track.js`);
 const mongoose = require('mongoose');
+const User = require(`./../models/user.js`);
 
 /**
  * @module controller/playlist
