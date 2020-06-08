@@ -45,6 +45,11 @@ userSchema = mongoose.Schema({
   image: String,
   premium: Boolean,
   previouslyPremium: Boolean,
+  CreatedPlaylists: [
+    {
+      type: mongoose.Schema.Types.ObjectId,ref:'Playlist'
+    }
+  ],
 
   //==============AUTH======================
   tokens: [
