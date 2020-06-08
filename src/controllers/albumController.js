@@ -1,4 +1,5 @@
 const Album = require(`./../models/album.js`);
+const Track = require(`./../models/track.js`);
 
 /**
  * @module controller/album
@@ -102,5 +103,55 @@ exports.uploadAlbumPhoto  = async (req, res) => {    //api done
   };
 
 
+// NEW FEATURE #2:
+
+/**
+ * @property {Function} getAlbumStatistics  get album statistics : 1- number of likers   2-number of listeners
+ * @param {object} req - request object
+ * @param {object} res - response object
+ * @param {string} req.params.id - album id 
+ * @param {object} res.body - contains the 2 results : Number of listeners & Number of likes
+*/
+
+
+
+exports.getAlbumStatistics  = async (req, res) => {    //api done
+  try {
+    const album = await Album.findById(req.params.id);
+
+    const AlbumTracks = album.tracks;
+
+    if (AlbumTracks !== null)
+    {
+      var playedTracksCount =0;
+      var likersCount =0;
+
+      for(var i = 0; i < AlbumTracks.length; i++)
+      {
+       
+        var TempTrack= await Track.findById(AlbumTracks[i]);
+
+        playedTracksCount =playedTracksCount + TempTrack.playcount;
+        likersCount= likersCount + TempTrack.likers.length;
+
+      }
+    }
+    
+    res.status(200).json({
+      status: "success",
+      data: {
+        "Number of listeners " :playedTracksCount,
+        "Number of likes " : likersCount
+
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message        
+    });
+  }
+  };
 
 
