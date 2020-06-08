@@ -10,12 +10,11 @@ const mongoose = require('mongoose');
 
 
 
-
-
 /**
    * @property {Function} createPlaylist  creats a new playlist 
    * @param {object} req - request object
    * @param {string} req.body.id - playlist id 
+   * @param {string} req.params.id - user's id 
    * @param {object} res - response object
    * @param {object} res.body.data - returns the newly created playlist object
 */
@@ -23,12 +22,18 @@ const mongoose = require('mongoose');
 exports.createPlaylist = async (req, res) => {    
   try {
     const newPlaylist = await Playlist.create(req.body);
+    
+    await User.findByIdAndUpdate(req.params.id,{ $push:{CreatedPlaylists: newPlaylist._id} });
+
+
     res.status(201).json({
       status: "success",
       data: {
         playlist : newPlaylist
       }
     });
+
+    
   } catch (err) {
     console.log(err);
     res.status(400).json({
@@ -37,6 +42,8 @@ exports.createPlaylist = async (req, res) => {
     });
   }
 };
+
+
 
 //                                    ----GET :----
 
