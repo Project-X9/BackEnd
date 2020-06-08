@@ -435,10 +435,12 @@ exports.SignUp = async (req, res) => {
     });
     newUser.ConfirmationToken=token;
     await newUser.generateAuthToken();
+    const id= newUser._id
     //const url = 'http://localhost:3000/api/v1/users/confirmation/'+token;
     res.status(201).json({
       status: "success",
       data: {
+        id,
         token
       }
     });
