@@ -69,4 +69,38 @@ exports.getAlbumTracks  = async (req, res) => {    //api done
 
 
 
+// NEW FEATURE:
+
+/**
+   * @property {Function} uploadAlbumPhoto  uploads a photo of the specified album
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {string} req.params.id - album id 
+   * @param {object} req.body.image - desired image url
+*/
+
+exports.uploadAlbumPhoto  = async (req, res) => {    //api done
+  try {
+    const album = await Album.findByIdAndUpdate(req.params.id,{image: req.body.image}, {
+      new: true,
+      runValidators: true
+     
+    });
+    res.status(200).json({
+      status: "success",
+      data: {
+        album
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message        
+    });
+  }
+  };
+
+
+
 
