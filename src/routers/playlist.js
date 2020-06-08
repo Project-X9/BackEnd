@@ -14,6 +14,9 @@ router
   .post(PController.createPlaylist)
   .get(PController.getAllPlaylists);
 
+router
+  .route("/p/maxPlayed")
+  .get(PController.getMostPlayedPlaylist);
 
 
 router
