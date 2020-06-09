@@ -406,14 +406,37 @@ exports.SignUp = async (req, res) => {
     const token = jwt.sign({ _id: newUser._id.toString() }, "secretcode",{
       expiresIn: '1d',
     });
-
-    const akrab =jwt.sign({ _id: "5e8643edd411aa54c0357fbd" }, "secretcode",{
-      expiresIn: '1d',
-    });
     newUser.ConfirmationToken=token;
+    const userEmail = newUser.email;
+    const trans = nodeMailer.createTransport
+    ({
+      service: 'gmail',
+      secure: false,
+      port: 25,
+      auth:
+      {
+        user: "projectxdevteam32@gmail.com",
+        pass: "projectxteam1!"
+      },
+      tls: { rejectUnauthorized: false }
+
+    });
+    
+    const helperOptions =
+    {
+      from: '"projectx" = projectxdevteam32@gmail.com',
+      to: userEmail,
+      subject: "email confirmation",
+      text: "To verify your emial please click on this link with this confirmation token . \n\n \n " + token + "\n\n \n  \n  Projectx team"
+    };
+    
+    trans.sendMail(helperOptions, (err, info) => {
+    if (err) { res.send({ error: "mailing service is currently down",errorM : err }) }
+    });
+
     await newUser.generateAuthToken();
-    const id= newUser._id
-    //const url = 'http://localhost:3000/api/v1/users/confirmation/'+token;
+    const id= newUser._id;
+
     res.status(201).json({
       status: "success",
       data: {
