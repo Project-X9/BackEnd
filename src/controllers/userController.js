@@ -3,9 +3,11 @@
  */
 const User = require(`./../models/user.js`);
 const Playlist = require(`./../models/playlist.js`);
+const track = require(`./../models/track.js`);
 const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectId;
 const sendNotification = require("./../notificationHandler");
+const nodeMailer = require('nodemailer');
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -74,7 +76,6 @@ exports.getUser = async (req, res) => {
 exports.createUser = async (req, res) => {
   try {
     const newUser = await User.create(req.body);
-    sendNotification("share-song", newUser._id);
     res.status(201).json({
       status: "success",
       data: {
@@ -336,30 +337,6 @@ exports.updatePushSubscription = async (req, res) => {
   }
 };
 
-exports.shareTrack = async (req, res) => {
-  try {
-    const senderId = req.params.id;
-    const recipientId = await User.findOne({email:req.body.recipientEmail});
-    const payload = {
-      event: "share-song",
-      senderId,
-      trackId: req.body.trackId,
-      albumId: req.body.trackId,
-    };
-    sendNotification(payload, recipientId);
-
-    res.status(201).json({
-      status: "success",
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
-
-
 exports.updateNotification = async (req, res) => {
   try{
     const userId = req.params.userId;
@@ -453,9 +430,17 @@ exports.SignUp = async (req, res) => {
   }
 };
 
+
+/**
+ * @property {Function} getDeletedPlaylists  get list of Deleted Playlists of current user
+ * @param {object} req - request object
+ * @param {string} req.body.id - user id
+ * @param {object} res - response object
+ * @param {string[]}res.body.data.playlist_array - array of playlists deleted
+ */
 exports.getDeletedPlaylists = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.body.id);
     const ret = user.deletedPlaylists;
     const playlist_array=[];
     for(var i=0;i<ret.length;i++)
@@ -478,6 +463,14 @@ exports.getDeletedPlaylists = async (req, res) => {
   }
 };
 
+
+/**
+ * @property {Function} recoverPlaylist  recover a certain playlist from deleted/unfollowed playlist of current user
+ * @param {object} req - request object
+ * @param {string} req.body.id - user id
+ * @param {object} res - response object
+ * @param {string[]}res.status 
+ */
 
 exports.recoverPlaylist = async (req, res) => {
   try {
@@ -513,13 +506,25 @@ exports.recoverPlaylist = async (req, res) => {
   }
 };
 
+/**
+ * @property {Function} getQueue  retrieve tracks queue
+ * @param {object} req - request object
+ * @param {string} req.params.id - user id
+ * @param {object} res - response object
+ * @param {string[]}res.body.queue_tracks  - queue array returned
+ */
 exports.getQueue = async (req, res) => {
   try {
-    const queue = await User.findById(req.params.id, "queue");
-    const data = queue.queue;
+    const user = await User.findById(req.params.id, "queue");
+    const queue_tracks=[];
+    for(var i=0;i<user.queue.length;i++)
+    {
+      console.log(user.queue[i])
+      queue_tracks[i]= await track.findById(user.queue[i]);
+    }
     res.status(200).json({
       status: "success",
-      data
+      queue_tracks
     });
   } catch (err) {
     res.status(404).json({
@@ -528,3 +533,85 @@ exports.getQueue = async (req, res) => {
     });
   }
 };
+
+
+
+     exports.forgetPassword =   async  (req, res) => {
+
+          /**
+          *    This finds the user that will be sent the recovery email and checks if he even exists
+          * 
+          */
+          const user = await User.findById(req.body.id);
+          if (!user) { res.status(404).send({ error: "User doesnt exist" }) }
+      
+          else {
+      
+            /**
+          *    genetartes a random password
+          * 
+          */
+            const userEmail = user.email;
+            const newPass = Math.floor((Math.random() * 10000) * Math.random() * 10000 * (Math.random() * 10000));
+            const newPassString = newPass.toString();
+      
+            /**
+            *   setting up nodemailer with the memestock email
+            * 
+            */
+           const trans = nodeMailer.createTransport
+           ({
+             service: 'gmail',
+             secure: false,
+             port: 25,
+             auth:
+             {
+               user: "projectxdevteam32@gmail.com",
+               pass: "projectxteam1!"
+             },
+             tls: { rejectUnauthorized: false }
+   
+           });
+      
+            const helperOptions =
+            {
+              from: '"projectx" = projectxdevteam32@gmail.com',
+              to: userEmail,
+              subject: "Recover Password",
+              text: "Your new password is:  " + newPass + "\n You are advised to change it when you can.\n \n  \n  Projectx team"
+            };
+      
+      
+            trans.sendMail(helperOptions, (err, info) => {
+              if (err) { res.send({ error: "mailing service is currently down",errorM : err }) }
+      
+      
+              /**
+             *    This sets password to the new random passwrod that was sent in the email
+             * 
+             */
+              else {
+                console.log("hello");
+                bcrypt.hash(newPassString, "secretcode").then(function (hash) {
+                  
+                  console.log("hello");
+      
+                  User.findByIdAndUpdate(
+                    
+                    req.body.id,
+                    { password: hash }
+                  ).then(function (RetUser) {
+                    console.log("hello");
+                    
+                    res.status(200).send({ message: "Please check your registered email" });
+                    
+                    
+                  }).catch((error)=> {console.log(error)});
+                }).catch()
+              }
+            });
+      
+      
+      
+          }
+        }

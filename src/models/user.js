@@ -9,6 +9,7 @@ const validator = require("validator");
 
 const notificationSchema = mongoose.Schema({
   event: String,
+  time: mongoose.SchemaTypes.Date,
   senderId: mongoose.Types.ObjectId,
   trackId: mongoose.Types.ObjectId,
   albumId: mongoose.Types.ObjectId,

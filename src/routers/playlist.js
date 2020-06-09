@@ -28,8 +28,8 @@ router
     //.delete(PController.deletePlaylistTarck);   
     
 router
-    .route("/deleteTrack") 
-    .delete(PController.deletePlaylistTarck);
+    .route("/deleteTrack/:id1/:id2") 
+    .patch(PController.deletePlaylistTarck);
 
 
 

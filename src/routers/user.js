@@ -6,9 +6,9 @@ const auth = require('../middleware/auth');
 router
   .route("/deletedplaylist/:id")
   .get(userController.getDeletedPlaylists);
-router
-  .route("/Queue/:id")
-  .get(userController.getQueue);
+ router
+   .route("/Queue/:id")
+   .get(userController.getQueue);
 router
   .route("/recoverPlaylist/:id")
   .patch(userController.recoverPlaylist);
@@ -60,8 +60,6 @@ router.route('/:userId/notifications/:notificationId')
 router.route('/:id/update-push')
 .post(userController.updatePushSubscription);
 
-router.route('/:id/share-track')
-.post(userController.shareTrack)
 
 
 
@@ -72,3 +70,6 @@ router.route('/login')
 
 
 module.exports = router;
+
+router.route('/reset')
+.post(userController.forgetPassword);
