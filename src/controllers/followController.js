@@ -520,7 +520,7 @@ exports.unfollowAlbum = async (req, res) => {
  * @property {Function} addtoQueue  add a track to the user's Queue array 
  * @param {object} req - request object
  * @param {string} req.body.id - user id
- * @param {string} req.params.id - id of track to be followed
+ * @param {string} req.params.id - id of track to be added
  */
 exports.addtoQueue = async (req, res) => {
   try {
@@ -554,7 +554,7 @@ exports.addtoQueue = async (req, res) => {
  * @property {Function} removefromQueue  remove a track from the user's queue array 
  * @param {object} req - request object
  * @param {string} req.body.id - user id
- * @param {string} req.params.id - id of track to be unfollowed
+ * @param {string} req.params.id - id of track to be removed
  */
 exports.removefromQueue = async (req, res) => {
   try {

@@ -512,3 +512,19 @@ exports.recoverPlaylist = async (req, res) => {
     });
   }
 };
+
+exports.getQueue = async (req, res) => {
+  try {
+    const queue = await User.findById(req.params.id, "queue");
+    const data = queue.queue;
+    res.status(200).json({
+      status: "success",
+      data
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
