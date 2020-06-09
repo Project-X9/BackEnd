@@ -76,7 +76,6 @@ exports.getUser = async (req, res) => {
 exports.createUser = async (req, res) => {
   try {
     const newUser = await User.create(req.body);
-    sendNotification("share-song", newUser._id);
     res.status(201).json({
       status: "success",
       data: {
@@ -337,30 +336,6 @@ exports.updatePushSubscription = async (req, res) => {
     });
   }
 };
-
-exports.shareTrack = async (req, res) => {
-  try {
-    const senderId = req.params.id;
-    const recipientId = await User.findOne({email:req.body.recipientEmail});
-    const payload = {
-      event: "share-song",
-      senderId,
-      trackId: req.body.trackId,
-      albumId: req.body.trackId,
-    };
-    sendNotification(payload, recipientId);
-
-    res.status(201).json({
-      status: "success",
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
-
 
 exports.updateNotification = async (req, res) => {
   try{

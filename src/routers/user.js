@@ -60,8 +60,6 @@ router.route('/:userId/notifications/:notificationId')
 router.route('/:id/update-push')
 .post(userController.updatePushSubscription);
 
-router.route('/:id/share-track')
-.post(userController.shareTrack)
 
 
 

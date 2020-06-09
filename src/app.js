@@ -11,6 +11,7 @@ const albumRouter = require('./routers/album')
 const playlistRouter = require ('./routers/playlist')
 const shareRouter = require('./routers/share')
 const likeRouter = require('./routers/like')
+const subscriptionRouter = require('./routers/subscriptionRouter')
 const searchRouter = require('./routers/search')
 // const taskRouter = require('./routers/task')
 
@@ -48,6 +49,7 @@ app.use('/api/v1/playlist', playlistRouter)
 
 app.use('/api/v1/share', shareRouter)
 
+app.use('/api/v1/subscriptions', subscriptionRouter)
 app.use('/api/v1/search',searchRouter)
 
 // app.use(taskRouter)
