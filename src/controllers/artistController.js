@@ -499,7 +499,8 @@ exports.addArtist= async (req, res) =>
 {
   try { 
     console.log(req.params.id);
-    const user = User.findById(req.params.id);
+    const user = await User.findById(req.params.id);
+    if (!user) return;
     if (user.isArtist == true) {
       res.status(404).json({
         status: "fail",
@@ -507,16 +508,16 @@ exports.addArtist= async (req, res) =>
       });
       return;
     }
+    user.isArtist= true;
+    const result = await user.save();
     const artist = new Artist();
-    
     artist.image = user.image;
     artist.name = user.name;
     artist.email = user.email;
     artist.password = user.password;
     artist.dateAdded = new Date();
     artist.save();
-    user.isArtist = true;
-    user.save();
+    
     console.log(artist); 
     res.status(200).json({
       status: "success",
