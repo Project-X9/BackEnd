@@ -21,10 +21,12 @@ router
 router
     .route("/:id/tracks")                          
     .get(PController.getPlaylistTracks)  
-    .patch(PController.addPlaylistTrack)
-    .delete(PController.deletePlaylistTarck);      
+    .patch(PController.addPlaylistTrack);
+    //.delete(PController.deletePlaylistTarck);      
 
-
+router
+    .route("/deleteTrack") 
+    .delete(PController.deletePlaylistTarck);
 
 //     .get(PController.getPlaylistByName);       // what iF i have many with the same name? returns an arr of playlists?
 
