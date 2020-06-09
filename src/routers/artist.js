@@ -28,6 +28,20 @@ router
 
 router
      .route("/getTopTracks")
-     .get(artistController.getTopTracks)
+     .get(artistController.getTopTracks);
+
+router
+     .route("/getTopArtists")
+     .get(artistController.getTopArtists);
+
+router
+     .route("/artists/:id/t/:trackid")
+     .delete(artistController.deleteArtistTrack)
+     .patch(artistController.updateArtistTrack);
+router 
+     .route("/artists/:id/addTrack/:trackid")
+     .patch(artistController.addArtistTrack);
+
+
 
 module.exports=router;

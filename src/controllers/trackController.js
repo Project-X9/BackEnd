@@ -157,3 +157,26 @@ exports.deleteTrack = async (req, res) => {
     });
   }
 };
+
+exports.updateTrack = async( req, res) =>{
+
+ try{ 
+   const trackEdited = await Track.findByIdAndUpdate(req.params.id,req.body);
+  res.status(200).json({
+    status: "success",
+    data:
+     {
+      trackEdited
+     }
+    });
+  }
+    catch (err) {
+      console.log(err);
+      res.status(404).json({
+        status: "fail",
+        message: err.message
+      });
+    }
+ 
+
+};

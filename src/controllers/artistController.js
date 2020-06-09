@@ -136,16 +136,6 @@ exports.getArtist = async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
 exports.deleteArtist = async (req, res) => {
   try {
     await Artist.findByIdAndDelete(req.params.id);
@@ -295,6 +285,8 @@ exports.deleteArtistAlbum = async (req, res) => {
 exports.UpdateArtistAlbum = async( req, res) =>{
 
   try {
+    console.log(req.body);
+    console.log(req.body.data);
     const artistAlbums = await Artist.findById(req.params.id, "albums"); // --> artist id
     
     if(artistAlbums!==null)
@@ -331,3 +323,5 @@ exports.UpdateArtistAlbum = async( req, res) =>{
     });
   }
 };
+
+

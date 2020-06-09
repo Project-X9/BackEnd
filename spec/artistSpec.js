@@ -53,7 +53,7 @@
            });
        });
        it("Status 200", (done) => {
-           expect(response.status).toBe(200);
+           expect(response.status).toEqual(200);
           done();
        });
    });
