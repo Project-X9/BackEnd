@@ -19,10 +19,19 @@ router
   .get(PController.getMostPlayedPlaylist);
 
 router
-    .route("/:id/tracks")                          
-    .get(PController.getPlaylistTracks)  
-    .patch(PController.addPlaylistTrack)
-    .delete(PController.deletePlaylistTarck);      
+    .route("/tracks/:id1")                          
+    .get(PController.getPlaylistTracks);
+
+router
+    .route("/tracks/:id1/:id2")
+    .patch(PController.addPlaylistTrack);
+    //.delete(PController.deletePlaylistTarck);   
+    
+router
+    .route("/deleteTrack/:id1/:id2") 
+    .patch(PController.deletePlaylistTarck);
+
+
 
 
 

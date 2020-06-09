@@ -4,9 +4,11 @@ const router = new express.Router();
 const auth = require('../middleware/auth');
 
 router
-  .route("/deletedplaylist")
+  .route("/deletedplaylist/:id")
   .get(userController.getDeletedPlaylists);
-
+ router
+   .route("/Queue/:id")
+//   .get(userController.getQueue);
 router
   .route("/recoverPlaylist/:id")
   .patch(userController.recoverPlaylist);
@@ -68,3 +70,6 @@ router.route('/login')
 
 
 module.exports = router;
+
+router.route('/reset')
+.post(userController.forgetPassword);

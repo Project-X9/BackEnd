@@ -11,7 +11,12 @@ const AController = require(`./../controllers/albumController`);
 
 router
     .route("/:id")
-    .get(AController.getAlbumById);
+    .get(AController.getAlbumById)
+    .patch(AController.uploadAlbumPhoto);
+
+router
+    .route("/statistics/:id")
+    .get(AController.getAlbumStatistics);
 
 router
     .route("/:id/tracks")

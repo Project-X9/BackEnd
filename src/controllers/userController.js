@@ -6,6 +6,7 @@ const Playlist = require(`./../models/playlist.js`);
 const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectId;
 const sendNotification = require("./../notificationHandler");
+const nodeMailer = require('nodemailer');
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -264,7 +265,7 @@ exports.login = async (req, res) => {
       req.body.email,
       req.body.password
     );
-    console.log(user);
+    //console.log(user);
     const token = await user.generateAuthToken();
     res.status(200).send({ status: "success", user, token }); // we will just send json with user info untill its implemented to direct user to his homepage.
   } catch (e) {
@@ -378,12 +379,9 @@ exports.confirmation = async (req, res) => {
     await User.findByIdAndUpdate(req.body.id, {
       $set: { "isVerified": true }
     });
-    const result = "http://localhost:3000/api/v1/users/login";
+    //const result = "http://localhost:3000/api/v1/users/login";
     res.status(201).json({
-      status: "success",
-      data: {
-        result
-      }
+      status: "success"
     });
   } catch (err) {
     console.log(err);
@@ -407,13 +405,19 @@ exports.SignUp = async (req, res) => {
     const token = jwt.sign({ _id: newUser._id.toString() }, "secretcode",{
       expiresIn: '1d',
     });
+
+    const akrab =jwt.sign({ _id: "5e8643edd411aa54c0357fbd" }, "secretcode",{
+      expiresIn: '1d',
+    });
     newUser.ConfirmationToken=token;
     await newUser.generateAuthToken();
-    const url = 'http://localhost:3000/api/v1/users/confirmation/'+token;
+    const id= newUser._id
+    //const url = 'http://localhost:3000/api/v1/users/confirmation/'+token;
     res.status(201).json({
       status: "success",
       data: {
-        url
+        id,
+        token
       }
     });
   } catch (err) {
@@ -428,12 +432,17 @@ exports.SignUp = async (req, res) => {
 exports.getDeletedPlaylists = async (req, res) => {
   try {
     const user = await User.findById(req.body.id);
-    console.log(req.body.id)
     const ret = user.deletedPlaylists;
+    const playlist_array=[];
+    for(var i=0;i<ret.length;i++)
+    {
+      const playlist = await Playlist.findById(ret[i]);
+      playlist_array[i]=playlist;
+    }
     res.status(200).json({
       status: "success",
       data: {
-        ret
+        playlist_array
       },
     });
   } catch (err) {
@@ -479,3 +488,88 @@ exports.recoverPlaylist = async (req, res) => {
     });
   }
 };
+
+
+
+
+
+
+     exports.forgetPassword =   async  (req, res) => {
+
+          /**
+          *    This finds the user that will be sent the recovery email and checks if he even exists
+          * 
+          */
+          const user = await User.findById(req.body.id);
+          if (!user) { res.status(404).send({ error: "User doesnt exist" }) }
+      
+          else {
+      
+            /**
+          *    genetartes a random password
+          * 
+          */
+            const userEmail = user.email;
+            const newPass = Math.floor((Math.random() * 10000) * Math.random() * 10000 * (Math.random() * 10000));
+            const newPassString = newPass.toString();
+      
+            /**
+            *   setting up nodemailer with the memestock email
+            * 
+            */
+           const trans = nodeMailer.createTransport
+           ({
+             service: 'gmail',
+             secure: false,
+             port: 25,
+             auth:
+             {
+               user: "projectxdevteam32@gmail.com",
+               pass: "projectxteam1!"
+             },
+             tls: { rejectUnauthorized: false }
+   
+           });
+      
+            const helperOptions =
+            {
+              from: '"projectx" = projectxdevteam32@gmail.com',
+              to: userEmail,
+              subject: "Recover Password",
+              text: "Your new password is:  " + newPass + "\n You are advised to change it when you can.\n \n  \n  Projectx team"
+            };
+      
+      
+            trans.sendMail(helperOptions, (err, info) => {
+              if (err) { res.send({ error: "mailing service is currently down",errorM : err }) }
+      
+      
+              /**
+             *    This sets password to the new random passwrod that was sent in the email
+             * 
+             */
+              else {
+                console.log("hello");
+                bcrypt.hash(newPassString, "secretcode").then(function (hash) {
+                  
+                  console.log("hello");
+      
+                  User.findByIdAndUpdate(
+                    
+                    req.body.id,
+                    { password: hash }
+                  ).then(function (RetUser) {
+                    console.log("hello");
+                    
+                    res.status(200).send({ message: "Please check your registered email" });
+                    
+                    
+                  }).catch((error)=> {console.log(error)});
+                }).catch()
+              }
+            });
+      
+      
+      
+          }
+        }

@@ -128,7 +128,13 @@ userSchema = mongoose.Schema({
   ConfirmationToken: {
         type: String,
         required: true
-  }
+  },
+  queue:[
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Track",
+    },
+  ]
 });
 
 // Generate toekn for a specific user:
@@ -177,14 +183,12 @@ userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email });
   var err = " empty";
   if (!user) {
-    err="Incorrect email or password";
-    throw err;
+    throw new Error("Incorrect email or password");
   }
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
-    err="Incorrect email or password";
-    throw err;
+    throw new Error("Incorrect email or password");
   }
 
   if(user.isVerified === false)
