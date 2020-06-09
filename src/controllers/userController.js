@@ -455,7 +455,7 @@ exports.SignUp = async (req, res) => {
 
 exports.getDeletedPlaylists = async (req, res) => {
   try {
-    const user = await User.findById(req.body.id);
+    const user = await User.findById(req.params.id);
     const ret = user.deletedPlaylists;
     const playlist_array=[];
     for(var i=0;i<ret.length;i++)

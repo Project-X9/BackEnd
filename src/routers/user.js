@@ -4,7 +4,7 @@ const router = new express.Router();
 const auth = require('../middleware/auth');
 
 router
-  .route("/deletedplaylist")
+  .route("/deletedplaylist/:id")
   .get(userController.getDeletedPlaylists);
 
 router
