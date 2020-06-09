@@ -265,7 +265,7 @@ exports.login = async (req, res) => {
       req.body.email,
       req.body.password
     );
-    console.log(user);
+    //console.log(user);
     const token = await user.generateAuthToken();
     res.status(200).send({ status: "success", user, token }); // we will just send json with user info untill its implemented to direct user to his homepage.
   } catch (e) {
@@ -299,7 +299,6 @@ exports.getNotifications = async (req, res) => {
   } catch (err) {
     res.status(404).json({
       status: "fail",
-      message: err.message,
     });
   }
 };
@@ -340,13 +339,14 @@ exports.updatePushSubscription = async (req, res) => {
 exports.shareTrack = async (req, res) => {
   try {
     const senderId = req.params.id;
+    const recipientId = await User.findOne({email:req.body.recipientEmail});
     const payload = {
       event: "share-song",
       senderId,
       trackId: req.body.trackId,
       albumId: req.body.trackId,
     };
-    sendNotification(payload, req.body.recipientId);
+    sendNotification(payload, recipientId);
 
     res.status(201).json({
       status: "success",
@@ -359,6 +359,32 @@ exports.shareTrack = async (req, res) => {
   }
 };
 
+
+exports.updateNotification = async (req, res) => {
+  try{
+    const userId = req.params.userId;
+    const notificationId = req.params.notificationId;
+    await User.findOneAndUpdate({ _id: userId, "notifications._id": notificationId}, {
+      $set: { "notifications.$.read" : req.body.read}
+    })
+
+    const user = await User.findById(userId, 'notifications');
+    res.status(200).json({
+        status: 'success',
+        notification: user.notifications.find(val => {
+          return val._id == notificationId
+        })
+      })
+
+    
+  } catch (err) {
+    console.log(err.message)
+    res.status(404).json({
+      status: 'fail'
+    })
+  }
+
+}
 
 
 
@@ -377,12 +403,9 @@ exports.confirmation = async (req, res) => {
     await User.findByIdAndUpdate(req.body.id, {
       $set: { "isVerified": true }
     });
-    const result = "http://localhost:3000/api/v1/users/login";
+    //const result = "http://localhost:3000/api/v1/users/login";
     res.status(201).json({
-      status: "success",
-      data: {
-        result
-      }
+      status: "success"
     });
   } catch (err) {
     console.log(err);
@@ -406,13 +429,19 @@ exports.SignUp = async (req, res) => {
     const token = jwt.sign({ _id: newUser._id.toString() }, "secretcode",{
       expiresIn: '1d',
     });
+
+    const akrab =jwt.sign({ _id: "5e8643edd411aa54c0357fbd" }, "secretcode",{
+      expiresIn: '1d',
+    });
     newUser.ConfirmationToken=token;
     await newUser.generateAuthToken();
-    const url = 'http://localhost:3000/api/v1/users/confirmation/'+token;
+    const id= newUser._id
+    //const url = 'http://localhost:3000/api/v1/users/confirmation/'+token;
     res.status(201).json({
       status: "success",
       data: {
-        url
+        id,
+        token
       }
     });
   } catch (err) {

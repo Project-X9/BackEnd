@@ -45,6 +45,11 @@ userSchema = mongoose.Schema({
   image: String,
   premium: Boolean,
   previouslyPremium: Boolean,
+  CreatedPlaylists: [
+    {
+      type: mongoose.Schema.Types.ObjectId,ref:'Playlist'
+    }
+  ],
 
   //==============AUTH======================
   tokens: [
@@ -171,14 +176,12 @@ userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email });
   var err = " empty";
   if (!user) {
-    err="Incorrect email or password";
-    throw err;
+    throw new Error("Incorrect email or password");
   }
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
-    err="Incorrect email or password";
-    throw err;
+    throw new Error("Incorrect email or password");
   }
 
   if(user.isVerified === false)

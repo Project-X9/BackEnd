@@ -52,6 +52,9 @@ router.route('/:id/notifications')
 .get(userController.getNotifications)
 .delete(userController.deleteNotifications)
 
+router.route('/:userId/notifications/:notificationId')
+.patch(userController.updateNotification)
+
 router.route('/:id/update-push')
 .post(userController.updatePushSubscription);
 

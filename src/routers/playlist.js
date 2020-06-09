@@ -5,27 +5,28 @@ const PController = require(`./../controllers/playlistController`);
 
 router.route("/:id")
     .get(PController.getPlaylistById)                  
-    .patch(PController.updatePlaylist);     
+    .patch(PController.updatePlaylist)
+    .post(PController.createPlaylist);     
 
 
 
 router
   .route("/")
-  .post(PController.createPlaylist)
   .get(PController.getAllPlaylists);
 
 router
   .route("/p/maxPlayed")
   .get(PController.getMostPlayedPlaylist);
 
-
 router
     .route("/:id/tracks")                          
     .get(PController.getPlaylistTracks)  
-    .patch(PController.addPlaylistTrack)
-    .delete(PController.deletePlaylistTarck);      
+    .patch(PController.addPlaylistTrack);
+    //.delete(PController.deletePlaylistTarck);      
 
-
+router
+    .route("/deleteTrack") 
+    .delete(PController.deletePlaylistTarck);
 
 //     .get(PController.getPlaylistByName);       // what iF i have many with the same name? returns an arr of playlists?
 

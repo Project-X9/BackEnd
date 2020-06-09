@@ -37,7 +37,7 @@ function paginator(arr, perpage, page) {
         res.status(200).json({
           status: "success",
           data: {
-            tracks
+            array
           }
         });
       } catch (err) {

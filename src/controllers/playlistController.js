@@ -1,6 +1,7 @@
 const Playlist = require(`./../models/playlist.js`);
 const Track = require(`./../models/track.js`);
 const mongoose = require('mongoose');
+const User = require(`./../models/user.js`);
 
 /**
  * @module controller/playlist
@@ -10,12 +11,11 @@ const mongoose = require('mongoose');
 
 
 
-
-
 /**
    * @property {Function} createPlaylist  creats a new playlist 
    * @param {object} req - request object
    * @param {string} req.body.id - playlist id 
+   * @param {string} req.params.id - user's id 
    * @param {object} res - response object
    * @param {object} res.body.data - returns the newly created playlist object
 */
@@ -23,12 +23,18 @@ const mongoose = require('mongoose');
 exports.createPlaylist = async (req, res) => {    
   try {
     const newPlaylist = await Playlist.create(req.body);
+    
+    await User.findByIdAndUpdate(req.params.id,{ $push:{playlists: newPlaylist._id} });
+
+
     res.status(201).json({
       status: "success",
       data: {
         playlist : newPlaylist
       }
     });
+
+    
   } catch (err) {
     console.log(err);
     res.status(400).json({
@@ -37,6 +43,8 @@ exports.createPlaylist = async (req, res) => {
     });
   }
 };
+
+
 
 //                                    ----GET :----
 
@@ -247,9 +255,19 @@ exports.getMostPlayedPlaylist= async(req, res) =>
    * @param {string} req.params.id - playlist id 
 */
 
+ 
+/**
+   * @property {Function} deletePlaylistTarck  gets all playlists in database
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {string} req.body.id - playlist id 
+   * @param {string} req.body.track - track to be deleted id
+*/
+
   exports.deletePlaylistTarck = async (req, res) => {
     try {
-      const playlist = await Playlist.findByIdAndUpdate(req.query.id,{ $pull:{trackIds: req.query.id} });
+      console.log("HEREEE")
+      const playlist = await Playlist.findByIdAndUpdate(req.body.id,{ $pull:{tracks: req.body.track} });
       res.status(200).json({
         status: "success"
       });
@@ -261,6 +279,9 @@ exports.getMostPlayedPlaylist= async(req, res) =>
       });
     }
   };
+
+
+
 
 
   //                                    ----UPDATE :----
