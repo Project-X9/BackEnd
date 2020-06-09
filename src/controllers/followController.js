@@ -510,3 +510,82 @@ exports.unfollowAlbum = async (req, res) => {
     });
   }
 };
+
+
+
+
+
+
+/**
+ * @property {Function} addtoQueue  add a track to the user's Queue array 
+ * @param {object} req - request object
+ * @param {string} req.body.id - user id
+ * @param {string} req.params.id - id of track to be added
+ */
+exports.addtoQueue = async (req, res) => {
+  try {
+    const IN_User = await User.findById(req.body.id);
+    if (IN_User !== null) {
+      for (var i = 0; i < IN_User.tracks.length; i++) {
+        if (req.params.id == IN_User.queue[i]) {
+          return res.status(403).json({ data: "already in queue" });
+        }
+      }
+      await User.findByIdAndUpdate(req.body.id, {
+        $push: { queue: req.params.id },
+      });
+      res.status(200).json({
+        status: "success",
+      });
+    } else {
+      var err = "invalid id";
+      throw err;
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
+
+/**
+ * @property {Function} removefromQueue  remove a track from the user's queue array 
+ * @param {object} req - request object
+ * @param {string} req.body.id - user id
+ * @param {string} req.params.id - id of track to be removed
+ */
+exports.removefromQueue = async (req, res) => {
+  try {
+    const IN_User = await User.findById(req.body.id);
+    if (IN_User !== null) {
+      var count = 0;
+      for (var i = 0; i < IN_User.tracks.length; i++) {
+        if (req.params.id == IN_User.queue[i]) {
+          count++;
+        }
+      }
+
+      if (count === 0) {
+        return res.status(403).json({ data: "invalid deletion" });
+      }
+
+      await User.findByIdAndUpdate(req.body.id, {
+        $pull: { queue: req.params.id },
+      });
+      res.status(200).json({
+        status: "success",
+      });
+    } else {
+      var err = "invalid id";
+      throw err;
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};

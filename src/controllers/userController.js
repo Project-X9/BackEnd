@@ -455,7 +455,7 @@ exports.SignUp = async (req, res) => {
 
 exports.getDeletedPlaylists = async (req, res) => {
   try {
-    const user = await User.findById(req.body.id);
+    const user = await User.findById(req.params.id);
     const ret = user.deletedPlaylists;
     const playlist_array=[];
     for(var i=0;i<ret.length;i++)
@@ -506,6 +506,22 @@ exports.recoverPlaylist = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
+
+exports.getQueue = async (req, res) => {
+  try {
+    const queue = await User.findById(req.params.id, "queue");
+    const data = queue.queue;
+    res.status(200).json({
+      status: "success",
+      data
+    });
+  } catch (err) {
     res.status(404).json({
       status: "fail",
       message: err.message,
