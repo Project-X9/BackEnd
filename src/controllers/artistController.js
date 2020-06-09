@@ -455,7 +455,7 @@ exports.getTopArtists= async (req, res) => {
     const array = [];
     const compare_value=1;
     const artists = await Artist.find();
-    if (artist ==null) return;
+    
     for(var i =0; i<artists.length;i++)
     {
       const artist = artists[i];
@@ -485,4 +485,3 @@ exports.getTopArtists= async (req, res) => {
     });
   }
 };
-
