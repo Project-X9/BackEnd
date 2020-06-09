@@ -485,3 +485,48 @@ exports.getTopArtists= async (req, res) => {
     });
   }
 };
+
+/// ---------------------ADD ARTIST -------------------------------------------------------
+/**
+   * @property {Function} addArtist  adds track  
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {string} req.params.id - user id 
+   * @param {object} res.body.data - return the artist
+*/
+
+exports.addArtist= async (req, res) =>
+{
+  try { 
+    console.log(req.params.id);
+    const user = User.findById(req.params.id);
+    if (user.isArtist == true) {
+      res.status(404).json({
+        status: "fail",
+        message : "artist already exists! "
+      });
+      return;
+    }
+    const artist = new Artist();
+    
+    artist.image = user.image;
+    artist.name = user.name;
+    artist.email = user.email;
+    artist.password = user.password;
+    artist.dateAdded = new Date();
+    artist.save();
+    console.log(artist); 
+    res.status(200).json({
+      status: "success",
+      data: {
+       artist
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message
+    });
+  }
+}
