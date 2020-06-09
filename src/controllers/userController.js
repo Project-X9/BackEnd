@@ -6,6 +6,7 @@ const Playlist = require(`./../models/playlist.js`);
 const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectId;
 const sendNotification = require("./../notificationHandler");
+const nodeMailer = require('nodemailer');
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -455,7 +456,7 @@ exports.SignUp = async (req, res) => {
 
 exports.getDeletedPlaylists = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.body.id);
     const ret = user.deletedPlaylists;
     const playlist_array=[];
     for(var i=0;i<ret.length;i++)
@@ -513,18 +514,87 @@ exports.recoverPlaylist = async (req, res) => {
   }
 };
 
-exports.getQueue = async (req, res) => {
-  try {
-    const queue = await User.findById(req.params.id, "queue");
-    const data = queue.queue;
-    res.status(200).json({
-      status: "success",
-      data
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err.message,
-    });
-  }
-};
+
+
+
+
+
+     exports.forgetPassword =   async  (req, res) => {
+
+          /**
+          *    This finds the user that will be sent the recovery email and checks if he even exists
+          * 
+          */
+          const user = await User.findById(req.body.id);
+          if (!user) { res.status(404).send({ error: "User doesnt exist" }) }
+      
+          else {
+      
+            /**
+          *    genetartes a random password
+          * 
+          */
+            const userEmail = user.email;
+            const newPass = Math.floor((Math.random() * 10000) * Math.random() * 10000 * (Math.random() * 10000));
+            const newPassString = newPass.toString();
+      
+            /**
+            *   setting up nodemailer with the memestock email
+            * 
+            */
+           const trans = nodeMailer.createTransport
+           ({
+             service: 'gmail',
+             secure: false,
+             port: 25,
+             auth:
+             {
+               user: "projectxdevteam32@gmail.com",
+               pass: "projectxteam1!"
+             },
+             tls: { rejectUnauthorized: false }
+   
+           });
+      
+            const helperOptions =
+            {
+              from: '"projectx" = projectxdevteam32@gmail.com',
+              to: userEmail,
+              subject: "Recover Password",
+              text: "Your new password is:  " + newPass + "\n You are advised to change it when you can.\n \n  \n  Projectx team"
+            };
+      
+      
+            trans.sendMail(helperOptions, (err, info) => {
+              if (err) { res.send({ error: "mailing service is currently down",errorM : err }) }
+      
+      
+              /**
+             *    This sets password to the new random passwrod that was sent in the email
+             * 
+             */
+              else {
+                console.log("hello");
+                bcrypt.hash(newPassString, "secretcode").then(function (hash) {
+                  
+                  console.log("hello");
+      
+                  User.findByIdAndUpdate(
+                    
+                    req.body.id,
+                    { password: hash }
+                  ).then(function (RetUser) {
+                    console.log("hello");
+                    
+                    res.status(200).send({ message: "Please check your registered email" });
+                    
+                    
+                  }).catch((error)=> {console.log(error)});
+                }).catch()
+              }
+            });
+      
+      
+      
+          }
+        }
