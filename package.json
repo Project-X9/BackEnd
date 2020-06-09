@@ -28,6 +28,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.4",
+    "stripe": "^8.60.0",
     "validator": "^13.0.0",
     "web-push": "^3.4.4"
   },
