@@ -325,3 +325,164 @@ exports.UpdateArtistAlbum = async( req, res) =>{
 };
 
 
+
+///--------------------------update TRACK -----------------------------------------------------------------------------------------------///
+
+/**
+   * @property {Function} updateArtistTrack  update track  
+   * @param {object} req - request object
+   * @param {string} req.params.id - artist id 
+   * @param {string} req.params.trackid - id of track to be updated
+   * @param {string} req.body.data modification of track 
+   * @param {object} res  response object
+   * @param {object} res.body.data - return the artist
+*/
+
+exports.updateArtistTrack= async (req, res) =>
+{
+  try {
+    console.log(req.params.id);
+    console.log(req.params.trackid);
+    console.log(req.body);
+    console.log(req.body.data);
+    const artist = await Artist.findById(req.params.id); 
+    if (artist ==null) return;
+    console.log(artist.tracks.length);
+    for (var i =0 ; i<artist.tracks.length;i++) 
+    {
+      console.log(artist.tracks[i])
+      if (artist.tracks[i] == req.params.trackid )
+      {
+        const trackModified = await Track.findByIdAndUpdate(req.params.trackid, {$set:req.body},{ $push: { genres: req.body.genres }, new: true});
+       // trackModified.genres.push( req.body.genres);
+       // trackModified.save();
+        console.log(trackModified);
+       res.status(200).json({
+        status: "success",
+        data: {
+         trackModified
+        }
+      });
+      return;
+      }
+    }
+
+     
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message
+    });
+  }
+}
+
+//----------------------------- add track ------------------------------------------------------------------------------------------//
+/**
+   * @property {Function} addArtistTrack  adds track  
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {string} req.params.id - artist id 
+   * @param {string} req.params.trackid - id of track to be added
+   * @param {object} res.body.data - return the artist
+*/
+
+exports.addArtistTrack= async (req, res) =>
+{
+  try { 
+    console.log(req.params.id);
+    console.log(req.params.trackid);
+    const artist = await Artist.findByIdAndUpdate(req.params.id ,{ $push:{tracks: req.params.trackid} ,new: true});   
+    if (artist ==null) return;
+    console.log(artist); 
+    res.status(200).json({
+      status: "success",
+      data: {
+       artist
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message
+    });
+  }
+}
+
+// ---------------------------------------- DELETE TRACK ----------------------------------------------------------------------------//
+
+/**
+   * @property {Function} deleteArtistTrack  delete track  
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {string} req.params.id - artist id 
+   * @param {string} req.params.trackid - id of track to be deleted
+   * @param {object} res.body.data - return the artist
+*/
+
+exports.deleteArtistTrack= async (req, res) =>
+{
+  try {
+    const artist = await Artist.findByIdAndUpdate(req.params.id ,{ $pull:{tracks: req.params.trackid} ,new: true});   
+    if (artist ==null) return; 
+    res.status(200).json({
+      status: "success",
+      data: {
+       artist
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message
+    });
+  }
+}
+////////------------------------GET TOP ARTISTS --------------------
+/**
+ * @property {Function} getTopArtists  get Top artists
+ * @param {object} req - request object
+ * @param {int} req.query.perpage - number of artists per page 
+ * @param {int} req.query.page - page number
+ * @param {object} res - response object
+ * @param {string[]}res.body.returnedArtists - array of top artists ids
+ */
+ 
+exports.getTopArtists= async (req, res) => {
+  try {
+    const array = [];
+    const compare_value=1;
+    const artists = await Artist.find();
+    if (artist ==null) return;
+    for(var i =0; i<artists.length;i++)
+    {
+      const artist = artists[i];
+      console.log(artist.followers.length);
+      if(artist.followers.length > compare_value)
+      {
+        console.log("artist added id = ");
+        console.log(artist.id);
+        array.push(artist.id);
+          
+      }
+    }
+    console.log(array);
+    const returnedArtists = paginator(array,req.query.perpage,req.query.page);
+    console.log(returnedArtists);
+    res.status(200).json({
+      status: "success",
+      data: {
+        returnedArtists
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message
+    });
+  }
+};
+
