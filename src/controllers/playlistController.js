@@ -260,14 +260,14 @@ exports.getMostPlayedPlaylist= async(req, res) =>
    * @property {Function} deletePlaylistTarck  gets all playlists in database
    * @param {object} req - request object
    * @param {object} res - response object
-   * @param {string} req.body.id - playlist id 
-   * @param {string} req.body.track - track to be deleted id
+   * @param {string} req.params.id1 - playlist id 
+   * @param {string} req.params.id1 - track to be deleted id
 */
 
   exports.deletePlaylistTarck = async (req, res) => {
     try {
       console.log("HEREEE")
-      const playlist = await Playlist.findByIdAndUpdate(req.body.id,{ $pull:{tracks: req.body.track} });
+      const playlist = await Playlist.findByIdAndUpdate(req.params.id1,{ $pull:{tracks: req.params.id2} });
       res.status(200).json({
         status: "success"
       });
