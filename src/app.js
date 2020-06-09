@@ -11,6 +11,7 @@ const albumRouter = require('./routers/album')
 const playlistRouter = require ('./routers/playlist')
 const shareRouter = require('./routers/share')
 const likeRouter = require('./routers/like')
+const searchRouter = require('./routers/search')
 // const taskRouter = require('./routers/task')
 
 const app = express()
@@ -46,6 +47,8 @@ app.use('/api/v1/album', albumRouter)
 app.use('/api/v1/playlist', playlistRouter)
 
 app.use('/api/v1/share', shareRouter)
+
+app.use('/api/v1/search',searchRouter)
 
 // app.use(taskRouter)
 module.exports = app
