@@ -8,7 +8,7 @@ router
   .get(userController.getDeletedPlaylists);
  router
    .route("/Queue/:id")
-//   .get(userController.getQueue);
+   .get(userController.getQueue);
 router
   .route("/recoverPlaylist/:id")
   .patch(userController.recoverPlaylist);

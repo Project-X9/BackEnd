@@ -3,6 +3,7 @@
  */
 const User = require(`./../models/user.js`);
 const Playlist = require(`./../models/playlist.js`);
+const track = require(`./../models/track.js`);
 const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectId;
 const sendNotification = require("./../notificationHandler");
@@ -515,7 +516,26 @@ exports.recoverPlaylist = async (req, res) => {
 };
 
 
-
+exports.getQueue = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id, "queue");
+    const queue_tracks=[];
+    for(var i=0;i<user.queue.length;i++)
+    {
+      console.log(user.queue[i])
+      queue_tracks[i]= await track.findById(user.queue[i]);
+    }
+    res.status(200).json({
+      status: "success",
+      queue_tracks
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
 
 
 
