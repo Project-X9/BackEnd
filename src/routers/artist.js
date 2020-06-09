@@ -42,6 +42,8 @@ router
      .route("/artists/:id/addTrack/:trackid")
      .patch(artistController.addArtistTrack);
 
-
+router 
+     .route ("/addArtist/:id")
+     .patch(artistController.addArtist);
 
 module.exports=router;

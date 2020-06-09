@@ -133,7 +133,11 @@ userSchema = mongoose.Schema({
       type: mongoose.Types.ObjectId,
       ref: "Track",
     },
-  ]
+  ],
+  isArtist: {
+    type: Boolean,
+    defaultValue: false,
+  }
 });
 
 // Generate toekn for a specific user:
