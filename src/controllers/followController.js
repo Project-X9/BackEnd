@@ -26,11 +26,12 @@ function paginator(arr, perpage, page) {
 exports.getAllfollowers = async (req, res) => {
   try {
     const user = await User.findById(req.body.id);
+    //paginator(user.followers,req.query.perpage,req.query.page)
     if(user!==null)
       {
         res.status(200).json({
           status: "success",
-          followers: paginator(user.followers,req.query.perpage,req.query.page)
+          followers: user.followers
         });
       }else{
         var err= "invalid id";

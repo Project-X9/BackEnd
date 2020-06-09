@@ -421,3 +421,71 @@
  *     }
  */
 
+
+ /**---------------------------------------------------------------add to Queue --------------------------------------------------------------- */
+/**
+ * @api {patch} /follow/Queue/:id   add to Queue
+ * @apiGroup Follow
+ * @apiName add to queue 
+ * @apiVersion 0.1.0
+ * 
+ * @apiParam {string} id  user Id in body
+ * @apiHeader {string} id  playlist Id to be added to queue in path
+ * @apiParamExample {json} bodyParameter-Example:
+ *      {
+	       "id":"5e89fc634cd1d420fc3096c0"
+        }
+       
+ * @apiParamExample {json} PathParameter-Example:
+ *     /follow/Queue/5e85fd12bd68be36d8638cb3
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 201 OK
+ *     {
+ *       "status":"success"
+        }
+        
+ * @apiError NotFound The requested resource could not be found. This error can be due to a temporary or permanent condition.
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not found
+ *     {
+ *          "error": {
+ *             "status": "fail"
+ *           }
+ *     }
+ */
+
+
+ 
+ /**---------------------------------------------------------------remove from Queue --------------------------------------------------------------- */
+/**
+ * @api {patch} /follow/Queue/un/:id   remove from Queue
+ * @apiGroup Follow
+ * @apiName remove from queue 
+ * @apiVersion 0.1.0
+ * 
+ * @apiParam {string} id  user Id in body
+ * @apiHeader {string} id  playlist Id to be removed from queue in path
+ * @apiParamExample {json} bodyParameter-Example:
+ *      {
+	       "id":"5e89fc634cd1d420fc3096c0"
+        }
+       
+ * @apiParamExample {json} PathParameter-Example:
+ *     /follow/Queue/un/5e85fd12bd68be36d8638cb3
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 201 OK
+ *     {
+ *       "status":"success"
+        }
+        
+ * @apiError NotFound The requested resource could not be found. This error can be due to a temporary or permanent condition.
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not found
+ *     {
+ *          "error": {
+ *             "status": "fail"
+ *           }
+ *     }
+ */

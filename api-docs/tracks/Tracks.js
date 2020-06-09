@@ -83,3 +83,34 @@
  *     }
  * 
  */
+
+ 
+ /**---------------------------------------------------------------SHOW SONGS BY GENRE --------------------------------------------------------------- */
+/**
+ * @api {patch} /tracks/getTracksByGenresid/:id   getTracksByGenresid
+ * @apiGroup Tracks
+ * @apiName getTracksByGenresid 
+ * @apiVersion 0.1.0
+ * 
+ * @apiParam {string} id  artist Id in body
+ * @apiParamExample {json} PathParameter-Example:
+ *     /tracks/getTracksByGenresid/5e85fd12bd68be36d8638cb3
+ * 
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 201 OK
+ *     {
+ *       "status":"success"
+         "data": {
+                .....tracks...
+            }
+        }
+        
+ * @apiError NotFound The requested resource could not be found. This error can be due to a temporary or permanent condition.
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not found
+ *     {
+ *          "error": {
+ *             "status": "fail"
+ *           }
+ *     }
+ */
