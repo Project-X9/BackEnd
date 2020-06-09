@@ -46,4 +46,12 @@ router
      .route("/artist/un/:id")
      .patch(followController.unfollowArtist)
 
+router
+     .route("/Queue/:id")
+     .patch(followController.addtoQueue)
+
+router
+     .route("/Queue/un/:id")
+     .patch(followController.removefromQueue)
+
 module.exports = router;

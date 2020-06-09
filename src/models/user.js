@@ -127,7 +127,13 @@ userSchema = mongoose.Schema({
   ConfirmationToken: {
         type: String,
         required: true
-  }
+  },
+  queue:[
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Track",
+    },
+  ]
 });
 
 // Generate toekn for a specific user:
