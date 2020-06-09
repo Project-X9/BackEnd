@@ -456,12 +456,17 @@ exports.SignUp = async (req, res) => {
 exports.getDeletedPlaylists = async (req, res) => {
   try {
     const user = await User.findById(req.body.id);
-    console.log(req.body.id)
     const ret = user.deletedPlaylists;
+    const playlist_array=[];
+    for(var i=0;i<ret.length;i++)
+    {
+      const playlist = await Playlist.findById(ret[i]);
+      playlist_array[i]=playlist;
+    }
     res.status(200).json({
       status: "success",
       data: {
-        ret
+        playlist_array
       },
     });
   } catch (err) {
