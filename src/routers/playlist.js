@@ -19,14 +19,21 @@ router
   .get(PController.getMostPlayedPlaylist);
 
 router
-    .route("/:id/tracks")                          
-    .get(PController.getPlaylistTracks)  
-    .patch(PController.addPlaylistTrack);
-    //.delete(PController.deletePlaylistTarck);      
+    .route("/tracks/:id1")                          
+    .get(PController.getPlaylistTracks);
 
+router
+    .route("/tracks/:id1/:id2")
+    .patch(PController.addPlaylistTrack);
+    //.delete(PController.deletePlaylistTarck);   
+    
 router
     .route("/deleteTrack") 
     .delete(PController.deletePlaylistTarck);
+
+
+
+
 
 //     .get(PController.getPlaylistByName);       // what iF i have many with the same name? returns an arr of playlists?
 
