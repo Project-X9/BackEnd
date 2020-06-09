@@ -316,19 +316,21 @@ exports.getMostPlayedPlaylist= async(req, res) =>
     }
   };
 
+
  /**
    * @property {Function} addPlaylistTrack  updates playlist with specified ID
    * @param {object} req - request object
    * @param {object} res - response object
-   * @param {string} req.query.id - playlist id 
+   * @param {string} req.params.id1 - playlist id 
+   * @param {string} req.params.id2 - track id to be added
    * @param {object} res.body.data - returns the  playlist with specified ID after adding the track specified
-   * @param {string} req.query.id1 - track id to be added
+   
 */
 
   exports.addPlaylistTrack= async (req, res) =>
   {
     try {
-      const playlist = await Playlist.findByIdAndUpdate(req.body.id,{ $push:{tracks: req.params.id} });   
+      const playlist = await Playlist.findByIdAndUpdate(req.params.id1,{ $push:{tracks: req.params.id2} },  {new: true});   
        res.status(200).json({
         status: "success",
         data: {
@@ -343,6 +345,8 @@ exports.getMostPlayedPlaylist= async(req, res) =>
       });
     }
   }
+
+  
 
   
 
