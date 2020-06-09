@@ -430,6 +430,14 @@ exports.SignUp = async (req, res) => {
   }
 };
 
+
+/**
+ * @property {Function} getDeletedPlaylists  get list of Deleted Playlists of current user
+ * @param {object} req - request object
+ * @param {string} req.body.id - user id
+ * @param {object} res - response object
+ * @param {string[]}res.body.data.playlist_array - array of playlists deleted
+ */
 exports.getDeletedPlaylists = async (req, res) => {
   try {
     const user = await User.findById(req.body.id);
@@ -455,6 +463,14 @@ exports.getDeletedPlaylists = async (req, res) => {
   }
 };
 
+
+/**
+ * @property {Function} recoverPlaylist  recover a certain playlist from deleted/unfollowed playlist of current user
+ * @param {object} req - request object
+ * @param {string} req.body.id - user id
+ * @param {object} res - response object
+ * @param {string[]}res.status 
+ */
 
 exports.recoverPlaylist = async (req, res) => {
   try {
@@ -490,7 +506,13 @@ exports.recoverPlaylist = async (req, res) => {
   }
 };
 
-
+/**
+ * @property {Function} getQueue  retrieve tracks queue
+ * @param {object} req - request object
+ * @param {string} req.params.id - user id
+ * @param {object} res - response object
+ * @param {string[]}res.body.queue_tracks  - queue array returned
+ */
 exports.getQueue = async (req, res) => {
   try {
     const user = await User.findById(req.params.id, "queue");
