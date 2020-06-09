@@ -515,6 +515,8 @@ exports.addArtist= async (req, res) =>
     artist.password = user.password;
     artist.dateAdded = new Date();
     artist.save();
+    user.isArtist = true;
+    user.save();
     console.log(artist); 
     res.status(200).json({
       status: "success",
