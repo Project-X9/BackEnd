@@ -138,7 +138,9 @@ userSchema = mongoose.Schema({
   isArtist: {
     type: Boolean,
     defaultValue: false,
-  }
+  },
+  country: String,
+  mobileNumber: String
 });
 
 // Generate toekn for a specific user:

@@ -107,6 +107,8 @@ exports.updateUser = async (req, res) => {
     "age",
     "premium",
     "previouslyPremium",
+    "country",
+    "mobileNumber"
   ];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
