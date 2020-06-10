@@ -404,7 +404,7 @@ exports.unfollowArtist = async (req, res) => {
             }
           }
 
-        if(count!==0){ return res.status(403).json({ data : "already followed"})}
+        if(count===0){ return res.status(403).json({ data : "invalid deletion"})}
         
         await User.findByIdAndUpdate(req.body.id,{ $pull:{artists: req.params.id} });
         await Artist.findByIdAndUpdate(req.params.id,{ $pull:{followers: req.body.id} });
