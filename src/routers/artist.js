@@ -47,5 +47,8 @@ router.route('/:id/update-push')
 .post(artistController.updatePushSubscription)
 
 
+router 
+     .route ("/addArtist/:id")
+     .patch(artistController.addArtist);
 
 module.exports=router;

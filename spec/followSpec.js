@@ -1,42 +1,42 @@
-// const superagent = require("superagent");
-// const domainName = `http://localhost:${process.env.PORT}/api/v1`;
+const superagent = require("superagent");
+const domainName = `http://localhost:${process.env.PORT}/api/v1`;
 
-// var valid_id='5e8a236466d92f054678771d';
-// var invalid_id ='5e89fc634cd1d420fc3096ce';
-// var user = '5e89fc7eb586021c3869f63e';
-// var playlist='5e8cf0bc7d231c3bec30c4e1';
-// var album='5e8cf1347d231c3bec30c4e3';
-// var artist='5e877b8fae42032b7c867feb';
-// var track='5e8cf03d7d231c3bec30c4de';
+var valid_id='5e8a236466d92f054678771d';
+var invalid_id ='5e89fc634cd1d420fc3096ce';
+var user = '5e89fc7eb586021c3869f63e';
+var playlist='5e8cf0bc7d231c3bec30c4e1';
+var album='5e8cf1347d231c3bec30c4e3';
+var artist='5e877b8fae42032b7c867feb';
+var track='5e8cf03d7d231c3bec30c4de';
 
 //   //--------------------------------------------------------------- GET ALL USERS ---------------------------------------------------------------//
 
-//   // describe("GET /follow/getfollowers", () => 
-//   // {
-//   //   describe("valid id", () => 
-//   //   {
-//   //       let response;
-//   //       beforeAll((done) => {
-//   //       return superagent
-//   //           .get(`${domainName}/follow/getfollowers`)
-//   //           .type('application/json')
-//   //           .send({id: valid_id})
-//   //           .then((res) => {
-//   //               response = { ...res };
-//   //               done();
-//   //           })
-//   //           .catch(err => {
-//   //               console.log(err.message);
-//   //           });
-//   //       });
-//   //       it("Status 200", (done) => {
-//   //         expect(response.status).toBe(200);
-//   //           //expect(response.body.followers).toEqual(["5e8643edd411aa54c0357fbd","5e89fc7eb586021c3869f63e"]);
-//   //          done();
-//   //       });
-//   //   });
+  describe("GET /follow/getfollowers", () => 
+  {
+    describe("valid id", () => 
+    {
+        let response;
+        beforeAll((done) => {
+        return superagent
+            .get(`${domainName}/follow/getfollowers`)
+            .type('application/json')
+            .send({id: valid_id})
+            .then((res) => {
+                response = { ...res };
+                done();
+            })
+            .catch(err => {
+                console.log(err.message);
+            });
+        });
+        it("Status 200", (done) => {
+          expect(response.status).toBe(200);
+            //expect(response.body.followers).toEqual(["5e8643edd411aa54c0357fbd","5e89fc7eb586021c3869f63e"]);
+           done();
+        });
+    });
 
-//   //  });
+   });
 
 
 // //-----------------------------------------------Follow user------------------------------------------------------//

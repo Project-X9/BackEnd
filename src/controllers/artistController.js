@@ -392,8 +392,11 @@ exports.addArtistTrack= async (req, res) =>
   try { 
     console.log(req.params.id);
     console.log(req.params.trackid);
-    const artist = await Artist.findByIdAndUpdate(req.params.id ,{ $push:{tracks: req.params.trackid} ,new: true});   
-    if (artist ==null) return;
+   // const artist = await Artist.findByIdAndUpdate(req.params.id ,{ $push:{tracks: req.params.trackid} ,new: true});  
+   // const track = await Track.findByIdAndUpdate(req.params.trackid ,{ $push:{artists: req.params.id} ,new: true}) ;
+   const artist = await Artist.findById(req.params.id);   
+   if (artist ==null) return;
+   artist.tracks.addToSet(req.params.trackid);
     console.log(artist); 
     res.status(200).json({
       status: "success",
@@ -508,3 +511,51 @@ exports.updatePushSubscription = async (req, res) => {
   }
 };
 
+
+/// ---------------------ADD ARTIST -------------------------------------------------------
+/**
+   * @property {Function} addArtist  adds track  
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {string} req.params.id - user id 
+   * @param {object} res.body.data - return the artist
+*/
+
+exports.addArtist= async (req, res) =>
+{
+  try { 
+    console.log(req.params.id);
+    const user = await User.findById(req.params.id);
+    if (!user) return;
+    if (user.isArtist == true) {
+      res.status(404).json({
+        status: "fail",
+        message : "artist already exists! "
+      });
+      return;
+    }
+    user.isArtist= true;
+    const result = await user.save();
+    const artist = new Artist();
+    artist.image = user.image;
+    artist.name = user.name;
+    artist.email = user.email;
+    artist.password = user.password;
+    artist.dateAdded = new Date();
+    artist.save();
+    
+    console.log(artist); 
+    res.status(200).json({
+      status: "success",
+      data: {
+       artist
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message
+    });
+  }
+}

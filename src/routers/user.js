@@ -8,7 +8,7 @@ router
   .get(userController.getDeletedPlaylists);
  router
    .route("/Queue/:id")
-//   .get(userController.getQueue);
+   .get(userController.getQueue);
 router
   .route("/recoverPlaylist/:id")
   .patch(userController.recoverPlaylist);
@@ -38,6 +38,9 @@ router
 router.route('/:id/tracks')
 .get(userController.getTracks)
 // .put(userController.addTracks);
+
+router.route('/Track/Ex/:id')
+.get(userController.isTrackExists)
 
 router.route('/:id/tracks/:trackId')
 .delete(userController.deleteTracks);
