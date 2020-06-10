@@ -558,6 +558,50 @@ exports.getQueue = async (req, res) => {
 };
 
 
+/**
+ * @property {Function} isTrackExists  check if track exists
+ * @param {object} req - request object
+ * @param {string} req.params.id - user id
+ * @param {object} res - response object
+ * @param {string[]}res.body.queue_tracks  - queue array returned
+ */
+exports.isTrackExists = async (req, res) => {
+  try {
+    const user = await User.findById(req.body.id, "tracks");
+    if(user !== null)
+    {
+      const newtrack = await track.findById(req.params.id);
+      if(newtrack !==null)
+      {
+        console.log(user.tracks);
+        var data=false;
+        for(var i=0;i<user.tracks.length;i++)
+        {
+          if(user.tracks[i] == req.params.id )
+          {
+            data = true;
+          }
+        }
+        res.status(200).json({
+          status: "success",
+          data
+        });
+      }else {
+        var err = "invalid track id";
+        throw err;
+      }
+    }else {
+      var err = "invalid user id";
+      throw err;
+    }
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
+
 
      exports.forgetPassword =   async  (req, res) => {
 
