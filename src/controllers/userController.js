@@ -6,8 +6,8 @@ const Playlist = require(`./../models/playlist.js`);
 const track = require(`./../models/track.js`);
 const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectId;
-const sendNotification = require("./../notificationHandler");
 const nodeMailer = require('nodemailer');
+
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -34,6 +34,13 @@ exports.getAllUsers = async (req, res) => {
     });
   }
 };
+
+
+/**
+ * @property {Function} getUser  Retrieves the user object with the given Id and sends it in HTTP response
+ * @param {object} req - request object
+ * @param {string} req.params.id - userId
+ */
 exports.getUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id).populate([
@@ -100,6 +107,8 @@ exports.updateUser = async (req, res) => {
     "age",
     "premium",
     "previouslyPremium",
+    "country",
+    "mobileNumber"
   ];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)

@@ -2,6 +2,7 @@ const express = require('express');
 const artistController = require(`./../controllers/artistController`);
 const router = new express.Router();
 
+
 router
 .route("/artists/:id")
 .get(artistController.getArtist)
@@ -41,6 +42,10 @@ router
 router 
      .route("/artists/:id/addTrack/:trackid")
      .patch(artistController.addArtistTrack);
+
+router.route('/:id/update-push')
+.post(artistController.updatePushSubscription)
+
 
 router 
      .route ("/addArtist/:id")

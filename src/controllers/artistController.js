@@ -494,6 +494,29 @@ exports.getTopArtists= async (req, res) => {
     });
   }
 };
+  
+
+
+///////////////////////////////////////////////////////
+exports.updatePushSubscription = async (req, res) => {
+  console.log('updating pushNotification endpoint')
+  try {
+    await Artist.findByIdAndUpdate(req.params.id, {
+      pushSubscription: req.body.pushSubscription,
+    });
+    const artist = await Artist.findById(req.params.id);
+    res.status(200).json({
+      status: "success",
+      data: artist,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
+
 
 /// ---------------------ADD ARTIST -------------------------------------------------------
 /**
