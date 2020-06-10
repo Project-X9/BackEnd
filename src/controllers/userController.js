@@ -401,7 +401,7 @@ exports.deleteNotifications = async (req, res) => {
  */
 exports.updatePushSubscription = async (req, res) => {
   try {
-    await User.findByIdAndUpdate(req.params.id, {
+    await User.findByIdAndUpdate(req.user._id, {
       pushSubscription: req.body.pushSubscription,
     });
     const user = await User.findById(req.params.id);

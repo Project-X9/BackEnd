@@ -17,6 +17,7 @@ exports.sendNotificationToUser = async (payload, recipientId) => {
     const pushNotificationPromise = webpush.sendNotification(recipient.pushSubscription, JSON.stringify(payload));
     pushNotificationPromise.catch(err => {
       console.log(`Failed to send push Notification to User ${recipient.email}`)
+      console.log(err)
     })
 
     payload.read = false;
