@@ -3,9 +3,11 @@ const userController = require(`./../controllers/userController`);
 const router = new express.Router();
 const auth = require('../middleware/auth');
 
+
 router
   .route("/deletedplaylist/:id")
   .get(userController.getDeletedPlaylists);
+
  router
    .route("/Queue/:id")
    .get(userController.getQueue);
@@ -53,15 +55,74 @@ router.route('/:id/albums')
 router.route('/:id/tracks/:albumId')
 .delete(userController.deleteAlbums);
 
-router.route('/:id/notifications')
-.get(userController.getNotifications)
-.delete(userController.deleteNotifications)
 
-router.route('/:userId/notifications/:notificationId')
-.patch(userController.updateNotification)
+router.route('/me/notifications')
+/**
+* @api {get} /me/notifications Gets the user's notifications
+  * @apiName Get Notifications @apiGroup User Profile
+  * @apiVersion  0.1.0
+  * @apiUse HeaderAuth
+  * @apiSuccess (200) {JSON} JSON Object that contains the notifications
+ * @apiSuccessExample {JSON} Success-Response:
+ * HTTP/1.1 OK
+ * { 
+ * "status": "success",
+    "totalCount": 17,
+    "page": 1,
+    "count": 10,
+    "data": {
+        "notifications": [
+            {
+                "_id": "5ed8fcd9f8894654ac2ff1b6",
+                "event": "share-song",
+                "senderId": "5ed1a2a703229411d450a082",
+                "trackId": "5e86459124471028e4d3539b",
+                "albumId": "5e86459124471028e4d3539b",
+                "read": true
+            }
+          ]
+        }
+      }
+    }
+* @apiUse Error404
+*/
+.get(auth, userController.getNotifications)
+/**
+* @api {get} /me/notifications Gets the user's notifications
+  * @apiName Get Notifications @apiGroup User Profile
+  * @apiVersion  0.1.0
+  * @apiUse HeaderAuth
+  * @apiSuccess (200) {JSON} JSON Object that contains the notifications
+ * @apiSuccessExample {JSON} Success-Response:
+ * HTTP/1.1 OK
+ * { 
+ * "status": "success",
+    "totalCount": 17,
+    "page": 1,
+    "count": 10,
+    "data": {
+        "notifications": [
+            {
+                "_id": "5ed8fcd9f8894654ac2ff1b6",
+                "event": "share-song",
+                "senderId": "5ed1a2a703229411d450a082",
+                "trackId": "5e86459124471028e4d3539b",
+                "albumId": "5e86459124471028e4d3539b",
+                "read": true
+            }
+          ]
+        }
+      }
+    }
+* @apiUse Error404
+*/
+.delete(auth, userController.deleteNotifications)
 
-router.route('/:id/update-push')
-.post(userController.updatePushSubscription);
+router.route('/me/notifications/:notificationId')
+.patch(auth, userController.updateNotification)
+
+router.route('/me/update-push')
+.post(auth, userController.updatePushSubscription);
 
 
 

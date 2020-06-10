@@ -8,7 +8,11 @@ const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectId;
 const nodeMailer = require('nodemailer');
 
-
+/**
+ * @property {Function} getAllUsers  Retrieves a page from all User documents, containing 10 users, and sends it back in HTTP response
+ * @param {object} req - request object
+ * @param {string} req.query.page - the requested page number
+ */
 exports.getAllUsers = async (req, res) => {
   try {
     let totalCount = await User.countDocuments();
@@ -80,6 +84,12 @@ exports.getUser = async (req, res) => {
   }
 };
 
+
+/**
+ * @property {Function} createUser  Creates a new user with the provided values in the request body, and sends it back in HTTP response 
+ * @param {object} req - request object
+ * @param {string} req.body - The request body containing at least the required fields of the user model
+ */
 exports.createUser = async (req, res) => {
   try {
     const newUser = await User.create(req.body);
@@ -98,6 +108,13 @@ exports.createUser = async (req, res) => {
   }
 };
 
+
+/**
+ * @property {Function} updateUser  Updates the user who has the received Id with the values in the request body. 
+ * @param {object} req - request object
+ * @param {object} req.params.id - Id of the user to be updated
+ * @param {string} req.body - The request body containing at least the required fields of the user model
+ */
 exports.updateUser = async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = [
@@ -141,6 +158,11 @@ exports.updateUser = async (req, res) => {
   }
 };
 
+
+/**
+ * @property {Function} deleteUser  Deletes the user with the received Id from the DB 
+ * @param {object} req.params.id - User Id
+ */
 exports.deleteUser = async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
@@ -157,11 +179,17 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
+//TODO
 exports.getCurrentUser = async (req, res) => {
   console.log(req.user);
   res.send(req.user);
 };
 
+/**
+ * @property {Function} getTracks  Returns Tracks of a user in HTTP Response
+ * @param {object} req - request object
+ * @param {object} req.params.id - Id of the user to be updated
+ */
 exports.getTracks = async (req, res) => {
   try {
     const tracks = await User.findById(req.params.id, "tracks").populate({
@@ -184,6 +212,7 @@ exports.getTracks = async (req, res) => {
   }
 };
 
+//TODO
 // exports.addTracks = async (req, res) => {
 //   try {
 
@@ -195,6 +224,11 @@ exports.getTracks = async (req, res) => {
 //   }
 // }
 
+/**
+ * @property {Function} deleteTracks  Deletes the array of Liked Tracks from a User Document
+ * @param {object} req - request object
+ * @param {object} req.params.id - Id of the user to be updated
+ */
 exports.deleteTracks = async (req, res) => {
   try {
     await User.findByIdAndUpdate(req.params.id, {
@@ -212,6 +246,13 @@ exports.deleteTracks = async (req, res) => {
   }
 };
 
+
+/**
+ * @property {Function} getAlbums  Sends Albums of a user back in HTTP response 
+ * @param {object} req - request object
+ * @param {object} res - request object
+ * @param {object} req.params.id - Id of the user to be updated
+ */
 exports.getAlbums = async (req, res) => {
   try {
     const albums = await User.findById(req.params.id, "albums");
@@ -230,6 +271,7 @@ exports.getAlbums = async (req, res) => {
   }
 };
 
+//TODO
 // exports.addAlbums = async (req, res) => {
 //   try {
 
@@ -241,6 +283,12 @@ exports.getAlbums = async (req, res) => {
 //   }
 // }
 
+
+/**
+ * @property {Function} deleteTracks  Deletes the array of Liked Albums from a User Document and send back HTTP response
+ * @param {object} req - request object
+ * @param {object} req.params.id - Id of the user to be updated
+ */
 exports.deleteAlbums = async (req, res) => {
   try {
     await User.findByIdAndUpdate(req.params.id, {
@@ -275,7 +323,7 @@ exports.login = async (req, res) => {
       req.body.email,
       req.body.password
     );
-    //console.log(user);
+    // console.log("test");
     const token = await user.generateAuthToken();
     res.status(200).send({ status: "success", user, token }); // we will just send json with user info untill its implemented to direct user to his homepage.
   } catch (e) {
@@ -291,16 +339,27 @@ exports.login = async (req, res) => {
 //   }
 // }
 
+
+
+// Notifications
+
+/**
+ * @property {Function} getNotifications  Sends the array of Notifications from a User Document in HTTP response
+ * @param {object} req - request object
+ * @param {object} res - response object
+ * @param {object} req.params.id - Id of the user to be updated
+ */
 exports.getNotifications = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id, "notifications");
+    // const user = await User.findById(req.params.id, "notifications");
+    const user = req.user;
     let notifications = user.notifications;
     const page = req.query.page || 1;
     notifications = notifications.slice(10 * (page - 1), 10 * page);
     res.status(200).json({
       status: "success",
       totalCount: user.notifications.length,
-      page: req.query.page,
+      page: req.query.page || 1,
       count: notifications.length,
       data: {
         notifications,
@@ -313,6 +372,12 @@ exports.getNotifications = async (req, res) => {
   }
 };
 
+/**
+ * @property {Function} deleteNotifications  Deletes the array of Notifications from a User Document and sends back HTTP response
+ * @param {object} req - request object
+ * @param {object} res - response object
+ * @param {object} req.params.id - Id of the user to be updated
+ */
 exports.deleteNotifications = async (req, res) => {
   try {
     await User.findByIdAndUpdate(req.params.id, { notifications: [] });
@@ -327,8 +392,14 @@ exports.deleteNotifications = async (req, res) => {
   }
 };
 
+/**
+ * @property {Function} updatePushSubscription  updates the "pushSubscription" field of a user with subscription object in the request body, and sends back HTTP response.
+ * @param {object} req - request object
+ * @param {object} res - response object
+ * @param {object} req.params.id - Id of the user to be updated
+ * @param {object} req.body.pushSubscription - New pushSubscription object
+ */
 exports.updatePushSubscription = async (req, res) => {
-  console.log('updating pushNotification endpoint')
   try {
     await User.findByIdAndUpdate(req.params.id, {
       pushSubscription: req.body.pushSubscription,
@@ -346,6 +417,13 @@ exports.updatePushSubscription = async (req, res) => {
   }
 };
 
+/**
+ * @property {Function} updatePushSubscription  updates the "pushSubscription" field of a user with subscription object in the request body, and sends back HTTP response.
+ * @param {object} req - request object
+ * @param {object} res - response object
+ * @param {object} req.params.userId - Id of the user to be updated
+ * @param {object} req.params.notificationId - Id of the notification to be updated
+ */
 exports.updateNotification = async (req, res) => {
   try{
     const userId = req.params.userId;

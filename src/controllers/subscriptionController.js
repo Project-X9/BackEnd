@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const stripe = require('stripe')('sk_test_51Gs53YHI4RxWmnZ3WXxhR4Kcz4YXCBazll55JOGqodixAVYbiJhxUwxshsqhBS4yeVnvHlddeJe8zOQYacKCMDsX009AGOeauJ');
 
 exports.getCheckoutSession = async (req, res) => {
-    const user = User.findById(req.body.userId);
+    const user = req.user
     try{
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
