@@ -488,12 +488,14 @@ exports.confirmation = async (req, res) => {
  * @param {object} res - on success contains status , url string and token, on failure Wrong user credentials result in status code 400 , status:fail */
 
 exports.SignUp = async (req, res) => {
+
   try {
-    const newUser = await User.create(req.body);
-    const token = jwt.sign({ _id: newUser._id.toString() }, "secretcode",{
+    const token = jwt.sign({ email: req.body.email }, "secretcode",{
       expiresIn: '1d',
     });
-    newUser.ConfirmationToken=token;
+    req.body.ConfirmationToken=token;
+    const newUser = await User.create(req.body);
+    console.log("past create")
     const userEmail = newUser.email;
     const trans = nodeMailer.createTransport
     ({
@@ -528,11 +530,12 @@ exports.SignUp = async (req, res) => {
       status: "success",
       data: {
         id,
+        user: newUser,
         token
       }
     });
   } catch (err) {
-    console.log(err);
+    console.log("ERROR");
     res.status(400).json({
       status: "fail",
       message: err.message,

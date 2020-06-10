@@ -26,7 +26,6 @@ router
 router
   .route("/")
   .get(userController.getAllUsers)
-  .post(userController.createUser);
 
  router.route("/me")
  .get(userController.getCurrentUser);
