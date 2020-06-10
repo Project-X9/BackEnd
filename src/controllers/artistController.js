@@ -407,9 +407,13 @@ exports.addArtistTrack= async (req, res) =>
     // console.log(req.params.id);
     // console.log(req.params.trackid);
    // const artist = await Artist.findByIdAndUpdate(req.params.id ,{ $push:{tracks: req.params.trackid} ,new: true});  
-   // const track = await Track.findByIdAndUpdate(req.params.trackid ,{ $push:{artists: req.params.id} ,new: true}) ;
+   //const track = await Track.findByIdAndUpdate(req.params.trackid ,{ $push:{artists: req.params.id} ,new: true}) ;
+   const track = await Track.findById(req.params.trackid );
+   if (track == null) return;
+
    const artist = await Artist.findById(req.params.id);   
    if (artist ==null) return;
+
    artist.tracks.addToSet(req.params.trackid);
    const payload = {
     event: "new-track",
@@ -422,6 +426,9 @@ exports.addArtistTrack= async (req, res) =>
      notificationHandler.sendNotificationToUser(payload, followerId)
    });
     // console.log(artist); 
+   
+   track.artists.addToSet(req.params.id);
+    console.log(artist); 
     res.status(200).json({
       status: "success",
       data: {
