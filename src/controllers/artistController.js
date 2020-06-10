@@ -5,8 +5,8 @@
 const Artist = require(`./../models/artist.js`);
 const Track = require(`./../models/track.js`);
 const Album = require(`./../models/album.js`);
-const webpush = require('web-push')
 const User = require(`./../models/user.js`);
+const notificationHandler = require('./../notificationHandler')
 
 
 
@@ -226,7 +226,21 @@ exports.getArtistRelatedArtists = async (req, res) => {
 exports.addArtistAlbum= async (req, res) =>
 {
   try {
-    const artist = await Artist.findByIdAndUpdate(req.body.id,{ $push:{albums: req.params.id} });   
+    await Artist.findByIdAndUpdate(req.body.id,{ $push:{albums: req.params.id} });   
+     
+
+    const artist = await Artist.findById(req.params.id) 
+    const payload = {
+      event: "new-album",
+      time: Date.now(),
+      senderId: req.body.id,
+      albumId: req.params.id,
+      read: false
+    };
+     artist.followers.forEach(followerId => {
+       notificationHandler.sendNotificationToUser(payload, followerId)
+     });
+
      res.status(200).json({
       status: "success",
       data: {
@@ -390,14 +404,24 @@ exports.updateArtistTrack= async (req, res) =>
 exports.addArtistTrack= async (req, res) =>
 {
   try { 
-    console.log(req.params.id);
-    console.log(req.params.trackid);
+    // console.log(req.params.id);
+    // console.log(req.params.trackid);
    // const artist = await Artist.findByIdAndUpdate(req.params.id ,{ $push:{tracks: req.params.trackid} ,new: true});  
    // const track = await Track.findByIdAndUpdate(req.params.trackid ,{ $push:{artists: req.params.id} ,new: true}) ;
    const artist = await Artist.findById(req.params.id);   
    if (artist ==null) return;
    artist.tracks.addToSet(req.params.trackid);
-    console.log(artist); 
+   const payload = {
+    event: "new-track",
+    time: Date.now(),
+    senderId: req.params.id,
+    trackId: req.params.trackId,
+    read: false
+  };
+   artist.followers.forEach(followerId => {
+     notificationHandler.sendNotificationToUser(payload, followerId)
+   });
+    // console.log(artist); 
     res.status(200).json({
       status: "success",
       data: {

@@ -11,11 +11,14 @@ exports.sendNotificationToUser = async (payload, recipientId) => {
   try{
     const recipient = await User.findById(
       recipientId,
-      "pushSubscription notifications"
+      "pushSubscription notifications name email"
     );
-    
-    webpush.sendNotification(recipient.pushSubscription, JSON.stringify(payload));
-  
+    // console.log(recipient)
+    const pushNotificationPromise = webpush.sendNotification(recipient.pushSubscription, JSON.stringify(payload));
+    pushNotificationPromise.catch(err => {
+      console.log(`Failed to send push Notification to User ${recipient.email}`)
+    })
+
     payload.read = false;
     await User.findByIdAndUpdate( recipientId, { $push: { notifications: payload } });
   } catch (err) {
@@ -33,7 +36,7 @@ exports.sendNotificationToArtist = async (payload, recipientId) => {
     
     const pushNotificationPromise = webpush.sendNotification(recipient.pushSubscription, JSON.stringify(payload));
     pushNotificationPromise.catch(err => {
-      throw err
+      console.log(`Failed to send push Notification to ArtistId ${recipientId}`)
     })
   
     await Artist.findByIdAndUpdate( recipientId, { $push: { notifications: payload } });
