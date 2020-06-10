@@ -5,8 +5,8 @@ const User = require(`./../models/user.js`);
 const Playlist = require(`./../models/playlist.js`);
 const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectId;
-const sendNotification = require("./../notificationHandler");
 const nodeMailer = require('nodemailer');
+
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -33,6 +33,13 @@ exports.getAllUsers = async (req, res) => {
     });
   }
 };
+
+
+/**
+ * @property {Function} getUser  Retrieves the user object with the given Id and sends it in HTTP response
+ * @param {object} req - request object
+ * @param {string} req.params.id - userId
+ */
 exports.getUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id).populate([

@@ -1,5 +1,5 @@
 const User = require(`./../models/user.js`);
-const sendNotification = require('./../notificationHandler')
+const notificationHandler = require('./../notificationHandler')
 
 
 exports.shareTrack = async (req, res) => {
@@ -17,7 +17,7 @@ exports.shareTrack = async (req, res) => {
       if(recipientId === null) {
           throw new Error('Failed. Invalid Recipient Email.')
       }
-      sendNotification(payload, recipientId);
+      notificationHandler.sendNotificationTouUser(payload, recipientId);
   
       res.status(201).json({
         status: "success",
