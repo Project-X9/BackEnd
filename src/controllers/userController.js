@@ -380,7 +380,7 @@ exports.getNotifications = async (req, res) => {
  */
 exports.deleteNotifications = async (req, res) => {
   try {
-    await User.findByIdAndUpdate(req.params.id, { notifications: [] });
+    await User.findByIdAndUpdate(req.user._id, { notifications: [] });
 
     res.status(204).json({
       status: "success",
@@ -426,7 +426,7 @@ exports.updatePushSubscription = async (req, res) => {
  */
 exports.updateNotification = async (req, res) => {
   try{
-    const userId = req.params.userId;
+    const userId = req.user._id;
     const notificationId = req.params.notificationId;
     await User.findOneAndUpdate({ _id: userId, "notifications._id": notificationId}, {
       $set: { "notifications.$.read" : req.body.read}
