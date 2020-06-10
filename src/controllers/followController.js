@@ -26,11 +26,12 @@ function paginator(arr, perpage, page) {
 exports.getAllfollowers = async (req, res) => {
   try {
     const user = await User.findById(req.body.id);
+    //paginator(user.followers,req.query.perpage,req.query.page)
     if(user!==null)
       {
         res.status(200).json({
           status: "success",
-          followers: paginator(user.followers,req.query.perpage,req.query.page)
+          followers: user.followers
         });
       }else{
         var err= "invalid id";
@@ -403,7 +404,7 @@ exports.unfollowArtist = async (req, res) => {
             }
           }
 
-        if(count!==0){ return res.status(403).json({ data : "already followed"})}
+        if(count===0){ return res.status(403).json({ data : "invalid deletion"})}
         
         await User.findByIdAndUpdate(req.body.id,{ $pull:{artists: req.params.id} });
         await Artist.findByIdAndUpdate(req.params.id,{ $pull:{followers: req.body.id} });

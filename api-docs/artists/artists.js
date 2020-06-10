@@ -186,3 +186,36 @@
 //{
     
 //}
+
+
+ /**---------------------------------------------------------------top tracks of an artist --------------------------------------------------------------- */
+/**
+ * @api {patch} /artist/getTopTracks  top tracks of an artist
+ * @apiGroup Artist
+ * @apiName getTopTracks 
+ * @apiVersion 0.1.0
+ * 
+ * @apiParam {string} id  artist Id in body
+ * @apiParamExample {json} bodyParameter-Example:
+ *      {
+	       "id":"5e89fc634cd1d420fc3096c0"
+        }
+       
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 201 OK
+ *     {
+ *       "status":"success"
+         "data": {
+                .....tracks...
+            }
+        }
+        
+ * @apiError NotFound The requested resource could not be found. This error can be due to a temporary or permanent condition.
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not found
+ *     {
+ *          "error": {
+ *             "status": "fail"
+ *           }
+ *     }
+ */
