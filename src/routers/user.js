@@ -56,6 +56,10 @@ router.route('/:id/tracks/:albumId')
 .delete(userController.deleteAlbums);
 
 
+
+
+
+
 router.route('/me/notifications')
 /**
 * @api {get} /me/notifications Gets the user's notifications
@@ -88,45 +92,53 @@ router.route('/me/notifications')
 */
 .get(auth, userController.getNotifications)
 /**
-* @api {get} /me/notifications Gets the user's notifications
-  * @apiName Get Notifications @apiGroup User Profile
+* @api {delete} /me/notifications Deletes all the user's notifications
+  * @apiName Delete Notifications @apiGroup User Profile
   * @apiVersion  0.1.0
   * @apiUse HeaderAuth
-  * @apiSuccess (200) {JSON} JSON Object that contains the notifications
- * @apiSuccessExample {JSON} Success-Response:
- * HTTP/1.1 OK
- * { 
- * "status": "success",
-    "totalCount": 17,
-    "page": 1,
-    "count": 10,
-    "data": {
-        "notifications": [
-            {
-                "_id": "5ed8fcd9f8894654ac2ff1b6",
-                "event": "share-song",
-                "senderId": "5ed1a2a703229411d450a082",
-                "trackId": "5e86459124471028e4d3539b",
-                "albumId": "5e86459124471028e4d3539b",
-                "read": true
-            }
-          ]
-        }
-      }
-    }
-* @apiUse Error404
+  * @apiSuccess (204) 
+ *@apiUse Error404
 */
 .delete(auth, userController.deleteNotifications)
 
+
+/**
+* @api {patch} /me/notifications/:notificationId Updates the notification 'read' field
+  * @apiName Update Notification  @apiGroup User Profile
+  * @apiVersion  0.1.0
+  * @apiUse HeaderAuth
+ * @apiParam  {Boolean} read 
+  * @apiSuccess (201) {JSON} JSON Object that contains the notification object after update
+ * @apiSuccessExample {JSON} Success-Response:
+ * HTTP/1.1 OK
+ * {
+    "status": "success",
+    "notification": {
+        "_id": "5ed8fcd9f8894654ac2ff1b6",
+        "event": "share-song",
+        "senderId": "5ed1a2a703229411d450a082",
+        "trackId": "5e86459124471028e4d3539b",
+        "albumId": "5e86459124471028e4d3539b",
+        "read": true
+    }
+}
+* @apiUse Error404
+*/
 router.route('/me/notifications/:notificationId')
 .patch(auth, userController.updateNotification)
 
+
+/**
+* @api {post} /me/update-push Updates the notification 'read' field
+  * @apiName Update Notification  @apiGroup User Profile
+  * @apiVersion  0.1.0
+  * @apiUse HeaderAuth
+ * @apiParam  {subscription} pushSubscription 
+  * @apiSuccess (200) {JSON} JSON Object that contains the user after updating 'pushSubscription' field
+* @apiUse Error404
+*/
 router.route('/me/update-push')
 .post(auth, userController.updatePushSubscription);
-
-
-
-
 //====================  (AUTHENTICATION) Login ======================
 
 router.route('/login')
