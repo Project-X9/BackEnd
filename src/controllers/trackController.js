@@ -25,15 +25,29 @@ function paginator(arr, perpage, page) {
     
     exports.getTracksByGenresid = async (req, res) => {
       try {
-        const tracks_arr = await Track.find().populate("genres","name");
+        const tracks_arr = await Track.find();
         const category = await Category.findById(req.params.id);
         const array = [];
-        for(var i =0;i<tracks_arr.length;i++)
+        for(var i = 0;i<tracks_arr.length;i++)
         {
-          if(tracks_arr[i].genres[0].name == category.name)
-          array.push(tracks_arr[i]);
+          console.log(tracks_arr[i].genres[0])
+          const categorynew = await Category.findById(tracks_arr[i].genres[0]);
+          console.log(categorynew)
+          if(categorynew.name == category.name)
+              array.push(tracks_arr[i]);
         }
-        const tracks = paginator(array,req.query.perpage,req.query.page);
+        // const array = [];
+        // for(var i =0;i<tracks_arr.length;i++)
+        // {
+        //   var x = tracks_arr[i].genres[0];
+        //   var id = x.id;
+        //   const categorynew = await Category.findById(id);
+        //   console.log(categorynew.name )
+        //   console.log(category.name)
+        //   //if(tracks_arr[i].genres[0].name == category.name)
+        //   //  array.push(tracks_arr[i]);
+        // }
+        // const tracks = paginator(array,req.query.perpage,req.query.page);
         res.status(200).json({
           status: "success",
           data: {
