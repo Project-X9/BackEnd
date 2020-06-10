@@ -15,6 +15,9 @@ router
 
 router
 .route("/getTracksByGenresid/:id")
-.get(trackController.getTracksByGenresid)
+.get(trackController.getTracksByGenresid);
 
+router
+    .route("/uploadTrack")
+    .patch(trackController.addTrack);
 module.exports=router;

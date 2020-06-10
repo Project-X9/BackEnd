@@ -142,6 +142,13 @@ exports.getTrack = async (req, res) => {
   }
 };
 
+/**
+ * @property {Function} deleteTrack  delete track by id 
+ * @param {object} req - request object
+ * @param {string} req.params.id - track  id 
+ * @param {object} res - response object
+ */
+
 exports.deleteTrack = async (req, res) => {
   try {
     await Track.findByIdAndDelete(req.params.id);
@@ -157,11 +164,17 @@ exports.deleteTrack = async (req, res) => {
     });
   }
 };
-
+/**
+ * @property {Function} updateTrack  update track by id 
+ * @param {object} req - request object
+ * @param {string} req.params.id - track  id
+ * @param {string} req.body - modification of track
+ * @param {object} res - response object
+ */
 exports.updateTrack = async( req, res) =>{
 
  try{ 
-   const trackEdited = await Track.findByIdAndUpdate(req.params.id,req.body);
+   const trackEdited = await Track.findByIdAndUpdate(req.params.id,{$set:req.body});
   res.status(200).json({
     status: "success",
     data:
@@ -178,5 +191,52 @@ exports.updateTrack = async( req, res) =>{
       });
     }
  
-
 };
+/*
+artists :[{type: mongoose.Schema.Types.ObjectId,ref:'Artist'}],
+    description : String,
+    likers : [{type: mongoose.Schema.Types.ObjectId,ref:'User'}],
+    name : String,
+    playcount : Number,
+    url : String,
+    duration : Number,
+    genres: [{type: mongoose.Schema.Types.ObjectId,ref:'Category'}],
+    imageUrl : String,
+    album: {type: mongoose.Schema.Types.ObjectId, ref: 'Album'}
+});
+*/
+
+/**
+ * @property {Function} addTrack  update track by id 
+ * @param {object} req - request object
+ * @param {string} req.body track specifications
+ * @param {object} res - response object
+ * @param {object} res.body.data track object returned
+ */
+
+exports.addTrack = async( req, res) =>{
+
+  try{ 
+    const track = new Track();
+    track.name = req.body.name;
+    track.description = req.body.description;
+    track.url = req.body.url;
+    track.imageUrl = req.body.imageUrl;
+    const result = await track.save();
+   res.status(200).json({
+     status: "success",
+     data:
+      {
+       track
+      }
+     });
+   }
+     catch (err) {
+       console.log(err);
+       res.status(404).json({
+         status: "fail",
+         message: err.message
+       });
+     }
+  
+ };
