@@ -11,32 +11,32 @@ var track='5e8cf03d7d231c3bec30c4de';
 
 //   //--------------------------------------------------------------- GET ALL USERS ---------------------------------------------------------------//
 
-  describe("GET /follow/getfollowers", () => 
-  {
-    describe("valid id", () => 
-    {
-        let response;
-        beforeAll((done) => {
-        return superagent
-            .get(`${domainName}/follow/getfollowers`)
-            .type('application/json')
-            .send({id: valid_id})
-            .then((res) => {
-                response = { ...res };
-                done();
-            })
-            .catch(err => {
-                console.log(err.message);
-            });
-        });
-        it("Status 200", (done) => {
-          expect(response.status).toBe(200);
-            //expect(response.body.followers).toEqual(["5e8643edd411aa54c0357fbd","5e89fc7eb586021c3869f63e"]);
-           done();
-        });
-    });
+  // describe("GET /follow/getfollowers", () => 
+  // {
+  //   describe("valid id", () => 
+  //   {
+  //       let response;
+  //       beforeAll((done) => {
+  //       return superagent
+  //           .get(`${domainName}/follow/getfollowers`)
+  //           .type('application/json')
+  //           .send({id: valid_id})
+  //           .then((res) => {
+  //               response = { ...res };
+  //               done();
+  //           })
+  //           .catch(err => {
+  //               console.log(err.message);
+  //           });
+  //       });
+  //       it("Status 200", (done) => {
+  //         expect(response.status).toBe(200);
+  //           //expect(response.body.followers).toEqual(["5e8643edd411aa54c0357fbd","5e89fc7eb586021c3869f63e"]);
+  //          done();
+  //       });
+  //   });
 
-   });
+  //  });
 
 
 // //-----------------------------------------------Follow user------------------------------------------------------//

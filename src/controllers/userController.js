@@ -17,14 +17,15 @@ exports.getAllUsers = async (req, res) => {
   try {
     let totalCount = await User.countDocuments();
     totalCount = totalCount.valueOf();
+    const page = req.query.page || 1;
     const users = await User.find()
       .populate("playlists")
-      .skip(10 * req.query.page - 1)
+      .skip(10 * (page - 1))
       .limit(10);
     res.status(200).json({
       status: "success",
       totalCount,
-      page: req.query.page,
+      page,
       count: users.length,
       data: {
         users,
@@ -150,7 +151,6 @@ exports.updateUser = async (req, res) => {
       },
     });
   } catch (err) {
-    console.log(err);
     res.status(404).json({
       status: "fail",
       message: err.message,
@@ -490,12 +490,11 @@ exports.confirmation = async (req, res) => {
 exports.SignUp = async (req, res) => {
 
   try {
-    const token = jwt.sign({ email: req.body.email }, "secretcode",{
+    const ConfirmationToken = jwt.sign({ email: req.body.email }, "secretcode",{
       expiresIn: '1d',
     });
-    req.body.ConfirmationToken=token;
+    req.body.ConfirmationToken=ConfirmationToken;
     const newUser = await User.create(req.body);
-    console.log("past create")
     const userEmail = newUser.email;
     const trans = nodeMailer.createTransport
     ({
@@ -516,14 +515,14 @@ exports.SignUp = async (req, res) => {
       from: '"projectx" = projectxdevteam32@gmail.com',
       to: userEmail,
       subject: "email confirmation",
-      text: "To verify your emial please click on this link with this confirmation token . \n\n \n " + token + "\n\n \n  \n  Projectx team"
+      text: "To verify your emial please click on this link with this confirmation token . \n\n \n " + ConfirmationToken + "\n\n \n  \n  Projectx team"
     };
     
     trans.sendMail(helperOptions, (err, info) => {
     if (err) { res.send({ error: "mailing service is currently down",errorM : err }) }
     });
 
-    await newUser.generateAuthToken();
+    const authToken = await newUser.generateAuthToken();
     const id= newUser._id;
 
     res.status(201).json({
@@ -531,11 +530,10 @@ exports.SignUp = async (req, res) => {
       data: {
         id,
         user: newUser,
-        token
+        token: authToken
       }
     });
   } catch (err) {
-    console.log("ERROR");
     res.status(400).json({
       status: "fail",
       message: err.message,
