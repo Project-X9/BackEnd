@@ -6,6 +6,55 @@
 // var valid_id1="5e86459124471028e4d3539b";
 // var valid_id2 ="5e8cf03d7d231c3bec30c4de";
 
+//   describe("GET /track/getTracksByGenresid/:id", () => 
+//   {
+//     var  id= "5e89f67c47f4092a9080d94b";
+//     describe("valid id", () => 
+//     {
+        
+//         let response;
+//         beforeAll((done) => {
+//         return superagent
+//             .get(`${domainName}/track/getTracksByGenresid/${id}`)
+//             .then((res) => {
+//                 response = { ...res };
+//                 done();
+//             })
+//             .catch((err) => {
+//               response = err;
+//               done();
+//           });
+//         });
+//         it("Status 200", (done) => {
+//           expect(response.status).toBe(200);
+        
+//           done();
+//         });
+//     });
+//     var id_in="5e89f67c47f4092a9080d943";
+    
+//     describe("invalid id", () => 
+//     {
+//         let response;
+//         beforeAll((done) => {
+//         return superagent
+//         .get(`${domainName}/track/getTracksByGenresid/${id_in}`)
+//             .then((res) => {
+//                 response = { ...res };
+//                 done();
+//             })
+//             .catch((err) => {
+//               response = err;
+//               done();
+//             });
+//           });
+//         it("Status 404", (done) => {
+//           expect(response.status).toBe(404);
+        
+//           done();
+//         });
+//     });
+//   });
 
 //   describe("GET /tracks/:id", () => 
 //   {

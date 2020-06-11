@@ -255,3 +255,63 @@ var track='5e8cf03d7d231c3bec30c4de';
 // //          });
 // //      });
 // // });
+
+
+
+
+
+   //-----------------------------------------------Follow track------------------------------------------------------//
+  //  describe("GET /follow/queue", () => 
+  //  {
+  //    describe("using a valid id", () => 
+  //    {
+  //        let response; 
+  //        let valid_id="5e8643edd411aa54c0357fbd";
+  //        beforeAll(() => {
+  //        return superagent
+  //            .patch(`${domainName}/follow/Queue/5e8cf03d7d231c3bec30c4de`)
+  //            .type('application/json')
+  //            .send({id: valid_id})
+  //            .then(res => {
+  //                response = { ...res };
+  //            })
+  //            .catch(err => {
+  //                console.log(err.message);
+  //            });
+  //        });
+         
+  //        it("Status 200", (done) => {
+  //            expect(response.status).toBe(200);
+  //           done();
+  //        });
+  //    });
+  // });
+
+
+        // -----------------------------------------------unFollow track------------------------------------------------------//
+        describe("GET /follow/Queue/un", () => 
+        {
+          describe("using a valid id", () => 
+          {
+              let response;
+              let valid_id="5e8643edd411aa54c0357fbd";
+              beforeAll(() => {
+              return superagent
+                  .patch(`${domainName}/follow/Queue/5e8cf03d7d231c3bec30c4de`)
+                  .type('application/json')
+                  .send({id: valid_id})
+                  .then(res => {
+                      response = { ...res };
+                  })
+                  .catch(err => {
+                      console.log(err.message);
+                  });
+              });
+              
+              it("Status 200", (done) => {
+                  expect(response.status).toBe(200);
+                 done();
+              });
+          });
+     });
+     
