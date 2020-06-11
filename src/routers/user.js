@@ -7,14 +7,14 @@ const configAuth = require('../auth');
 
 
 router
-  .route("/deletedplaylist")
+  .route("/deletedplaylist/:id")
   .get(userController.getDeletedPlaylists);
 
  router
    .route("/Queue/:id")
    .get(userController.getQueue);
 router
-  .route("/recoverPlaylist/:idU/:id")
+  .route("/recoverPlaylist/:id")
   .patch(userController.recoverPlaylist);
 
 router

@@ -561,7 +561,7 @@ exports.SignUp = async (req, res) => {
  */
 exports.getDeletedPlaylists = async (req, res) => {
   try {
-    const user = await User.findById(req.body.id);
+    const user = await User.findById(req.params.id);
     if(user !== null)
     {
       const ret = user.deletedPlaylists;
@@ -600,7 +600,7 @@ exports.getDeletedPlaylists = async (req, res) => {
 
 exports.recoverPlaylist = async (req, res) => {
   try {
-    const IN_User = await User.findById(req.params.idU);
+    const IN_User = await User.findById(req.params.id);
     if (IN_User !== null) {
       var count = 0;
       for (var i = 0; i < IN_User.deletedPlaylists.length; i++) {
