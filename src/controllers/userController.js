@@ -655,11 +655,12 @@ exports.getQueue = async (req, res) => {
             status: "success",
             queue_tracks
           });
-      }{
-        var err="ivalid id";
+      }else{
+        var err="invalid id";
         throw err;
       }
-  } catch (err) {
+  } catch (err)
+  {
     res.status(404).json({
       status: "fail",
       message: err.message,

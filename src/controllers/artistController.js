@@ -29,12 +29,14 @@ function paginator(arr, perpage, page) {
 exports.getTopTracks= async (req, res) => {
   try {
     const artist = await Artist.findById(req.body.id).populate("tracks","playCount");
+   // console.log(artist)
     const array = [];
     const compare_value=20;
     for(var i =0; i<artist.tracks.length;i++)
     {
       track_playcount= await Track.findById(artist.tracks[i]);
-      console.log(track_playcount.playcount)
+      console.log(track_playcount)
+      //console.log(track_playcount.playcount)
       if(track_playcount.playcount> compare_value)
       {
           array.push(artist.tracks[i]);
