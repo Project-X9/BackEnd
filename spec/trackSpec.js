@@ -1,6 +1,7 @@
-// require('../src/index.js');
-// const domainName = `http://localhost:${process.env.PORT}/api/v1`;
-// const superagent = require("superagent");
+const superagent = require("superagent");
+ const mongoose = require("../src/db/mongoose");
+ const domainName = `http://localhost:${process.env.PORT}/api/v1`;
+ require("./../src/index.js");
 
 
 // var valid_id1="5e86459124471028e4d3539b";
@@ -61,3 +62,77 @@
 //    });
 
 
+
+describe(" GET getTrackStats /getTrackStats/:trackid", () => 
+  {
+    describe("valid track id", () => 
+    {
+        let response;
+        beforeAll((done) => {
+        return superagent
+            .get(`${domainName}/getTrackStats/:trackid${track_id_valid}`)
+            .type('application/json')
+            .then((res) => {
+                response = { ...res };
+                done();
+            })
+            .catch((err) => {
+              response = err;
+              done();
+            });
+        });
+        it("Status 200", (done) => {
+          expect(response.status).toBe(200);
+        
+          done();
+        });
+    });
+    describe("invalid track id", () => 
+  {
+      let response;
+      beforeAll((done) => {
+      return superagent
+      .get(`${domainName}/getTrackStats/:trackid${track_id_invalid}`)
+      .type('application/json')
+          .then((res) => {
+              response = { ...res };
+              done();
+          })
+          .catch((err) => {
+            response = err;
+            done();
+          });
+      });
+      it("Status 404", (done) => {
+        expect(response.status).toBe(404);
+      
+        done();
+      });
+  });
+ });
+
+ 
+
+describe(" PATCH Add track /uploadTrack", () => 
+ {
+  
+       let response;
+       beforeAll((done) => {
+       return superagent
+           .patch(`${domainName}/uploadTrack`)
+           .type('application/json')
+           .then((res) => {
+               response = { ...res };
+               done();
+           })
+           .catch((err) => {
+             response = err;
+             done();
+           });
+        });
+       it("Status 200", (done) => {
+         expect(response.status).toBe(200);
+       
+         done();
+    });
+});

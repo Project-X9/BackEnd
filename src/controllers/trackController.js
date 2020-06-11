@@ -254,3 +254,48 @@ exports.addTrack = async( req, res) =>{
      }
   
  };
+ 
+/**
+ * @property {Function} getTrackStats  get track stats by id
+ * @param {object} req - request object
+ * @param {string} req.params.trackid track specifications
+ * @param {object} res - response object
+ * @param {object} res.body.data track stats returned
+ */
+
+exports.getTrackStats = async( req, res) =>{
+
+  try{ 
+    const track = await Track.findById(req.params.trackid);
+    if (track==null) 
+    {
+      res.status(404).json({
+        status: "fail",
+        message: "No such track found",
+      });
+      return;
+
+    }
+    //console.log(track.likers);
+    //console.log(track.playcount);
+
+    const numberOfLikers = track.likers.length;
+    const numberofPlaycount = track.playcount;
+   res.status(200).json({
+     status: "success",
+     data:
+      {
+       "Likers" : numberOfLikers,
+       "PlayCount" : numberofPlaycount
+      }
+     });
+   }
+     catch (err) {
+       console.log(err.message);
+       res.status(404).json({
+         status: "fail",
+         message: err.message
+       });
+     }
+  
+ };

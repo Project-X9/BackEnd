@@ -543,17 +543,17 @@ var confid="5ee1fae463eb422d00bc1796";
 
 
 
-  //     it("Status 200", () => {
-  //       expect(response.status).toBe(200);
-  //     });
-  //     it("Body", () => {
-  //       expect(response.body.data.user.name).toBe("Peter Parker");
-  //       expect(response.body.data.user.email).toBe("swing@gmail.com");
-  //     });
-  //   });
-  // });
+//       it("Status 200", () => {
+//         expect(response.status).toBe(200);
+//       });
+//       it("Body", () => {
+//         expect(response.body.data.user.name).toBe("Peter Parker");
+//         expect(response.body.data.user.email).toBe("swing@gmail.com");
+//       });
+//     });
+//   });
 // });
-////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////
 
 // const superagent = require("superagent");
 // const mongoose = require("./../src/db/mongoose");

@@ -1,11 +1,16 @@
  const superagent = require("superagent");
+ const mongoose = require("../src/db/mongoose");
  const domainName = `http://localhost:${process.env.PORT}/api/v1`;
  require("./../src/index.js");
 
- var valid_id="5e877b8fae42032b7c867feb";
+ var user_id_valid="5e9288731eafc70e082b8046";
+ var track_id_valid;
+ var user_id_invalid= "2345trvt654yf5678765";
+ var artist_id_invalid = "23456utgbnjutre345tr";
+ var artist_id_valid = "34rdr4rft6yy7uji90ok0";
+ var track_id_valid ;
+ var track_id_invalid ="w45tfft5tgy67yhgyu7yuhju";
 
-
- 
 //   describe("GET /artists/:id", () => 
 //   {
 //     describe("using a valid id", () => 
@@ -139,22 +144,143 @@
 //       });
 //      });
 //-----------------------------------------------------------------------------------------
-/*
-     describe ("GET /getTopArtists", ()=>{
-         return superagent
-         .patch(`${domainName}/artists`)
-         .then(console.log)
-         .catch(console.error);
-            
-        //  (async () => {
-        //     try {
-        //       const res = await superagent.post('/api/pet');
-        //       console.log(res);
-        //     } catch (err) {
-        //       console.error(err);
-        //     }
-        //   })();
-     });
 
-     */
-    
+//      describe ("GET /getTopArtists", ()=>{
+//          let response;
+//          beforeAll((done) => {
+//             superagent
+//             .get(`${domainName}/getTopArtists`)
+//             .send({perpage: 10,
+//             page: 1})
+//             .then((res) => {
+//               response = { ...res };
+//               done();
+//             });
+//           });
+
+            
+//        it("Status 200", () => {
+//       expect(response.status).toBe(200);
+//     });
+//   });
+  
+//   describe(" PATCH ADDTRACK /artists/:id/addTrack/:trackid", () => 
+//   {
+//     describe("valid id", () => 
+//     {
+//         let response;
+//         beforeAll((done) => {
+//         return superagent
+//             .patch(`${domainName}/artists/:id${artist_id_valid}/addTrack/:trackid${track_id_valid}`)
+//             .type('application/json')
+//             .then((res) => {
+//                 response = { ...res };
+//                 done();
+//             })
+//             .catch((err) => {
+//               response = err;
+//               done();
+//             });
+//         });
+//         it("Status 200", (done) => {
+//           expect(response.status).toBe(200);
+        
+//           done();
+//         });
+//     });
+//     describe("invalid artist id", () => 
+//   {
+//       let response;
+//       beforeAll((done) => {
+//       return superagent
+//       .patch(`${domainName}/artists/:id${artist_id_invalid}/addTrack/:trackid${track_id_valid}`)
+//       .type('application/json')
+//           .then((res) => {
+//               response = { ...res };
+//               done();
+//           })
+//           .catch((err) => {
+//             response = err;
+//             done();
+//           });
+//       });
+//       it("Status 404", (done) => {
+//         expect(response.status).toBe(404);
+      
+//         done();
+//       });
+//   });
+//   describe("invalid track id", () => 
+//   {
+//       let response;
+//       beforeAll((done) => {
+//       return superagent
+//       .patch(`${domainName}/artists/:id${artist_id_valid}/addTrack/:trackid${track_id_invalid}`)
+//       .type('application/json')
+//           .then((res) => {
+//               response = { ...res };
+//               done();
+//           })
+//           .catch((err) => {
+//             response = err;
+//             done();
+//           });
+//       });
+//       it("Status 404", (done) => {
+//         expect(response.status).toBe(404);
+      
+//         done();
+//       });
+//   });
+//  });
+
+
+
+//  describe(" PATCH ADDARTIST /addArtist/:id", () => 
+//  {
+//    describe("valid id and not artist yet", () => 
+//    {
+//        let response;
+//        beforeAll((done) => {
+//        return superagent
+//            .patch(`${domainName}/addArtist/:id${user_id_valid}`)
+//            .type('application/json')
+//            .then((res) => {
+//                response = { ...res };
+//                done();
+//            })
+//            .catch((err) => {
+//              response = err;
+//              done();
+//            });
+//        });
+//        it("Status 200", (done) => {
+//          expect(response.status).toBe(200);
+       
+//          done();
+//        });
+//     });
+//        describe("valid id but is an artist", () => 
+//    {
+//        let response;
+//        beforeAll((done) => {
+//        return superagent
+//            .patch(`${domainName}/addArtist/:id${user_id_valid}`)
+//            .type('application/json')
+//            .then((res) => {
+//                response = { ...res };
+//                done();
+//            })
+//            .catch((err) => {
+//              response = err;
+//              done();
+//            });
+//        });
+//        it("Status 403", (done) => {
+//          expect(response.status).toBe(403);
+       
+//          done();
+//        });
+//    });
+// });
+

@@ -411,10 +411,21 @@ exports.addArtistTrack= async (req, res) =>
    // const artist = await Artist.findByIdAndUpdate(req.params.id ,{ $push:{tracks: req.params.trackid} ,new: true});  
    //const track = await Track.findByIdAndUpdate(req.params.trackid ,{ $push:{artists: req.params.id} ,new: true}) ;
    const track = await Track.findById(req.params.trackid );
-   if (track == null) return;
-
+   if (track == null){
+    res.status(404).json({
+      status: "fail",
+      message: "track not found"
+    });
+     return;
+  }
    const artist = await Artist.findById(req.params.id);   
-   if (artist ==null) return;
+   if (artist ==null) {
+    res.status(404).json({
+      status: "fail",
+      message: "artist not found"
+    });
+     return;
+  } 
 
    artist.tracks.addToSet(req.params.trackid);
    const payload = {
