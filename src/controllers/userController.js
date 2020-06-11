@@ -467,8 +467,7 @@ exports.confirmation = async (req, res) => {
     await User.findByIdAndUpdate(req.body.id, {
       $set: { "isVerified": true }
     });
-    //const result = "http://localhost:3000/api/v1/users/login";
-    res.status(201).json({
+    res.status(200).json({
       status: "success"
     });
   } catch (err) {
@@ -495,7 +494,7 @@ exports.SignUp = async (req, res) => {
     });
     req.body.ConfirmationToken=token;
     const newUser = await User.create(req.body);
-    console.log("past create")
+    //console.log("past create")
     const userEmail = newUser.email;
     const trans = nodeMailer.createTransport
     ({
@@ -554,21 +553,27 @@ exports.SignUp = async (req, res) => {
 exports.getDeletedPlaylists = async (req, res) => {
   try {
     const user = await User.findById(req.body.id);
-    const ret = user.deletedPlaylists;
-    const playlist_array=[];
-    for(var i=0;i<ret.length;i++)
+    if(user !== null)
     {
-      const playlist = await Playlist.findById(ret[i]);
-      playlist_array[i]=playlist;
+      const ret = user.deletedPlaylists;
+      const playlist_array=[];
+      for(var i=0;i<ret.length;i++)
+      {
+        const playlist = await Playlist.findById(ret[i]);
+        playlist_array[i]=playlist;
+      }
+      res.status(200).json({
+        status: "success",
+        data: {
+          playlist_array
+        },
+      });
+    }else{
+      var err="invalid id";
+      throw err;
     }
-    res.status(200).json({
-      status: "success",
-      data: {
-        playlist_array
-      },
-    });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     res.status(404).json({
       status: "fail",
       message: err.message,
@@ -632,7 +637,6 @@ exports.getQueue = async (req, res) => {
     const queue_tracks=[];
     for(var i=0;i<user.queue.length;i++)
     {
-      console.log(user.queue[i])
       queue_tracks[i]= await track.findById(user.queue[i]);
     }
     res.status(200).json({
@@ -663,7 +667,6 @@ exports.isTrackExists = async (req, res) => {
       const newtrack = await track.findById(req.params.id);
       if(newtrack !==null)
       {
-        console.log(user.tracks);
         var data=false;
         for(var i=0;i<user.tracks.length;i++)
         {

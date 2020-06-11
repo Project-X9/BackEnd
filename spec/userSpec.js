@@ -1,46 +1,257 @@
 const superagent = require("superagent");
 const mongoose = require("../src/db/mongoose");
 const domainName = `http://localhost:${process.env.PORT}/api/v1`;
+var request =require('request');
 
 
+var userid = "5e8643edd411aa54c0357fbd";
+var userid_in="5e8643edd411aa54c0357fb3";
+var recoverplaylist ="5ee013df10a0886ab0b905d7";
+var auttoken="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTg2NDNlZGQ0MTFhYTU0YzAzNTdmYmQiLCJpYXQiOjE1OTE4Njk2NTV9.4m6tdxK30T8z-oyUMdFKShQ6oAhPL84PztuKc43b5M0";
+var confirmationtoken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRpbmFAbW9yYWQuY29tIiwiaWF0IjoxNTkxODY4MTMyLCJleHAiOjE1OTE5NTQ1MzJ9.xz2JXJ2qABIeYDHYBvkIqRF5n9EGtYiXNDL8bqbbWZQ";
+var confid="5ee1fae463eb422d00bc1796";
+// describe("post /users/SignUp", () => 
+// {
+//   describe("valid data", () => 
+//   {
+//       let response;
+//       beforeAll((done) => {
+//       return superagent
+//           .post(`${domainName}/users/SignUp`)
+//           .type('application/json')
+//           .send({name: "dina morad",age: 34,email:"dina@morad.com",password:"123456789"})
+//           .then((res) => {
+//               response = { ...res };
+//               done();
+//           })
+//           .catch(err => {
+//               console.log(err.message);
+//           });
+//       });
+//       it("Status 201", (done) => {
+//         expect(response.status).toBe(201);
+      
+//         done();
+//       });
+//   });
 
-describe("User", () => {
-  let server;
-  beforeAll(() => {
-    server = require("../src/index");
-    mongoose.connection.collection("users").deleteMany({}, (err, res) => {});
+//  });
+// describe("post /users/confirmation/:token", () => 
+// {
+//   describe("valid id", () => 
+//   {
+//       let response;
+//       beforeAll((done) => {
+//       return superagent
+//           .patch(`${domainName}/users/confirmation/${confirmationtoken}`)
+//           .type('application/json')
+//           .send({id:confid})
+//           .then((res) => {
+//               response = { ...res };
+//               done();
+//           })
+//           .catch(err => {
+//               console.log(err.message);
+//           });
+//       });
+//       it("Status 200", (done) => {
+//         expect(response.status).toBe(200);
+      
+//         done();
+//       });
+//   });
+//  });
+
+
+// describe("GET /users/recoverPlaylist/:id", () => 
+// {
+//   describe("valid id", () => 
+//   {
+//       let response;
+//       beforeAll((done) => {
+//       return superagent
+//           .patch(`${domainName}/users/recoverPlaylist/${recoverplaylist}`)
+//           .type('application/json')
+//           .send({id: userid})
+//           .then((res) => {
+//               response = { ...res };
+//               done();
+//           })
+//           .catch(err => {
+//               console.log(err.message);
+//           });
+//       });
+//       it("Status 200", (done) => {
+//         expect(response.status).toBe(200);
+      
+//         done();
+//       });
+//   });
+
+//  });
+describe("GET /users/deletedplaylist", () => 
+{
+  describe("valid id", () => 
+  {
+      let response;
+      var options;
+      beforeAll((done) => {
+      return superagent
+          .get(`${domainName}/users/deletedplaylist`)
+          .type('application/json')
+          .send({id: userid})
+          .set("Authorization",auttoken)
+          .then((res) => {
+              response = { ...res };
+              done();
+          })
+          .catch(err => {
+              console.log(err.message);
+          });
+      });
+      it("Status 200", (done) => {
+        expect(response.status).toBe(200);
+      
+        done();
+      });
   });
-  afterAll(() => {
-    server.close();
+  describe("invalid id", () => 
+  {
+      let response;
+      beforeAll((done) => {
+      return superagent
+          .get(`${domainName}/users/deletedplaylist`)
+          .type('application/json')
+          .send({id: userid_in})
+          .set("Authorization",auttoken)
+          .then((res) => {
+              response = { ...res };
+              done();
+          })
+          .catch(err => {
+              console.log(err.message);
+          });
+      });
+      it("Status 404", (done) => {
+        expect(response.status).toBe(404);
+      
+        done();
+      });
   });
 
-  //POST////////////////////////
-  describe("POST /users", () => {
-    let data = {};
-    beforeAll((done) => {
-      superagent
-        .post(`${domainName}/users`)
-        .send({
-          name: "ben",
-          email: "ben@gmail.com",
-          password: "strings",
-          age: 20,
-        })
-        .then((res) => {
-          // console.log(res);
-          response = { ...res };
-          done();
-        })
-        .catch((err) => {});
-    });
-    it("Status 201", () => {
-      expect(response.status).toBe(201);
-    });
-    it("Body", () => {
-      expect(response.body.data.user.name).toBe("ben");
-      expect(response.body.data.user.email).toBe("ben@gmail.com");
-    });
-  });
+ });
+//  describe("GET /users/Queue/:id", () => 
+//  {
+//    describe("valid id", () => 
+//    {
+//        let response;
+//        beforeAll((done) => {
+//        return superagent
+//            .get(`${domainName}/users/Queue/${userid}`)
+//            .then((res) => {
+//                response = { ...res };
+//                done();
+//            })
+//            .catch(err => {
+//                console.log(err.message);
+//            });
+//        });
+//        it("Status 200", (done) => {
+//          expect(response.status).toBe(200);
+       
+//          done();
+//        });
+//    });
+ 
+//   });
+  
+//   describe("GET /users/Track/Ex/:id", () => 
+//   {
+//     describe("valid id", () => 
+//     {
+//         let response;
+//         beforeAll((done) => {
+//         return superagent
+//             .get(`${domainName}/users/Track/Ex/5e8cf0417d231c3bec30c4df`)
+//             .type('application/json')
+//             .send({id: userid})
+//             .then((res) => {
+//                 response = { ...res };
+//                 done();
+//             })
+//             .catch(err => {
+//                 console.log(err.message);
+//             });
+//         });
+//         it("Status 200", (done) => {
+//           expect(response.status).toBe(200);
+        
+//           done();
+//         });
+//     });
+  
+//    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// describe("User", () => {
+//   let server;
+//   beforeAll(() => {
+//     server = require("../src/index");
+//     mongoose.connection.collection("users").deleteMany({}, (err, res) => {});
+//   });
+//   afterAll(() => {
+//     server.close();
+//   });
+
+//   //POST////////////////////////
+//   describe("POST /users", () => {
+//     let data = {};
+//     beforeAll((done) => {
+//       superagent
+//         .post(`${domainName}/users`)
+//         .send({
+//           name: "ben",
+//           email: "ben@gmail.com",
+//           password: "strings",
+//           age: 20,
+//         })
+//         .then((res) => {
+//           // console.log(res);
+//           response = { ...res };
+//           done();
+//         })
+//         .catch((err) => {});
+//     });
+//     it("Status 201", () => {
+//       expect(response.status).toBe(201);
+//     });
+//     it("Body", () => {
+//       expect(response.body.data.user.name).toBe("ben");
+//       expect(response.body.data.user.email).toBe("ben@gmail.com");
+//     });
+//   });
 
   // describe("POST /user Invalid", () => {
   //   let data = {};
@@ -157,7 +368,7 @@ describe("User", () => {
   //     });
   //   });
   // });
-});
+// });
 ////////////////////////////////////////////////////////
 
 // const superagent = require("superagent");
