@@ -6,12 +6,8 @@ const Playlist = require(`./../models/playlist.js`);
 const track = require(`./../models/track.js`);
 const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectId;
-<<<<<<< HEAD
 const bcrypt = require("bcryptjs");
 const nodeMailer = require('nodemailer');
-=======
-const nodeMailer = require("nodemailer");
->>>>>>> 27e8806ba3cafc712446a3dbed89ef2d58a3f200
 
 /**
  * @property {Function} getAllUsers  Retrieves a page from all User documents, containing 10 users, and sends it back in HTTP response
@@ -775,31 +771,6 @@ exports.forgetPassword = async (req, res) => {
             User.findByIdAndUpdate(req.body.id, { password: hash })
               .then(function (RetUser) {
                 console.log("hello");
-<<<<<<< HEAD
-                bcrypt.hash(newPassString, 8).then(function (hash) {
-                  
-                  console.log("hello");
-      
-                  User.findByIdAndUpdate(
-                    
-                    req.body.id,
-                    { password: hash }
-                  ).then(function (RetUser) {
-                    console.log("hello");
-                    
-                    res.status(200).send({ message: "Please check your registered email" });
-                    
-                    
-                  }).catch((error)=> {console.log(error)});
-                }).catch()
-              }
-            });
-      
-      
-      
-          }
-        }
-=======
 
                 res
                   .status(200)
@@ -814,4 +785,3 @@ exports.forgetPassword = async (req, res) => {
     });
   }
 };
->>>>>>> 27e8806ba3cafc712446a3dbed89ef2d58a3f200
