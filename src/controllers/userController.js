@@ -6,8 +6,12 @@ const Playlist = require(`./../models/playlist.js`);
 const track = require(`./../models/track.js`);
 const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectId;
+<<<<<<< HEAD
 const bcrypt = require("bcryptjs");
 const nodeMailer = require('nodemailer');
+=======
+const nodeMailer = require("nodemailer");
+>>>>>>> 27e8806ba3cafc712446a3dbed89ef2d58a3f200
 
 /**
  * @property {Function} getAllUsers  Retrieves a page from all User documents, containing 10 users, and sends it back in HTTP response
@@ -18,14 +22,15 @@ exports.getAllUsers = async (req, res) => {
   try {
     let totalCount = await User.countDocuments();
     totalCount = totalCount.valueOf();
+    const page = req.query.page || 1;
     const users = await User.find()
       .populate("playlists")
-      .skip(10 * req.query.page - 1)
+      .skip(10 * (page - 1))
       .limit(10);
     res.status(200).json({
       status: "success",
       totalCount,
-      page: req.query.page,
+      page,
       count: users.length,
       data: {
         users,
@@ -39,7 +44,6 @@ exports.getAllUsers = async (req, res) => {
     });
   }
 };
-
 
 /**
  * @property {Function} getUser  Retrieves the user object with the given Id and sends it in HTTP response
@@ -85,9 +89,8 @@ exports.getUser = async (req, res) => {
   }
 };
 
-
 /**
- * @property {Function} createUser  Creates a new user with the provided values in the request body, and sends it back in HTTP response 
+ * @property {Function} createUser  Creates a new user with the provided values in the request body, and sends it back in HTTP response
  * @param {object} req - request object
  * @param {string} req.body - The request body containing at least the required fields of the user model
  */
@@ -109,9 +112,8 @@ exports.createUser = async (req, res) => {
   }
 };
 
-
 /**
- * @property {Function} updateUser  Updates the user who has the received Id with the values in the request body. 
+ * @property {Function} updateUser  Updates the user who has the received Id with the values in the request body.
  * @param {object} req - request object
  * @param {object} req.params.id - Id of the user to be updated
  * @param {string} req.body - The request body containing at least the required fields of the user model
@@ -126,7 +128,7 @@ exports.updateUser = async (req, res) => {
     "premium",
     "previouslyPremium",
     "country",
-    "mobileNumber"
+    "mobileNumber",
   ];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
@@ -151,7 +153,6 @@ exports.updateUser = async (req, res) => {
       },
     });
   } catch (err) {
-    console.log(err);
     res.status(404).json({
       status: "fail",
       message: err.message,
@@ -159,9 +160,8 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-
 /**
- * @property {Function} deleteUser  Deletes the user with the received Id from the DB 
+ * @property {Function} deleteUser  Deletes the user with the received Id from the DB
  * @param {object} req.params.id - User Id
  */
 exports.deleteUser = async (req, res) => {
@@ -247,9 +247,8 @@ exports.deleteTracks = async (req, res) => {
   }
 };
 
-
 /**
- * @property {Function} getAlbums  Sends Albums of a user back in HTTP response 
+ * @property {Function} getAlbums  Sends Albums of a user back in HTTP response
  * @param {object} req - request object
  * @param {object} res - request object
  * @param {object} req.params.id - Id of the user to be updated
@@ -283,7 +282,6 @@ exports.getAlbums = async (req, res) => {
 //     });
 //   }
 // }
-
 
 /**
  * @property {Function} deleteTracks  Deletes the array of Liked Albums from a User Document and send back HTTP response
@@ -332,7 +330,6 @@ exports.login = async (req, res) => {
   }
 };
 
-
 // exports.changePassword = async (req, res) => {
 //   try{
 //     const user = await User.findByCredentials(req.body.email, req.body.currentPassword);
@@ -340,15 +337,12 @@ exports.login = async (req, res) => {
 //   }
 // }
 
-
-
 // Notifications
 
 /**
  * @property {Function} getNotifications  Sends the array of Notifications from a User Document in HTTP response
  * @param {object} req - request object
  * @param {object} res - response object
- * @param {object} req.params.id - Id of the user to be updated
  */
 exports.getNotifications = async (req, res) => {
   try {
@@ -377,7 +371,6 @@ exports.getNotifications = async (req, res) => {
  * @property {Function} deleteNotifications  Deletes the array of Notifications from a User Document and sends back HTTP response
  * @param {object} req - request object
  * @param {object} res - response object
- * @param {object} req.params.id - Id of the user to be updated
  */
 exports.deleteNotifications = async (req, res) => {
   try {
@@ -397,7 +390,6 @@ exports.deleteNotifications = async (req, res) => {
  * @property {Function} updatePushSubscription  updates the "pushSubscription" field of a user with subscription object in the request body, and sends back HTTP response.
  * @param {object} req - request object
  * @param {object} res - response object
- * @param {object} req.params.id - Id of the user to be updated
  * @param {object} req.body.pushSubscription - New pushSubscription object
  */
 exports.updatePushSubscription = async (req, res) => {
@@ -405,7 +397,7 @@ exports.updatePushSubscription = async (req, res) => {
     await User.findByIdAndUpdate(req.user._id, {
       pushSubscription: req.body.pushSubscription,
     });
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.user);
     res.status(200).json({
       status: "success",
       data: user,
@@ -419,45 +411,65 @@ exports.updatePushSubscription = async (req, res) => {
 };
 
 /**
- * @property {Function} updatePushSubscription  updates the "pushSubscription" field of a user with subscription object in the request body, and sends back HTTP response.
+ * @property {Function} deletePushSubscription  deletes the "pushSubscription" of the authenticated user and send the update user in HTTP response
  * @param {object} req - request object
  * @param {object} res - response object
- * @param {object} req.params.userId - Id of the user to be updated
+ */
+exports.deletePushSubscription = async (req, res) => {
+  try {
+    await User.findByIdAndUpdate(req.user._id, {
+      pushSubscription: {}
+    });
+    const user = await User.findById(req.user._id);
+    res.status(204).json({
+      status: "success",
+      data: {user}
+    });
+  } catch (err) {
+    console.log(err)
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
+
+/**
+ * @property {Function} updateNotification  updates the 'read' field in the notification with the given Id and sends the updated notification object in HTTP response
+ * @param {object} req - request object
+ * @param {object} res - response object
  * @param {object} req.params.notificationId - Id of the notification to be updated
  */
 exports.updateNotification = async (req, res) => {
-  try{
+  try {
     const userId = req.user._id;
     const notificationId = req.params.notificationId;
-    await User.findOneAndUpdate({ _id: userId, "notifications._id": notificationId}, {
-      $set: { "notifications.$.read" : req.body.read}
-    })
+    await User.findOneAndUpdate(
+      { _id: userId, "notifications._id": notificationId },
+      {
+        $set: { "notifications.$.read": req.body.read },
+      }
+    );
 
-    const user = await User.findById(userId, 'notifications');
+    const user = await User.findById(userId, "notifications");
     res.status(200).json({
-        status: 'success',
-        notification: user.notifications.find(val => {
-          return val._id == notificationId
-        })
-      })
-
-    
+      status: "success",
+      notification: user.notifications.find((val) => {
+        return val._id == notificationId;
+      }),
+    });
   } catch (err) {
-    console.log(err.message)
+    console.log(err.message);
     res.status(404).json({
-      status: 'fail'
-    })
+      status: "fail",
+    });
   }
-
-}
-
-
-
+};
 
 //-------------------------------------------------------------sk----------------------------------------//
 
- /**
- * @property {Function} confirmation  
+/**
+ * @property {Function} confirmation
  * @param {object} req - request object contains email and password
  * @param {string} req.body.token - token id
  * @param {object} res - on success contains status , url string , on failure Wrong user credentials result in status code 400 , status:fail */
@@ -466,10 +478,9 @@ exports.confirmation = async (req, res) => {
   try {
     jwt.verify(req.params.token, "secretcode");
     await User.findByIdAndUpdate(req.body.id, {
-      $set: { "isVerified": true }
+      $set: { isVerified: true },
     });
-    //const result = "http://localhost:3000/api/v1/users/login";
-    res.status(201).json({
+    res.status(200).json({
       status: "success"
     });
   } catch (err) {
@@ -481,69 +492,69 @@ exports.confirmation = async (req, res) => {
   }
 };
 
-
 /**
- * @property {Function} SignUp  
+ * @property {Function} SignUp
  * @param {object} req - request object contains email and password
  * @param {string} req.body - contains user info
  * @param {object} res - on success contains status , url string and token, on failure Wrong user credentials result in status code 400 , status:fail */
 
 exports.SignUp = async (req, res) => {
-
   try {
-    const token = jwt.sign({ email: req.body.email }, "secretcode",{
-      expiresIn: '1d',
-    });
-    req.body.ConfirmationToken=token;
+    const ConfirmationToken = jwt.sign(
+      { email: req.body.email },
+      "secretcode",
+      {
+        expiresIn: "1d",
+      }
+    );
+    req.body.ConfirmationToken = ConfirmationToken;
     const newUser = await User.create(req.body);
-    console.log("past create")
     const userEmail = newUser.email;
-    const trans = nodeMailer.createTransport
-    ({
-      service: 'gmail',
+    const trans = nodeMailer.createTransport({
+      service: "gmail",
       secure: false,
       port: 25,
-      auth:
-      {
+      auth: {
         user: "projectxdevteam32@gmail.com",
-        pass: "projectxteam1!"
+        pass: "projectxteam1!",
       },
-      tls: { rejectUnauthorized: false }
-
+      tls: { rejectUnauthorized: false },
     });
-    
-    const helperOptions =
-    {
+
+    const helperOptions = {
       from: '"projectx" = projectxdevteam32@gmail.com',
       to: userEmail,
       subject: "email confirmation",
-      text: "To verify your emial please click on this link with this confirmation token . \n\n \n " + token + "\n\n \n  \n  Projectx team"
+      text:
+        "To verify your emial please click on this link with this confirmation token . \n\n \n " +
+        ConfirmationToken +
+        "\n\n \n  \n  Projectx team",
     };
-    
+
     trans.sendMail(helperOptions, (err, info) => {
-    if (err) { res.send({ error: "mailing service is currently down",errorM : err }) }
+      if (err) {
+        res.send({ error: "mailing service is currently down", errorM: err });
+      }
     });
 
-    await newUser.generateAuthToken();
-    const id= newUser._id;
+    const authToken = await newUser.generateAuthToken();
+    const id = newUser._id;
 
     res.status(201).json({
       status: "success",
       data: {
         id,
         user: newUser,
-        token
-      }
+        token: authToken,
+      },
     });
   } catch (err) {
-    console.log("ERROR");
     res.status(400).json({
       status: "fail",
       message: err.message,
     });
   }
 };
-
 
 /**
  * @property {Function} getDeletedPlaylists  get list of Deleted Playlists of current user
@@ -555,21 +566,27 @@ exports.SignUp = async (req, res) => {
 exports.getDeletedPlaylists = async (req, res) => {
   try {
     const user = await User.findById(req.body.id);
-    const ret = user.deletedPlaylists;
-    const playlist_array=[];
-    for(var i=0;i<ret.length;i++)
+    if(user !== null)
     {
-      const playlist = await Playlist.findById(ret[i]);
-      playlist_array[i]=playlist;
+      const ret = user.deletedPlaylists;
+      const playlist_array=[];
+      for(var i=0;i<ret.length;i++)
+      {
+        const playlist = await Playlist.findById(ret[i]);
+        playlist_array[i]=playlist;
+      }
+      res.status(200).json({
+        status: "success",
+        data: {
+          playlist_array
+        },
+      });
+    }else{
+      var err="invalid id";
+      throw err;
     }
-    res.status(200).json({
-      status: "success",
-      data: {
-        playlist_array
-      },
-    });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     res.status(404).json({
       status: "fail",
       message: err.message,
@@ -577,42 +594,42 @@ exports.getDeletedPlaylists = async (req, res) => {
   }
 };
 
-
 /**
  * @property {Function} recoverPlaylist  recover a certain playlist from deleted/unfollowed playlist of current user
  * @param {object} req - request object
  * @param {string} req.body.id - user id
  * @param {object} res - response object
- * @param {string[]}res.status 
+ * @param {string[]}res.status
  */
 
 exports.recoverPlaylist = async (req, res) => {
   try {
     const IN_User = await User.findById(req.body.id);
-    if (IN_User !== null) 
-    {
+    if (IN_User !== null) {
       var count = 0;
       for (var i = 0; i < IN_User.deletedPlaylists.length; i++) {
         if (req.params.id == IN_User.deletedPlaylists[i]) {
           count++;
         }
       }
-      if(count!==0)
-      {
+      if (count !== 0) {
         await User.findByIdAndUpdate(req.body.id, {
           $pull: { deletedPlaylists: req.params.id },
-          $push: { playlists: req.params.id }
+          $push: { playlists: req.params.id },
         });
         await Playlist.findByIdAndUpdate(req.params.id, {
           $push: { followers: req.body.id },
         });
       }
       res.status(200).json({
-        status: "success"
+        status: "success",
       });
+    }else{
+      var err = "invalid id";
+      throw err;
     }
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     res.status(404).json({
       status: "fail",
       message: err.message,
@@ -630,16 +647,22 @@ exports.recoverPlaylist = async (req, res) => {
 exports.getQueue = async (req, res) => {
   try {
     const user = await User.findById(req.params.id, "queue");
-    const queue_tracks=[];
-    for(var i=0;i<user.queue.length;i++)
-    {
-      console.log(user.queue[i])
-      queue_tracks[i]= await track.findById(user.queue[i]);
-    }
-    res.status(200).json({
-      status: "success",
-      queue_tracks
-    });
+    
+      if(user!== null)
+      {
+          const queue_tracks=[];
+          for(var i=0;i<user.queue.length;i++)
+          {
+            queue_tracks[i]= await track.findById(user.queue[i]);
+          }
+          res.status(200).json({
+            status: "success",
+            queue_tracks
+          });
+      }{
+        var err="ivalid id";
+        throw err;
+      }
   } catch (err) {
     res.status(404).json({
       status: "fail",
@@ -647,7 +670,6 @@ exports.getQueue = async (req, res) => {
     });
   }
 };
-
 
 /**
  * @property {Function} isTrackExists  check if track exists
@@ -659,12 +681,10 @@ exports.getQueue = async (req, res) => {
 exports.isTrackExists = async (req, res) => {
   try {
     const user = await User.findById(req.body.id, "tracks");
-    if(user !== null)
-    {
+    if (user !== null) {
       const newtrack = await track.findById(req.params.id);
       if(newtrack !==null)
       {
-        console.log(user.tracks);
         var data=false;
         for(var i=0;i<user.tracks.length;i++)
         {
@@ -675,13 +695,13 @@ exports.isTrackExists = async (req, res) => {
         }
         res.status(200).json({
           status: "success",
-          data
+          data,
         });
-      }else {
+      } else {
         var err = "invalid track id";
         throw err;
       }
-    }else {
+    } else {
       var err = "invalid user id";
       throw err;
     }
@@ -693,63 +713,69 @@ exports.isTrackExists = async (req, res) => {
   }
 };
 
+exports.forgetPassword = async (req, res) => {
+  /**
+   *    This finds the user that will be sent the recovery email and checks if he even exists
+   *
+   */
+  const user = await User.findById(req.body.id);
+  if (!user) {
+    res.status(404).send({ error: "User doesnt exist" });
+  } else {
+    /**
+     *    genetartes a random password
+     *
+     */
+    const userEmail = user.email;
+    const newPass = Math.floor(
+      Math.random() * 10000 * Math.random() * 10000 * (Math.random() * 10000)
+    );
+    const newPassString = newPass.toString();
 
-     exports.forgetPassword =   async  (req, res) => {
+    /**
+     *   setting up nodemailer with the memestock email
+     *
+     */
+    const trans = nodeMailer.createTransport({
+      service: "gmail",
+      secure: false,
+      port: 25,
+      auth: {
+        user: "projectxdevteam32@gmail.com",
+        pass: "projectxteam1!",
+      },
+      tls: { rejectUnauthorized: false },
+    });
 
-          /**
-          *    This finds the user that will be sent the recovery email and checks if he even exists
-          * 
-          */
-          const user = await User.findById(req.body.id);
-          if (!user) { res.status(404).send({ error: "User doesnt exist" }) }
-      
-          else {
-      
-            /**
-          *    genetartes a random password
-          * 
-          */
-            const userEmail = user.email;
-            const newPass = Math.floor((Math.random() * 10000) * Math.random() * 10000 * (Math.random() * 10000));
-            const newPassString = newPass.toString();
-      
-            /**
-            *   setting up nodemailer with the memestock email
-            * 
-            */
-           const trans = nodeMailer.createTransport
-           ({
-             service: 'gmail',
-             secure: false,
-             port: 25,
-             auth:
-             {
-               user: "projectxdevteam32@gmail.com",
-               pass: "projectxteam1!"
-             },
-             tls: { rejectUnauthorized: false }
-   
-           });
-      
-            const helperOptions =
-            {
-              from: '"projectx" = projectxdevteam32@gmail.com',
-              to: userEmail,
-              subject: "Recover Password",
-              text: "Your new password is:  " + newPass + "\n You are advised to change it when you can.\n \n  \n  Projectx team"
-            };
-      
-      
-            trans.sendMail(helperOptions, (err, info) => {
-              if (err) { res.send({ error: "mailing service is currently down",errorM : err }) }
-      
-      
-              /**
-             *    This sets password to the new random passwrod that was sent in the email
-             * 
-             */
-              else {
+    const helperOptions = {
+      from: '"projectx" = projectxdevteam32@gmail.com',
+      to: userEmail,
+      subject: "Recover Password",
+      text:
+        "Your new password is:  " +
+        newPass +
+        "\n You are advised to change it when you can.\n \n  \n  Projectx team",
+    };
+
+    trans.sendMail(helperOptions, (err, info) => {
+      if (err) {
+        res.send({ error: "mailing service is currently down", errorM: err });
+      } else {
+
+      /**
+       *    This sets password to the new random passwrod that was sent in the email
+       *
+       */
+        console.log("hello");
+        bcrypt
+          .hash(newPassString, "secretcode")
+          .then(function (hash) {
+            console.log("hello");
+
+            User.findByIdAndUpdate(req.body.id, { password: hash })
+              .then(function (RetUser) {
                 console.log("hello");
+<<<<<<< HEAD
                 bcrypt.hash(newPassString, 8).then(function (hash) {
                   
                   console.log("hello");
@@ -773,3 +799,19 @@ exports.isTrackExists = async (req, res) => {
       
           }
         }
+=======
+
+                res
+                  .status(200)
+                  .send({ message: "Please check your registered email" });
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          })
+          .catch();
+      }
+    });
+  }
+};
+>>>>>>> 27e8806ba3cafc712446a3dbed89ef2d58a3f200

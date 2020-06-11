@@ -23,6 +23,7 @@ exports.shareTrack = async (req, res) => {
       status: "success",
     });
   } catch (err) {
+    console.log(err)
     res.status(404).json({
       status: "fail",
       message: err.message,

@@ -246,7 +246,7 @@ exports.addTrack = async( req, res) =>{
      });
    }
      catch (err) {
-       console.log(err);
+       console.log(err.message);
        res.status(404).json({
          status: "fail",
          message: err.message

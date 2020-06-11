@@ -131,8 +131,34 @@ router
  */
      .patch(artistController.addArtistTrack);
 
+
+// Notifications
 router.route('/:id/update-push')
+/**
+* @api {post} /:id/update-push Updates the pushSubscription field of the Artist with the given Id
+  * @apiName Update Push Subscription  @apiGroup Artists
+  * @apiVersion  0.1.0
+  * @apiUse HeaderAuth
+ * @apiParam  {subscription} pushSubscription 
+  * @apiSuccess (200) {JSON} JSON Object that contains the user after updating 'pushSubscription' field
+* @apiUse Error404
+*/
 .post(artistController.updatePushSubscription)
+
+router.route('/:id/delete-push')
+/**
+* @api {delete} /:id/delete-push Deletes the pushSubscription of the Artist with the given Id
+  * @apiName Delete Push Subscription  @apiGroup Artists
+  * @apiVersion  0.1.0
+  * @apiUse HeaderAuth
+ * @apiParam  {subscription} pushSubscription 
+  * @apiSuccess (204)
+* @apiUse Error404
+*/
+.delete(artistController.deletePushSubscription);
+
+
+
 
 
 router 
