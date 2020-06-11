@@ -182,13 +182,15 @@ exports.getMostPlayedPlaylist= async(req, res) =>
   
         if (PlaylistTracks !== null)
         {
-          console.log("PLAYLIST TRACKS NUMBER: "+ PlaylistTracks.length)
+         // console.log("PLAYLIST TRACKS NUMBER: "+ PlaylistTracks.length)
           for(var j=0; j<PlaylistTracks.length; j++ )
           {
             const trackTemp= await Track.findById(PlaylistTracks[j]);
-            
-            var pc= trackTemp.playcount;
-            TotalPlayed=TotalPlayed + pc ;
+            if(trackTemp !== null)
+            {
+              var pc= trackTemp.playcount;
+              TotalPlayed=TotalPlayed + pc ;
+            }
             
           } 
         
@@ -206,7 +208,7 @@ exports.getMostPlayedPlaylist= async(req, res) =>
     
       res.status(200).json({
         status: "success",
-        data:{"Max Played ID " :MaxPlayedID, "Max played count ":MaxPlayedCount, "Playlistls length: ": getAllPlaylists.length}
+        data:{"Max Played ID " :MaxPlayedID, "Max played count ":MaxPlayedCount}
       });
     }
 

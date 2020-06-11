@@ -7,7 +7,7 @@ const configAuth = require('../auth');
 
 
 router
-  .route("/deletedplaylist")
+  .route("/deletedplaylist/:id")
   .get(userController.getDeletedPlaylists);
 
  router
@@ -34,7 +34,7 @@ router
 
 router
   .route("/:id")
-  .get(userController.getUser)
+  .get(auth,userController.getUser)
   .patch(userController.updateUser)
   .delete(userController.deleteUser);
 
