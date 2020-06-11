@@ -29,6 +29,7 @@
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.4",
     "nodemailer": "^6.4.8",
+    "passport": "^0.4.1",
     "validator": "^13.0.0",
     "web-push": "^3.4.4"
   },
