@@ -186,9 +186,11 @@ exports.getMostPlayedPlaylist= async(req, res) =>
           for(var j=0; j<PlaylistTracks.length; j++ )
           {
             const trackTemp= await Track.findById(PlaylistTracks[j]);
-            
-            var pc= trackTemp.playcount;
-            TotalPlayed=TotalPlayed + pc ;
+            if(trackTemp !== null)
+            {
+              var pc= trackTemp.playcount;
+              TotalPlayed=TotalPlayed + pc ;
+            }
             
           } 
         
