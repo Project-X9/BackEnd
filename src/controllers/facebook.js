@@ -1,6 +1,13 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-
+/** 
+ * @module controller/facebook
+ */
+/**
+ * @property {Function} facebookOAuth Login with facebook
+ * @param {object} req - request object
+ * @param {object} res - response object
+ */
 
 exports.facebookOAuth =   async  (req, res) => {
 

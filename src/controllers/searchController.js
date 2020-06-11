@@ -1,6 +1,18 @@
 const Track = require(`../models/track.js`);
 const Album = require(`../models/album.js`);
+/** 
+ * @module controller/search
+ */
 
+/**
+ * @property {Function} searchTracks
+ * @param {object} req - request object
+ * @param {string} q - search string query
+ * @param {int} limit - optional (pargination) limit number of results
+ * @param {int} page - optional (pagination) page number
+ * @param {object} res - response object
+ * @param {string[]}res.body.tracks - array of tracks 
+ */
 
 
 exports.searchTracks = async (req, res)  => {
@@ -29,7 +41,15 @@ exports.searchTracks = async (req, res)  => {
     }
 };
 
-
+/**
+ * @property {Function} searchAlbums
+ * @param {object} req - request object
+ * @param {string} q - search string query
+ * @param {int} limit - optional (pargination) limit number of results
+ * @param {int} page - optional (pagination) page number
+ * @param {object} res - response object
+ * @param {string[]}res.body.tracks - array of albums 
+ */
 
 exports.searchAlbums = async (req, res)  => {
 

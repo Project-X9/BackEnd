@@ -713,6 +713,13 @@ exports.isTrackExists = async (req, res) => {
   }
 };
 
+
+/**
+ * @property {Function} forgetPassword Reset user's password using email
+ * @param {object} req - request object containg id
+ * @param {object} res - response object containing status message
+ */
+
 exports.forgetPassword = async (req, res) => {
   /**
    *    This finds the user that will be sent the recovery email and checks if he even exists

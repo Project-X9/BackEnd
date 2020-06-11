@@ -554,6 +554,37 @@
  */
 
 
+ /**
+ * @api {patch} /users/reset reset user password using email
+ * @apiName forgetpassword
+ * @apiGroup User Profile
+ * @apiVersion 0.1.0
+ * 
+ * @apiParam {string} id  user Id in body
+ * @apiParamExample {json} bodyParameter-Example:
+ *      {
+	       "id":"5e8643edd411aa54c0357fbd"
+        }
+       
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+            "status": "success",
+            "data": true
+        }
+        
+ * @apiError NotFound The requested resource could not be found. This error can be due to a temporary or permanent condition.
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not found
+ *     {
+ *          "error": {
+ *             "status": "fail"
+ *           }
+ *     }
+ */
+
+
 
 
 
