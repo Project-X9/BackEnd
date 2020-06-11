@@ -8,7 +8,7 @@ var userid = "5e8643edd411aa54c0357fbd";
 var userid_in="5e8643edd411aa54c0357fb3";
 var recoverplaylist ="5ee013df10a0886ab0b905d7";
 var auttoken="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTg2NDNlZGQ0MTFhYTU0YzAzNTdmYmQiLCJpYXQiOjE1OTE4Njk2NTV9.4m6tdxK30T8z-oyUMdFKShQ6oAhPL84PztuKc43b5M0";
-var confirmationtoken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRpbmFAbW9yYWQuY29tIiwiaWF0IjoxNTkxODY4MTMyLCJleHAiOjE1OTE5NTQ1MzJ9.xz2JXJ2qABIeYDHYBvkIqRF5n9EGtYiXNDL8bqbbWZQ";
+var confirmationtoken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZhcmlkYUBtb3JhZC5jb20iLCJpYXQiOjE1OTE4ODIxNTAsImV4cCI6MTU5MTk2ODU1MH0.zELbSX6sCeGExWjH-BeiszbpYptVyzSh-SgS-hPxDG0";
 var confid="5ee1fae463eb422d00bc1796";
 // describe("post /users/SignUp", () => 
 // {
@@ -19,7 +19,7 @@ var confid="5ee1fae463eb422d00bc1796";
 //       return superagent
 //           .post(`${domainName}/users/SignUp`)
 //           .type('application/json')
-//           .send({name: "dina morad",age: 34,email:"dina@morad.com",password:"123456789"})
+//           .send({name: "farida morad",age: 34,email:"farida@morad.com",password:"123456789"})
 //           .then((res) => {
 //               response = { ...res };
 //               done();
@@ -63,211 +63,211 @@ var confid="5ee1fae463eb422d00bc1796";
 //  });
 
 
-describe("GET /users/recoverPlaylist/:id", () => 
-{
-  describe("valid id", () => 
-  {
-      let response;
-      beforeAll((done) => {
-      return superagent
-          .patch(`${domainName}/users/recoverPlaylist/${recoverplaylist}`)
-          .type('application/json')
-          .set("Authorization",auttoken)
-          .send({id: userid})
-          .then((res) => {
-              response = { ...res };
-              done();
-          })
-          .catch((err) => {
-            response = err;
-            done();
-          });
-      });
-      it("Status 200", (done) => {
-        expect(response.status).toBe(200);
+// describe("GET /users/recoverPlaylist/:id", () => 
+// {
+//   describe("valid id", () => 
+//   {
+//       let response;
+//       beforeAll((done) => {
+//       return superagent
+//           .patch(`${domainName}/users/recoverPlaylist/${recoverplaylist}`)
+//           .type('application/json')
+//           .set("Authorization",auttoken)
+//           .send({id: userid})
+//           .then((res) => {
+//               response = { ...res };
+//               done();
+//           })
+//           .catch((err) => {
+//             response = err;
+//             done();
+//           });
+//       });
+//       it("Status 200", (done) => {
+//         expect(response.status).toBe(200);
       
-        done();
-      });
-  });
-  describe("invalid user id", () => 
-  {
-      let response;
-      beforeAll((done) => {
-      return superagent
-          .patch(`${domainName}/users/recoverPlaylist/${recoverplaylist}`)
-          .type('application/json')
-          .send({id: userid_in})
-          .set("Authorization",auttoken)
-          .then((res) => {
-              response = { ...res };
-              done();
-          })
-          .catch((err) => {
-            response = err;
-            done();
-          });
-      });
-      it("Status 404", (done) => {
-        expect(response.status).toBe(404);
+//         done();
+//       });
+//   });
+//   describe("invalid user id", () => 
+//   {
+//       let response;
+//       beforeAll((done) => {
+//       return superagent
+//           .patch(`${domainName}/users/recoverPlaylist/${recoverplaylist}`)
+//           .type('application/json')
+//           .send({id: userid_in})
+//           .set("Authorization",auttoken)
+//           .then((res) => {
+//               response = { ...res };
+//               done();
+//           })
+//           .catch((err) => {
+//             response = err;
+//             done();
+//           });
+//       });
+//       it("Status 404", (done) => {
+//         expect(response.status).toBe(404);
       
-        done();
-      });
-  });
- });
-describe("GET /users/deletedplaylist", () => 
-{
-  describe("valid id", () => 
-  {
-      let response;
-      var options;
-      beforeAll((done) => {
-      return superagent
-          .get(`${domainName}/users/deletedplaylist`)
-          .type('application/json')
-          .send({id: userid})
-          .set("Authorization",auttoken)
-          .then((res) => {
-              response = { ...res };
-              done();
-          })
-          .catch((err) => {
-                      response = err;
-                      done();
-                    });
-      });
-      it("Status 200", (done) => {
-        expect(response.status).toBe(200);
+//         done();
+//       });
+//   });
+//  });
+// describe("GET /users/deletedplaylist", () => 
+// {
+//   describe("valid id", () => 
+//   {
+//       let response;
+//       var options;
+//       beforeAll((done) => {
+//       return superagent
+//           .get(`${domainName}/users/deletedplaylist`)
+//           .type('application/json')
+//           .send({id: userid})
+//           .set("Authorization",auttoken)
+//           .then((res) => {
+//               response = { ...res };
+//               done();
+//           })
+//           .catch((err) => {
+//                       response = err;
+//                       done();
+//                     });
+//       });
+//       it("Status 200", (done) => {
+//         expect(response.status).toBe(200);
       
-        done();
-      });
-  });
+//         done();
+//       });
+//   });
 
-  describe("invalid id", () => 
-  {
-      let response;
-      beforeAll((done) => {
-      return superagent
-          .get(`${domainName}/users/deletedplaylist`)
-          .type('application/json')
-          .send({id: userid_in})
-          .set("Authorization",auttoken)
-          .then((res) => {
-              response = { ...res };
-              done();
-          })
-          .catch((err) => {
-            response = err;
-            done();
-          });
-      });
-      it("Status 404", (done) => {
-        expect(response.status).toBe(404);
+//   describe("invalid id", () => 
+//   {
+//       let response;
+//       beforeAll((done) => {
+//       return superagent
+//           .get(`${domainName}/users/deletedplaylist`)
+//           .type('application/json')
+//           .send({id: userid_in})
+//           .set("Authorization",auttoken)
+//           .then((res) => {
+//               response = { ...res };
+//               done();
+//           })
+//           .catch((err) => {
+//             response = err;
+//             done();
+//           });
+//       });
+//       it("Status 404", (done) => {
+//         expect(response.status).toBe(404);
       
-        done();
-      });
-  });
+//         done();
+//       });
+//   });
 
- });
- describe("GET /users/Queue/:id", () => 
- {
-  //  describe("valid id", () => 
-  //  {
-  //      let response;
-  //      beforeAll((done) => {
-  //      return superagent
-  //          .get(`${domainName}/users/Queue/${userid}`)
-  //          .set("Authorization",auttoken)
-  //          .then((res) => {
-  //              response = { ...res };
-  //              done();
-  //          })
-  //          .catch((err) => {
-  //           response = err;
-  //           done();
-  //         });
-  //      });
-  //      it("Status 200", (done) => {
-  //        expect(response.status).toBe(200);
+//  });
+//  describe("GET /users/Queue/:id", () => 
+//  {
+//   //  describe("valid id", () => 
+//   //  {
+//   //      let response;
+//   //      beforeAll((done) => {
+//   //      return superagent
+//   //          .get(`${domainName}/users/Queue/${userid}`)
+//   //          .set("Authorization",auttoken)
+//   //          .then((res) => {
+//   //              response = { ...res };
+//   //              done();
+//   //          })
+//   //          .catch((err) => {
+//   //           response = err;
+//   //           done();
+//   //         });
+//   //      });
+//   //      it("Status 200", (done) => {
+//   //        expect(response.status).toBe(200);
        
-  //        done();
-  //      });
-  //  });
-   describe("in valid id", () => 
-   {
-       let response;
-       beforeAll((done) => {
-       return superagent
-           .get(`${domainName}/users/Queue/${userid_in}`)
-           .set("Authorization",auttoken)
-           .then((res) => {
-               response = { ...res };
-               done();
-           })
-           .catch((err) => {
-            response = err;
-            done();
-          });
-       });
-       it("Status 404", (done) => {
-         expect(response.status).toBe(404);
+//   //        done();
+//   //      });
+//   //  });
+//    describe("in valid id", () => 
+//    {
+//        let response;
+//        beforeAll((done) => {
+//        return superagent
+//            .get(`${domainName}/users/Queue/${userid_in}`)
+//            .set("Authorization",auttoken)
+//            .then((res) => {
+//                response = { ...res };
+//                done();
+//            })
+//            .catch((err) => {
+//             response = err;
+//             done();
+//           });
+//        });
+//        it("Status 404", (done) => {
+//          expect(response.status).toBe(404);
        
-         done();
-       });
-   });
-  });
+//          done();
+//        });
+//    });
+//   });
 
 
-  describe("GET /users/Track/Ex/:id", () => 
-  {
-    describe("valid id", () => 
-    {
-        let response;
-        beforeAll((done) => {
-        return superagent
-            .get(`${domainName}/users/Track/Ex/5e8cf0417d231c3bec30c4df`)
-            .type('application/json')
-            .send({id: userid})
-            .set("Authorization",auttoken)
-            .then((res) => {
-                response = { ...res };
-                done();
-            })
-            .catch((err) => {
-              response = err;
-              done();
-          });
-        });
-        it("Status 200", (done) => {
-          expect(response.status).toBe(200);
+//   describe("GET /users/Track/Ex/:id", () => 
+//   {
+//     describe("valid id", () => 
+//     {
+//         let response;
+//         beforeAll((done) => {
+//         return superagent
+//             .get(`${domainName}/users/Track/Ex/5e8cf0417d231c3bec30c4df`)
+//             .type('application/json')
+//             .send({id: userid})
+//             .set("Authorization",auttoken)
+//             .then((res) => {
+//                 response = { ...res };
+//                 done();
+//             })
+//             .catch((err) => {
+//               response = err;
+//               done();
+//           });
+//         });
+//         it("Status 200", (done) => {
+//           expect(response.status).toBe(200);
         
-          done();
-        });
-    });
-    describe("valid id", () => 
-    {
-        let response;
-        beforeAll((done) => {
-        return superagent
-            .get(`${domainName}/users/Track/Ex/5e8cf0417d231c3bec30c4d3`)
-            .type('application/json')
-            .send({id: userid})
-            .set("Authorization",auttoken)
-            .then((res) => {
-                response = { ...res };
-                done();
-            })
-            .catch((err) => {
-              response = err;
-              done();
-            });
-          });
-        it("Status 404", (done) => {
-          expect(response.status).toBe(404);
+//           done();
+//         });
+//     });
+//     describe("valid id", () => 
+//     {
+//         let response;
+//         beforeAll((done) => {
+//         return superagent
+//             .get(`${domainName}/users/Track/Ex/5e8cf0417d231c3bec30c4d3`)
+//             .type('application/json')
+//             .send({id: userid})
+//             .set("Authorization",auttoken)
+//             .then((res) => {
+//                 response = { ...res };
+//                 done();
+//             })
+//             .catch((err) => {
+//               response = err;
+//               done();
+//             });
+//           });
+//         it("Status 404", (done) => {
+//           expect(response.status).toBe(404);
         
-          done();
-        });
-    });
-  });
+//           done();
+//         });
+//     });
+//   });
 
 
 
