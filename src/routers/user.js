@@ -2,6 +2,8 @@ const express = require("express");
 const userController = require(`./../controllers/userController`);
 const router = new express.Router();
 const auth = require('../middleware/auth');
+const configAuth = require('../auth');
+
 
 
 router
@@ -144,7 +146,13 @@ router.route('/login')
 .post(userController.login);
 
 
-module.exports = router;
-
 router.route('/reset')
 .post(userController.forgetPassword);
+
+
+module.exports = router;
+
+
+
+
+

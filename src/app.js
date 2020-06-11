@@ -14,6 +14,10 @@ const likeRouter = require('./routers/like')
 const subscriptionRouter = require('./routers/subscriptionRouter')
 const searchRouter = require('./routers/search')
 // const taskRouter = require('./routers/task')
+const  facebookRouter = require('./routers/facebook')
+
+const  passport = require('passport');
+
 
 const app = express()
 app.use(cors());
@@ -51,6 +55,21 @@ app.use('/api/v1/share', shareRouter)
 
 app.use('/api/v1/subscriptions', subscriptionRouter)
 app.use('/api/v1/search',searchRouter)
+
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
+});
+
+passport.deserializeUser(function(id, done) {
+  user.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+app.use(passport.initialize());  
+
+app.use('/api/v1/facebook',facebookRouter)
+
+
 
 // app.use(taskRouter)
 module.exports = app

@@ -6,6 +6,7 @@ const Playlist = require(`./../models/playlist.js`);
 const track = require(`./../models/track.js`);
 const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectId;
+const bcrypt = require("bcryptjs");
 const nodeMailer = require('nodemailer');
 
 /**
@@ -749,7 +750,7 @@ exports.isTrackExists = async (req, res) => {
              */
               else {
                 console.log("hello");
-                bcrypt.hash(newPassString, "secretcode").then(function (hash) {
+                bcrypt.hash(newPassString, 8).then(function (hash) {
                   
                   console.log("hello");
       
