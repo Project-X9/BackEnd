@@ -43,7 +43,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
     }
     ));
 router
-.post('/facebook', passport.authenticate('facebookToken', {session: false, scope: ['email',  'public_profile', 'user_location']}), facebookAuth.facebookOAuth);
+.post('/', passport.authenticate('facebookToken', {session: false, scope: ['email',  'public_profile', 'user_location']}), facebookAuth.facebookOAuth);
 
 router
 .post('/facebook/callback', passport.authenticate('facebookToken', { successRedirect: '/', failureRedirect: '/user/login' }));

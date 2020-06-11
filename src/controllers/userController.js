@@ -766,15 +766,15 @@ exports.forgetPassword = async (req, res) => {
        *    This sets password to the new random passwrod that was sent in the email
        *
        */
-        console.log("hello");
+        
         bcrypt
-          .hash(newPassString, "secretcode")
+          .hash(newPassString, 8)
           .then(function (hash) {
-            console.log("hello");
+            
 
             User.findByIdAndUpdate(req.body.id, { password: hash })
               .then(function (RetUser) {
-                console.log("hello");
+                
 
                 res
                   .status(200)
