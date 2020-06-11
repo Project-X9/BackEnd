@@ -3,8 +3,8 @@ const Playlist = require(`./../models/playlist.js`);
 const Album = require(`./../models/album.js`);
 const track = require(`./../models/track.js`);
 const Artist = require(`./../models/artist.js`);
-const webpush = require('web-push')
-const sendNotification = require("./../notificationHandler");
+const notificationHandler = require('./../notificationHandler')
+
 
 /**
  * @module controller/follows
@@ -26,11 +26,12 @@ function paginator(arr, perpage, page) {
 exports.getAllfollowers = async (req, res) => {
   try {
     const user = await User.findById(req.body.id);
+    //paginator(user.followers,req.query.perpage,req.query.page)
     if(user!==null)
       {
         res.status(200).json({
           status: "success",
-          followers: paginator(user.followers,req.query.perpage,req.query.page)
+          followers: user.followers
         });
       }else{
         var err= "invalid id";
@@ -355,16 +356,15 @@ exports.followArtist = async (req, res) => {
       
       await User.findByIdAndUpdate(req.body.id,{ $push:{artists: req.params.id} });
       const artist = await Artist.findByIdAndUpdate(req.params.id,{ $push:{followers: req.body.id} });
-
-      // const recipientSubscription = await User.findById(req.body.id, 'pushSubscription');
-      //send to artist a notification
-      const recipientSubscription = req.body.subscription;
-      console.log(recipientSubscription);
-
-      //res.status(201).json({});
-      const payload = JSON.stringify({IN_User});
-      webpush.sendNotification(recipientSubscription, payload);
-      await Artist.findByIdAndUpdate(req.params.id,{ $push:{notifications: req.body.id} });
+      
+      const payload = {
+        event: "follow-artist",
+        time: Date.now(),
+        senderId: req.body.id,
+        read: false
+      };
+      notificationHandler.sendNotificationToArtist(payload, req.params.id);
+      
       
       res.status(200).json({
         status: "success"
@@ -374,7 +374,6 @@ exports.followArtist = async (req, res) => {
       throw err;
     }
   } catch (err) {
-    console.log(err);
     res.status(404).json({
       status: "fail",
       message: err
@@ -403,7 +402,7 @@ exports.unfollowArtist = async (req, res) => {
             }
           }
 
-        if(count!==0){ return res.status(403).json({ data : "already followed"})}
+        if(count===0){ return res.status(403).json({ data : "invalid deletion"})}
         
         await User.findByIdAndUpdate(req.body.id,{ $pull:{artists: req.params.id} });
         await Artist.findByIdAndUpdate(req.params.id,{ $pull:{followers: req.body.id} });

@@ -5,8 +5,8 @@
 const Artist = require(`./../models/artist.js`);
 const Track = require(`./../models/track.js`);
 const Album = require(`./../models/album.js`);
-const webpush = require('web-push')
 const User = require(`./../models/user.js`);
+const notificationHandler = require('./../notificationHandler')
 
 
 
@@ -226,7 +226,21 @@ exports.getArtistRelatedArtists = async (req, res) => {
 exports.addArtistAlbum= async (req, res) =>
 {
   try {
-    const artist = await Artist.findByIdAndUpdate(req.body.id,{ $push:{albums: req.params.id} });   
+    await Artist.findByIdAndUpdate(req.body.id,{ $push:{albums: req.params.id} });   
+     
+
+    const artist = await Artist.findById(req.params.id) 
+    const payload = {
+      event: "new-album",
+      time: Date.now(),
+      senderId: req.body.id,
+      albumId: req.params.id,
+      read: false
+    };
+     artist.followers.forEach(followerId => {
+       notificationHandler.sendNotificationToUser(payload, followerId)
+     });
+
      res.status(200).json({
       status: "success",
       data: {
@@ -378,6 +392,8 @@ exports.updateArtistTrack= async (req, res) =>
 }
 
 //----------------------------- add track ------------------------------------------------------------------------------------------//
+
+
 /**
    * @property {Function} addArtistTrack  adds track  
    * @param {object} req - request object
@@ -390,10 +406,30 @@ exports.updateArtistTrack= async (req, res) =>
 exports.addArtistTrack= async (req, res) =>
 {
   try { 
-    console.log(req.params.id);
-    console.log(req.params.trackid);
-    const artist = await Artist.findByIdAndUpdate(req.params.id ,{ $push:{tracks: req.params.trackid} ,new: true});   
-    if (artist ==null) return;
+    // console.log(req.params.id);
+    // console.log(req.params.trackid);
+   // const artist = await Artist.findByIdAndUpdate(req.params.id ,{ $push:{tracks: req.params.trackid} ,new: true});  
+   //const track = await Track.findByIdAndUpdate(req.params.trackid ,{ $push:{artists: req.params.id} ,new: true}) ;
+   const track = await Track.findById(req.params.trackid );
+   if (track == null) return;
+
+   const artist = await Artist.findById(req.params.id);   
+   if (artist ==null) return;
+
+   artist.tracks.addToSet(req.params.trackid);
+   const payload = {
+    event: "new-track",
+    time: Date.now(),
+    senderId: req.params.id,
+    trackId: req.params.trackId,
+    read: false
+  };
+   artist.followers.forEach(followerId => {
+     notificationHandler.sendNotificationToUser(payload, followerId)
+   });
+    // console.log(artist); 
+   
+   track.artists.addToSet(req.params.id);
     console.log(artist); 
     res.status(200).json({
       status: "success",
@@ -411,6 +447,7 @@ exports.addArtistTrack= async (req, res) =>
 }
 
 // ---------------------------------------- DELETE TRACK ----------------------------------------------------------------------------//
+
 
 /**
    * @property {Function} deleteArtistTrack  delete track  
@@ -441,6 +478,8 @@ exports.deleteArtistTrack= async (req, res) =>
   }
 }
 ////////------------------------GET TOP ARTISTS --------------------
+
+
 /**
  * @property {Function} getTopArtists  get Top artists
  * @param {object} req - request object
@@ -485,3 +524,75 @@ exports.getTopArtists= async (req, res) => {
     });
   }
 };
+  
+
+
+///////////////////////////////////////////////////////
+exports.updatePushSubscription = async (req, res) => {
+  console.log('updating pushNotification endpoint')
+  try {
+    await Artist.findByIdAndUpdate(req.params.id, {
+      pushSubscription: req.body.pushSubscription,
+    });
+    const artist = await Artist.findById(req.params.id);
+    res.status(200).json({
+      status: "success",
+      data: artist,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
+
+
+/// ---------------------ADD ARTIST -------------------------------------------------------
+
+/**
+   * @property {Function} addArtist  adds track  
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {string} req.params.id - user id 
+   * @param {object} res.body.data - return the artist
+*/
+
+exports.addArtist= async (req, res) =>
+{
+  try { 
+    console.log(req.params.id);
+    const user = await User.findById(req.params.id);
+    if (!user) return;
+    if (user.isArtist == true) {
+      res.status(403).json({
+        status: "fail",
+        message : "Artist already exists! "
+      });
+      return;
+    }
+    user.isArtist= true;
+    const result = await user.save();
+    const artist = new Artist();
+    artist.image = user.image;
+    artist.name = user.name;
+    artist.email = user.email;
+    artist.password = user.password;
+    artist.dateAdded = new Date();
+    artist.save();
+    
+    console.log(artist); 
+    res.status(200).json({
+      status: "success",
+      data: {
+       artist
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message
+    });
+  }
+}

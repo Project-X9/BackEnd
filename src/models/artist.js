@@ -1,5 +1,15 @@
 const mongoose = require('mongoose');
 
+
+const notificationSchema = mongoose.Schema({
+    event: String,
+    time: mongoose.SchemaTypes.Date,
+    senderId: mongoose.Types.ObjectId,
+    trackId: mongoose.Types.ObjectId,
+    albumId: mongoose.Types.ObjectId,
+    read: Boolean
+  })
+
 const artistSchema = new mongoose.Schema({
     Bio : String,
     followers : [{type: mongoose.Schema.Types.ObjectId,ref:'User'}],
@@ -11,8 +21,11 @@ const artistSchema = new mongoose.Schema({
     email:String,
     password: String,
     dateAdded:Date,
-    albums: [{type: mongoose.Schema.Types.ObjectId,ref:'Album'}],
-    notifications: [{type: mongoose.Schema.Types.ObjectId,ref:'User'}]
+    albums: [{type: mongoose.Schema.Types.ObjectId,ref:'Album'}],  
+    notifications: [notificationSchema],
+    pushSubscription: {
+        type: Object
+    },
 
 });
 

@@ -46,49 +46,6 @@
  * 
  */
 
-///////////////////////////////////////////////////////////////////////////
- /**
-  * 
-  * @api {get} /me Get Current User's Profile
-  * @apiName getCurrentUser
-  * @apiGroup User Profile
-  * @apiVersion  0.1.0
-  * @apiDescription Get detailed profile information about the current user.
-  * 
-  * @apiUse HeaderAuth
-  * @apiSuccess (200) {JSON} profile User Object in JSON format. 
-  * 
-*  
- * @apiSuccessExample {JSON} Success-Response:
- * HTTP/1.1 OK
- * {
- *     {
-    "status": "success",
-    "data": {
-        "user": {
-            "dateAdded": "2020-04-03T07:04:07.484Z",
-            "premium": false,
-            "previouslyPremium": false,
-            "followers": [],
-            "following": [],
-            "playlists": [],
-            "tracks": [],
-            "albums": [],
-            "artists": [],
-            "_id": "5e86e011daba594edc83be73",
-            "name": "John Engles",
-            "email": "Jack@gmail.com",
-            "password": "$2a$08$nQ.cCcZXCxpfqnN1qGTKBuNOpMotuqXvCNAAaQ3eroWUUFk6T./h6",
-            "age": 20,
-            "__v": 0
-        }
-    }
-}
- * }
-* 
-* @apiUse Error404
-* @apiUse Error400
-*/
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -140,8 +97,6 @@
  * 
  * 
  */
-
- 
 
  
 ///////////////////////////////////////////////////////////////////////////
@@ -302,3 +257,4 @@
 * @apiUse Error404
 * @apiUse Error400
 */
+

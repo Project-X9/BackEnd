@@ -6,135 +6,155 @@
 
 
  
-  describe("GET /artists/:id", () => 
-  {
-    describe("using a valid id", () => 
-    {
-        let response;
-        beforeAll(() => {
-        return superagent
-            .get(`${domainName}/artists/${valid_id}`)
-            .type('application/json')
-            .then(res => {
-                console.log("RECEIVED RESPONSE");
-                response = { ...res };
-            })
-            .catch(err => {
-                console.log("RECEIVED ERROR");
-                console.log(err.message);
-            });
-        });
-        it("Status 200", (done) => {
-            expect(response.status).toBe(200);
-            //expect(response.body.data.artist._id).toEqual(valid_id);
-            //expect(response.body.data.artist.name).toMatch("/Artist/");
-           done();
-        });
-    });
-   });
+//   describe("GET /artists/:id", () => 
+//   {
+//     describe("using a valid id", () => 
+//     {
+//         let response;
+//         beforeAll(() => {
+//         return superagent
+//             .get(`${domainName}/artists/${valid_id}`)
+//             .type('application/json')
+//             .then(res => {
+//                 console.log("RECEIVED RESPONSE");
+//                 response = { ...res };
+//             })
+//             .catch(err => {
+//                 console.log("RECEIVED ERROR");
+//                 console.log(err.message);
+//             });
+//         });
+//         it("Status 200", (done) => {
+//             expect(response.status).toBe(200);
+//             //expect(response.body.data.artist._id).toEqual(valid_id);
+//             //expect(response.body.data.artist.name).toMatch("/Artist/");
+//            done();
+//         });
+//     });
+//    });
 
- //---------------------------------------------  /artists/{id}/albums
- describe("GET /artists/:id/albums", () => 
- {
-   describe("using a valid id", () => 
-   {
-       let response;
-       beforeAll(() => {
-       return superagent
-           .get(`${domainName}/artists/${valid_id}/albums`)
-           .type('application/json')
-           .then(res => {
-               console.log("RECEIVED RESPONSE");
-               response = { ...res };
-           })
-           .catch(err => {
-               console.log("RECEIVED ERROR");
-               console.log(err.message);
-           });
-       });
-       it("Status 200", (done) => {
-           expect(response.status).toEqual(200);
-          done();
-       });
-   });
-  });
+//  //---------------------------------------------  /artists/{id}/albums
+//  describe("GET /artists/:id/albums", () => 
+//  {
+//    describe("using a valid id", () => 
+//    {
+//        let response;
+//        beforeAll(() => {
+//        return superagent
+//            .get(`${domainName}/artists/${valid_id}/albums`)
+//            .type('application/json')
+//            .then(res => {
+//                console.log("RECEIVED RESPONSE");
+//                response = { ...res };
+//            })
+//            .catch(err => {
+//                console.log("RECEIVED ERROR");
+//                console.log(err.message);
+//            });
+//        });
+//        it("Status 200", (done) => {
+//            expect(response.status).toEqual(200);
+//           done();
+//        });
+//    });
+//   });
 
-  //------------------------/artists/{id}/top-tracks.................................
+//   //------------------------/artists/{id}/top-tracks.................................
 
-  describe("GET /artists/:id/top-tracks", () => 
-  {
-    describe("using a valid id", () => 
-    {
-        let response;
-        beforeAll(() => {
-        return superagent
-            .get(`${domainName}/artists/${valid_id}/top-tracks`)
-            .type('application/json')
-            .then(res => {
-                console.log("RECEIVED RESPONSE");
-                response = { ...res };
-            })
-            .catch(err => {
-                console.log("RECEIVED ERROR");
-                console.log(err.message);
-            });
-        });
-        it("Status 200", (done) => {
-            expect(response.status).toBe(200);
-           done();
-        });
-    });
-   });
+//   describe("GET /artists/:id/top-tracks", () => 
+//   {
+//     describe("using a valid id", () => 
+//     {
+//         let response;
+//         beforeAll(() => {
+//         return superagent
+//             .get(`${domainName}/artists/${valid_id}/top-tracks`)
+//             .type('application/json')
+//             .then(res => {
+//                 console.log("RECEIVED RESPONSE");
+//                 response = { ...res };
+//             })
+//             .catch(err => {
+//                 console.log("RECEIVED ERROR");
+//                 console.log(err.message);
+//             });
+//         });
+//         it("Status 200", (done) => {
+//             expect(response.status).toBe(200);
+//            done();
+//         });
+//     });
+//    });
 
-   //----------------------------------------/artists/{id}/related-artists
-   describe("GET /artists/:id/related-artists", () => 
-   {
-     describe("using a valid id", () => 
-     {
-         let response;
-         beforeAll(() => {
+//    //----------------------------------------/artists/{id}/related-artists
+//    describe("GET /artists/:id/related-artists", () => 
+//    {
+//      describe("using a valid id", () => 
+//      {
+//          let response;
+//          beforeAll(() => {
+//          return superagent
+//              .get(`${domainName}/artists/${valid_id}/related-artists`)
+//              .type('application/json')
+//              .then(res => {
+//                  console.log("RECEIVED RESPONSE");
+//                  response = { ...res };
+//              })
+//              .catch(err => {
+//                  console.log("RECEIVED ERROR");
+//                  console.log(err.message);
+//              });
+//          });
+//          it("Status 200", (done) => {
+//              expect(response.status).toBe(200);
+//             done();
+//          });
+//      });
+//     });
+
+//     //-------------------------------------/artists--------------------------
+
+//     describe("GET /artists", () => 
+//     {
+//       describe("", () => 
+//       {
+//           let response;
+//           beforeAll(() => {
+//           return superagent
+//               .get(`${domainName}/artists`)
+//               .type('application/json')
+//               .then(res => {
+//                   console.log("RECEIVED RESPONSE");
+//                   response = { ...res };
+//               })
+//               .catch(err => {
+//                   console.log("RECEIVED ERROR");
+//                   console.log(err.message);
+//               });
+//           });
+//           it("Status 200", (done) => {
+//               expect(response.status).toBe(200);
+//              done();
+//           });
+//       });
+//      });
+//-----------------------------------------------------------------------------------------
+/*
+     describe ("GET /getTopArtists", ()=>{
          return superagent
-             .get(`${domainName}/artists/${valid_id}/related-artists`)
-             .type('application/json')
-             .then(res => {
-                 console.log("RECEIVED RESPONSE");
-                 response = { ...res };
-             })
-             .catch(err => {
-                 console.log("RECEIVED ERROR");
-                 console.log(err.message);
-             });
-         });
-         it("Status 200", (done) => {
-             expect(response.status).toBe(200);
-            done();
-         });
+         .patch(`${domainName}/artists`)
+         .then(console.log)
+         .catch(console.error);
+            
+        //  (async () => {
+        //     try {
+        //       const res = await superagent.post('/api/pet');
+        //       console.log(res);
+        //     } catch (err) {
+        //       console.error(err);
+        //     }
+        //   })();
      });
-    });
 
-    //-------------------------------------/artists--------------------------
-
-    describe("GET /artists", () => 
-    {
-      describe("", () => 
-      {
-          let response;
-          beforeAll(() => {
-          return superagent
-              .get(`${domainName}/artists`)
-              .type('application/json')
-              .then(res => {
-                  console.log("RECEIVED RESPONSE");
-                  response = { ...res };
-              })
-              .catch(err => {
-                  console.log("RECEIVED ERROR");
-                  console.log(err.message);
-              });
-          });
-          it("Status 200", (done) => {
-              expect(response.status).toBe(200);
-             done();
-          });
-      });
-     });
+     */
+    

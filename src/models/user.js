@@ -9,6 +9,7 @@ const validator = require("validator");
 
 const notificationSchema = mongoose.Schema({
   event: String,
+  time: mongoose.SchemaTypes.Date,
   senderId: mongoose.Types.ObjectId,
   trackId: mongoose.Types.ObjectId,
   albumId: mongoose.Types.ObjectId,
@@ -133,7 +134,13 @@ userSchema = mongoose.Schema({
       type: mongoose.Types.ObjectId,
       ref: "Track",
     },
-  ]
+  ],
+  isArtist: {
+    type: Boolean,
+    defaultValue: false,
+  },
+  country: String,
+  mobileNumber: String
 });
 
 // Generate toekn for a specific user:

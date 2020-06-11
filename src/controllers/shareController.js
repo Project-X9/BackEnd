@@ -1,15 +1,32 @@
 const User = require(`./../models/user.js`);
-const Track = require(`./../models/track`)
-const sendNotification = require('./../notificationHandler')
+const notificationHandler = require('./../notificationHandler')
 
-module.exports = async (req, res) =>  {
-    // const recipientSubscription = await User.findById(req.body.recipientId, 'pushSubscription');
-    const recipientSubscription = req.body.subscription;
-    console.log(recipientSubscription);
-    const track = await Track.findById(req.body.trackId, 'name artists url genres imageUrl album');
-    console.log(track);
 
-    res.status(201).json({});
-    const payload = JSON.stringify({track});
-    webpush.sendNotification(recipientSubscription, payload);
+exports.shareTrack = async (req, res) => {
+  try {
+    const senderId = req.user._id
+    const recipientId = await User.findOne({email:req.body.recipientEmail});
+    const payload = {
+      event: "share-song",
+      time: Date.now(),
+      senderId,
+      trackId: req.body.trackId,
+      albumId: req.body.trackId,
+      read: false
+    };
+    if(recipientId === null) {
+        throw new Error('Failed. Invalid Recipient Email.')
+    }
+    notificationHandler.sendNotificationToUser(payload, recipientId);
+
+    res.status(201).json({
+      status: "success",
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
 };
+  
