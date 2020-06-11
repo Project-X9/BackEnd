@@ -616,6 +616,9 @@ exports.recoverPlaylist = async (req, res) => {
         await Playlist.findByIdAndUpdate(req.params.id, {
           $push: { followers: req.body.id },
         });
+      }else
+      {
+        return res.status(403).json({ data: "invalid action" });
       }
       res.status(200).json({
         status: "success",
