@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 
 
 router
-  .route("/deletedplaylist/:id")
+  .route("/deletedplaylist")
   .get(userController.getDeletedPlaylists);
 
  router
