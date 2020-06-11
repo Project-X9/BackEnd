@@ -1,8 +1,8 @@
-//  const superagent = require("superagent");
-//  const domainName = `http://localhost:${process.env.PORT}/api/v1`;
-//  require("./../src/index.js");
+ const superagent = require("superagent");
+ const domainName = `http://localhost:${process.env.PORT}/api/v1`;
+ require("./../src/index.js");
 
-//  var valid_id="5e877b8fae42032b7c867feb";
+ var valid_id="5e877b8fae42032b7c867feb";
 
 
  
@@ -138,3 +138,23 @@
 //           });
 //       });
 //      });
+//-----------------------------------------------------------------------------------------
+/*
+     describe ("GET /getTopArtists", ()=>{
+         return superagent
+         .patch(`${domainName}/artists`)
+         .then(console.log)
+         .catch(console.error);
+            
+        //  (async () => {
+        //     try {
+        //       const res = await superagent.post('/api/pet');
+        //       console.log(res);
+        //     } catch (err) {
+        //       console.error(err);
+        //     }
+        //   })();
+     });
+
+     */
+    
