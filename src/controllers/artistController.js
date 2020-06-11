@@ -392,6 +392,8 @@ exports.updateArtistTrack= async (req, res) =>
 }
 
 //----------------------------- add track ------------------------------------------------------------------------------------------//
+
+
 /**
    * @property {Function} addArtistTrack  adds track  
    * @param {object} req - request object
@@ -446,6 +448,7 @@ exports.addArtistTrack= async (req, res) =>
 
 // ---------------------------------------- DELETE TRACK ----------------------------------------------------------------------------//
 
+
 /**
    * @property {Function} deleteArtistTrack  delete track  
    * @param {object} req - request object
@@ -475,6 +478,8 @@ exports.deleteArtistTrack= async (req, res) =>
   }
 }
 ////////------------------------GET TOP ARTISTS --------------------
+
+
 /**
  * @property {Function} getTopArtists  get Top artists
  * @param {object} req - request object
@@ -544,6 +549,7 @@ exports.updatePushSubscription = async (req, res) => {
 
 
 /// ---------------------ADD ARTIST -------------------------------------------------------
+
 /**
    * @property {Function} addArtist  adds track  
    * @param {object} req - request object
@@ -559,9 +565,9 @@ exports.addArtist= async (req, res) =>
     const user = await User.findById(req.params.id);
     if (!user) return;
     if (user.isArtist == true) {
-      res.status(404).json({
+      res.status(403).json({
         status: "fail",
-        message : "artist already exists! "
+        message : "Artist already exists! "
       });
       return;
     }
