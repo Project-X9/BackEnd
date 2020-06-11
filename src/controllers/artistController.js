@@ -29,12 +29,14 @@ function paginator(arr, perpage, page) {
 exports.getTopTracks= async (req, res) => {
   try {
     const artist = await Artist.findById(req.body.id).populate("tracks","playCount");
+   // console.log(artist)
     const array = [];
     const compare_value=20;
     for(var i =0; i<artist.tracks.length;i++)
     {
       track_playcount= await Track.findById(artist.tracks[i]);
-      console.log(track_playcount.playcount)
+      console.log(track_playcount)
+      //console.log(track_playcount.playcount)
       if(track_playcount.playcount> compare_value)
       {
           array.push(artist.tracks[i]);
@@ -237,6 +239,8 @@ exports.addArtistAlbum= async (req, res) =>
       albumId: req.params.id,
       read: false
     };
+  console.log("Followers" , artist.followers)
+
      artist.followers.forEach(followerId => {
        notificationHandler.sendNotificationToUser(payload, followerId)
      });
@@ -539,14 +543,45 @@ exports.getTopArtists= async (req, res) => {
 
 
 ///////////////////////////////////////////////////////
+/**
+   * @property {Function} updatePushSubscription  update the pushSubscription Field of the artist 
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {string} req.params.id - Artist Id 
+   * @param {JSON Object} req.body.pushSubscription - new pushSubscription Object
+*/
 exports.updatePushSubscription = async (req, res) => {
-  console.log('updating pushNotification endpoint')
   try {
     await Artist.findByIdAndUpdate(req.params.id, {
       pushSubscription: req.body.pushSubscription,
     });
     const artist = await Artist.findById(req.params.id);
     res.status(200).json({
+      status: "success",
+      data: artist,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
+
+
+/**
+   * @property {Function} deletePushSubscription  deletes the pushSubscription of the artist 
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {string} req.params.id - Artist Id 
+*/
+exports.deletePushSubscription = async (req, res) => {
+  try {
+    await Artist.findByIdAndUpdate(req.params.id, {
+      pushSubscription: {},
+    });
+    const artist = await Artist.findById(req.params.id);
+    res.status(204).json({
       status: "success",
       data: artist,
     });

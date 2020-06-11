@@ -2,10 +2,12 @@ const express = require("express");
 const userController = require(`./../controllers/userController`);
 const router = new express.Router();
 const auth = require('../middleware/auth');
+const configAuth = require('../auth');
+
 
 
 router
-  .route("/deletedplaylist")
+  .route("/deletedplaylist/:id")
   .get(userController.getDeletedPlaylists);
 
  router
@@ -128,8 +130,8 @@ router.route('/me/notifications/:notificationId')
 
 
 /**
-* @api {post} /me/update-push Updates the notification 'read' field
-  * @apiName Update Notification  @apiGroup User Profile
+* @api {post} /me/update-push Updates the pushSubscription field of the authenticated User
+  * @apiName Update Push Subscription  @apiGroup User Profile
   * @apiVersion  0.1.0
   * @apiUse HeaderAuth
  * @apiParam  {subscription} pushSubscription 
@@ -137,14 +139,34 @@ router.route('/me/notifications/:notificationId')
 * @apiUse Error404
 */
 router.route('/me/update-push')
-.post(auth, userController.updatePushSubscription);
+.post(auth, userController.updatePushSubscription)
+/**
+* @api {delete} /me/delete-push Deletes the pushSubscription of the authenticated User
+  * @apiName Delete Push Subscription  @apiGroup User Profile
+  * @apiVersion  0.1.0
+  * @apiUse HeaderAuth
+ * @apiParam  {subscription} pushSubscription 
+  * @apiSuccess (204)
+* @apiUse Error404
+*/
+router.route('/me/delete-push')
+.delete(auth, userController.deletePushSubscription);
+
+
+
 //====================  (AUTHENTICATION) Login ======================
 
 router.route('/login')
 .post(userController.login);
 
 
-module.exports = router;
-
 router.route('/reset')
 .post(userController.forgetPassword);
+
+
+module.exports = router;
+
+
+
+
+

@@ -1,15 +1,14 @@
 /**
  * 
- * @api {get} /{search}
+ * @api {get} /{search}/track||artist
  * @apiGroup Search 
  * @apiVersion  0.1.0
- * @apiDescription Get ProjectX information about artists, albums, tracks or playlists that match a keyword string.
+ * @apiDescription Get ProjectX information about artists, tracks
  * 
  * @apiUse HeaderAuth
- * @apiParam  {String} q Required. Search query keywords
- * @apiParam  {String} type Required. item types to search across.
+ * @apiParam  {String} q Required. Search query keywords.
  * @apiParam  {Number} limit Optional. Maximum number of results to return. Default:20 Minimum:1 Maximum: 50.
- * @apiParam  {Number} offset Optional. Optional.The index of the first result to return. Default: 0 (the first result). Maximum offset (including limit): 2,000. Use with limit to get the next page of search results.
+ * @apiParam  {Number} page Optional. Optional.The index of the first result to return. Default: 0 (the first result). Maximum offset (including limit): 2,000. Use with limit to get the next page of search results.
  * 
  * 
  * 
@@ -23,8 +22,7 @@
  * HTTP/1.1 OK
  * {
  *  
- *     "artists":{
- *          items:[{
+ *     "artists":[{
  *           "name": "Sean",
  *           "id": "131jlk12312312",
  *           ....
