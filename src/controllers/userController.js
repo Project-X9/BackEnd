@@ -600,7 +600,7 @@ exports.getDeletedPlaylists = async (req, res) => {
 
 exports.recoverPlaylist = async (req, res) => {
   try {
-    const IN_User = await User.findById(req.params.id);
+    const IN_User = await User.findById(req.body.id);
     if (IN_User !== null) {
       var count = 0;
       for (var i = 0; i < IN_User.deletedPlaylists.length; i++) {
