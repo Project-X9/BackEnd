@@ -14,7 +14,7 @@ router
    .route("/Queue/:id")
    .get(userController.getQueue);
 router
-  .route("/recoverPlaylist/:id")
+  .route("/recoverPlaylist/:idU/:id")
   .patch(userController.recoverPlaylist);
 
 router
